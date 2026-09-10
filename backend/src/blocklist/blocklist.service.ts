@@ -25,23 +25,25 @@ export class BlocklistService {
   }
 
   async getCurrentVersion(): Promise<string> {
-    const latest = await this.versionRepo.findOne({
+    const latest = await this.versionRepo.find({
       order: { updatedAt: 'DESC' },
+      take: 1,
     });
-    return latest?.version ?? '0.0.0';
+    return latest[0]?.version ?? '0.0.0';
   }
 
   async getDomainsAddedSince(version: string): Promise<string[]> {
-    const since = await this.versionRepo.findOne({
+    const since = await this.versionRepo.find({
       where: { version },
       order: { updatedAt: 'DESC' },
+      take: 1,
     });
-    if (!since) {
+    if (since.length === 0) {
       return this.getAllActiveDomains();
     }
     const domains = await this.domainRepo
       .createQueryBuilder('d')
-      .where('d.addedAt > :since', { since: since.updatedAt })
+      .where('d.addedAt > :since', { since: since[0].updatedAt })
       .andWhere('d.active = :active', { active: true })
       .getMany();
     return domains.map((d) => d.domain);
@@ -73,10 +75,11 @@ export class BlocklistService {
   }
 
   async incrementVersion(): Promise<string> {
-    const latest = await this.versionRepo.findOne({
+    const latest = await this.versionRepo.find({
       order: { updatedAt: 'DESC' },
+      take: 1,
     });
-    const parts = (latest?.version ?? '0.0.0').split('.').map(Number);
+    const parts = (latest[0]?.version ?? '0.0.0').split('.').map(Number);
     parts[2] = (parts[2] || 0) + 1;
     const version = parts.join('.');
     await this.versionRepo.save(this.versionRepo.create({ version }));

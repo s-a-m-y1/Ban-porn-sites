@@ -43,7 +43,9 @@ services:
       BLOCKLIST_CRON: '0 0 * * *'
       PORT: '3000'
     ports:
-      - '3000:3000'
+      - '${BACKEND_PORT:-3001}:3000'
+    profiles:
+      - default
 
 volumes:
   pgdata:
