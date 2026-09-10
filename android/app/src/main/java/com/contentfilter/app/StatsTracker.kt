@@ -3,8 +3,6 @@ package com.contentfilter.app
 import android.content.Context
 
 object StatsTracker {
-    private var blockedCount = 0L
-
     fun deviceId(context: Context): String {
         val prefs = context.getSharedPreferences("stats", Context.MODE_PRIVATE)
         var id = prefs.getString("device_id", null)
@@ -16,11 +14,14 @@ object StatsTracker {
     }
 
     /**
-     * Called from the VPN service's IO scope. Reporting is best-effort:
-     * failures (offline, backend down) are silently ignored.
+     * Persist total blocked count locally and report to backend best-effort.
+     * Called from the VPN service's IO coroutine.
      */
     suspend fun recordBlocked(context: Context, domain: String) {
-        blockedCount++
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val total = prefs.getInt("blocked_total", 0) + 1
+        prefs.edit().putInt("blocked_total", total).apply()
+
         val api = ApiService.create(
             context.getSharedPreferences("blocklist_prefs", Context.MODE_PRIVATE)
                 .getString("backend_url", "http://10.0.2.2:3000")!!,
@@ -31,8 +32,6 @@ object StatsTracker {
             // offline is fine - stats are best-effort
         }
     }
-
-    fun totalBlocked(): Long = blockedCount
 }
 
 data class ReportBlockedDto(val deviceId: String, val domain: String)

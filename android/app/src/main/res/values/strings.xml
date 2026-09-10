@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Content Filter</string>
-    <string name="start_blocking">Start Blocking</string>
-    <string name="stop_blocking">Stop Blocking</string>
+    <string name="protection_title">Protection Status</string>
     <string name="status_on">Protection active</string>
     <string name="status_off">Protection disabled</string>
-    <string name="blocklist_size_fmt">Blocklist: %1$d domains</string>
+    <string name="status_on_subtitle">Your device is safe. Adult content is being blocked.</string>
+    <string name="status_off_subtitle">Tap the power button to start blocking adult content.</string>
+    <string name="start_blocking">START PROTECTION</string>
+    <string name="stop_blocking">STOP PROTECTION</string>
+
+    <!-- Stats card -->
+    <string name="stats_title">Statistics</string>
+    <string name="blocked_count">Blocked attempts</string>
+    <string name="blocklist_size">Blocklist size</string>
+    <string name="blocked_count_fmt">%1$d</string>
+
+    <!-- Settings card -->
+    <string name="settings_title">Settings</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
+    <string name="blocklist_size_fmt">%1$d domains</string>
+
+    <!-- Contact card -->
+    <string name="contact_title">Contact Developer</string>
+    <string name="contact_subtitle">Found an issue or have a suggestion? Contact me:</string>
+    <string name="email_button">Email: sam858y@gmail.com</string>
+    <string name="send_email">Send Email</string>
+
+    <string name="powered_by">Powered by local DNS filtering — no data leaves your device.</string>
 </resources>

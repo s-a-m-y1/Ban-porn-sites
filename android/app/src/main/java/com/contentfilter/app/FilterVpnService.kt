@@ -71,7 +71,7 @@ class FilterVpnService : VpnService() {
         startForeground(NOTIFICATION_ID, buildNotification("Filtering active"))
         try {
             vpnInterface = Builder()
-                .setSession("Content Filter")
+                .setSession("CF")
                 .addAddress("10.111.0.1", 32)
                 .addDnsServer("10.111.0.2")
                 .addRoute("10.111.0.2", 32)
@@ -136,7 +136,7 @@ class FilterVpnService : VpnService() {
                     if (isBlocked(domain)) {
                         blockedCount++
                         if (blockedCount % 10 == 0) updateNotification()
-                        StatsTracker.recordBlocked(this, domain)
+                        scope.launch { StatsTracker.recordBlocked(this@FilterVpnService, domain) }
                         Log.i(TAG, "Blocked: $domain")
                         val response = dnsParser.buildNxDomainResponse(packet)
                         output.write(response)
@@ -198,6 +198,8 @@ class FilterVpnService : VpnService() {
             .setContentText(text)
             .setSmallIcon(android.R.drawable.ic_lock_lock)
             .setOngoing(true)
+            .setVisibility(Notification.VISIBILITY_SECRET)
+            .setCategory(Notification.CATEGORY_SERVICE)
             .setContentIntent(openIntent)
             .build()
     }
@@ -206,8 +208,11 @@ class FilterVpnService : VpnService() {
         val channel = NotificationChannel(
             CHANNEL_ID,
             "Content Filter",
-            NotificationManager.IMPORTANCE_LOW,
-        )
+            NotificationManager.IMPORTANCE_MIN, // lowest priority: no sound, bottom of list
+        ).apply {
+            setSound(null, null)
+            lockscreenVisibility = Notification.VISIBILITY_SECRET
+        }
         getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
     }
 }

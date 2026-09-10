@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Content Filter</string>
+    <string name="protection_title">حالة الحماية</string>
+    <string name="status_on">الحماية تعمل</string>
+    <string name="status_off">الحماية متوقفة</string>
+    <string name="status_on_subtitle">جهازك في أمان. المواقع الإباحية يتم حظرها الآن.</string>
+    <string name="status_off_subtitle">اضغط زر الطاقة لبدء حظر المواقع الإباحية.</string>
+    <string name="start_blocking">تشغيل الحماية</string>
+    <string name="stop_blocking">إيقاف الحماية</string>
+
+    <string name="stats_title">الإحصائيات</string>
+    <string name="blocked_count">محاولات محظورة</string>
+    <string name="blocklist_size">حجم قائمة الحظر</string>
+    <string name="blocked_count_fmt">%1$d</string>
+
+    <string name="settings_title">الإعدادات</string>
+    <string name="language">اللغة</string>
+    <string name="theme">المظهر</string>
+    <string name="dark_mode">الوضع الليلي</string>
+    <string name="english">English</string>
+    <string name="arabic" translatable="false">العربية</string>
+    <string name="blocklist_size_fmt">%1$d دومين</string>
+
+    <string name="contact_title">تواصل مع المطوّر</string>
+    <string name="contact_subtitle">وجدت مشكلة أو لديك اقتراح؟ تواصل معي:</string>
+    <string name="email_button">البريد: sam858y@gmail.com</string>
+    <string name="send_email">أرسل بريداً</string>
+
+    <string name="powered_by">يعمل بفلترة DNS محلية — لا تخرج أي بيانات من جهازك.</string>
+</resources>
