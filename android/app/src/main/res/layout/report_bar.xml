@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:gravity="bottom|center_horizontal"
+    android:layout_margin="4dp">
+
+    <View
+        android:id="@+id/barFill"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@drawable/bar_fill" />
+
+    <TextView
+        android:id="@+id/barLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="9sp"
+        android:textColor="?attr/textSecondary" />
+</LinearLayout>

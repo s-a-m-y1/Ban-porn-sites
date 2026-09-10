@@ -9,26 +9,85 @@
     <string name="start_blocking">START PROTECTION</string>
     <string name="stop_blocking">STOP PROTECTION</string>
 
-    <!-- Stats card -->
     <string name="stats_title">Statistics</string>
     <string name="blocked_count">Blocked attempts</string>
     <string name="blocklist_size">Blocklist size</string>
-    <string name="blocked_count_fmt">%1$d</string>
 
-    <!-- Settings card -->
     <string name="settings_title">Settings</string>
     <string name="language">Language</string>
-    <string name="theme">Theme</string>
     <string name="dark_mode">Dark mode</string>
     <string name="english">English</string>
-    <string name="arabic">العربية</string>
+    <string name="arabic" translatable="false">العربية</string>
     <string name="blocklist_size_fmt">%1$d domains</string>
 
-    <!-- Contact card -->
     <string name="contact_title">Contact Developer</string>
     <string name="contact_subtitle">Found an issue or have a suggestion? Contact me:</string>
-    <string name="email_button">Email: sam858y@gmail.com</string>
+    <string name="email_button">sam858y@gmail.com</string>
     <string name="send_email">Send Email</string>
-
     <string name="powered_by">Powered by local DNS filtering — no data leaves your device.</string>
+
+    <!-- Features -->
+    <string name="features_title">Protection features</string>
+    <string name="cat_porn">Block porn sites</string>
+    <string name="cat_gambling">Block gambling sites</string>
+    <string name="cat_fakenews">Block fake news sites</string>
+    <string name="cat_malware">Block malware sites</string>
+    <string name="manual_block">Manually blocked sites</string>
+    <string name="manual_block_desc">Add any site to the blocklist yourself</string>
+    <string name="add_domain">Add site to block</string>
+    <string name="domain_hint">example-site.com</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="empty_custom">No manually blocked sites yet</string>
+    <string name="invalid_domain">Invalid site address</string>
+    <string name="domain_added">Site added to blocklist</string>
+
+    <string name="schedule_title">Protection schedule</string>
+    <string name="schedule_desc">Set times when protection turns on automatically</string>
+    <string name="schedule_on">Active on schedule</string>
+    <string name="schedule_start">Start time</string>
+    <string name="schedule_end">End time</string>
+    <string name="schedule_next">%1$s → %2$s daily</string>
+
+    <string name="applock_title">Blocked apps</string>
+    <string name="applock_desc">Choose apps to lock completely</string>
+    <string name="applock_need_permission">To lock apps, grant Usage access first</string>
+    <string name="grant">Grant</string>
+
+    <string name="security_title">Security</string>
+    <string name="pin_lock">PIN protection</string>
+    <string name="pin_lock_desc">Require a PIN to stop protection or change settings</string>
+    <string name="uninstall_protect">Anti-uninstall protection</string>
+    <string name="uninstall_protect_desc">Makes the app a device admin — much harder to remove</string>
+    <string name="enter_pin_reason">Enter your PIN to continue</string>
+    <string name="pin_title">PIN required</string>
+    <string name="pin_hint">Enter PIN</string>
+    <string name="pin_wrong">Wrong PIN</string>
+    <string name="pin_confirm">Confirm</string>
+    <string name="pin_enter_new">Enter a new PIN (4–6 digits)</string>
+
+    <string name="report_title">Weekly report</string>
+    <string name="report_desc">Your blocking activity over the last 7 days</string>
+    <string name="report_total_fmt">Total blocked attempts</string>
+    <string name="report_today">Today</string>
+    <string name="report_empty">No blocked attempts this week</string>
+    <string name="top_blocked">Most blocked sites</string>
+
+    <string name="blocked_app_title">This app is blocked</string>
+    <string name="blocked_app_default">Selected app</string>
+    <string name="back_home">Back to home</string>
+
+    <!-- Heatmap / persistence -->
+    <string name="heatmap_title">Blocking activity</string>
+    <string name="heatmap_day_fmt">%1$s — %2$d blocked</string>
+    <string name="heatmap_today">Today</string>
+    <string name="autostart_title">Start on boot</string>
+    <string name="autostart_desc">Protection starts automatically when the device restarts</string>
+    <string name="always_on_title">Always-on VPN</string>
+    <string name="always_on_desc">System-level protection: block cannot be bypassed by other apps</string>
+    <string name="always_on_ask">To make protection permanent, enable "Always-on VPN" for Content Filter in the screen that opens.</string>
+    <string name="enable">Enable</string>
+    <string name="later">Later</string>
+    <string name="heatmap_empty">No activity yet — squares will fill as blocking happens</string>
 </resources>

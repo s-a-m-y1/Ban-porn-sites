@@ -216,6 +216,191 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- ============ FEATURES CARD ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp"
+            android:layout_marginTop="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/features_title"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="?attr/textPrimary" />
+
+            <LinearLayout android:id="@+id/rowPorn" style="@style/SettingsRow">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="@string/cat_porn"
+                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchPorn"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowGambling" style="@style/SettingsRow">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="@string/cat_gambling"
+                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchGambling"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowFakenews" style="@style/SettingsRow">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="@string/cat_fakenews"
+                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchFakenews"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowMalware" style="@style/SettingsRow">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="@string/cat_malware"
+                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchMalware"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowManual" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/manual_block"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/manual_block_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <TextView android:id="@+id/manualCount"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?attr/textSecondary" android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ============ SCHEDULE CARD ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp"
+            android:layout_marginTop="14dp">
+
+            <LinearLayout android:id="@+id/rowSchedule" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/schedule_title"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:id="@+id/scheduleValue" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:text="@string/schedule_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/scheduleSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/scheduleTimesRow" style="@style/SettingsRow"
+                android:visibility="gone">
+                <Button android:id="@+id/btnStartTime" android:layout_width="0dp"
+                    android:layout_height="44dp" android:layout_weight="1"
+                    android:text="@string/schedule_start"
+                    android:textAllCaps="false" android:textSize="13sp"
+                    android:background="@drawable/btn_primary" android:textColor="@color/white" />
+                <Button android:id="@+id/btnEndTime" android:layout_width="0dp"
+                    android:layout_height="44dp" android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/schedule_end"
+                    android:textAllCaps="false" android:textSize="13sp"
+                    android:background="@drawable/btn_primary" android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ============ APP LOCK CARD ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp"
+            android:layout_marginTop="14dp">
+
+            <LinearLayout android:id="@+id/rowApplock" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/applock_title"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:id="@+id/applockDesc" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:text="@string/applock_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/applockSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ============ SECURITY CARD ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp"
+            android:layout_marginTop="14dp">
+
+            <LinearLayout android:id="@+id/rowPin" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/pin_lock"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/pin_lock_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/pinSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowAdmin" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/uninstall_protect"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/uninstall_protect_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/adminSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
         <!-- ============ SETTINGS CARD ============ -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -301,6 +486,110 @@
                     android:id="@+id/themeSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ============ WEEKLY REPORT CARD ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp"
+            android:layout_marginTop="14dp">
+
+            <LinearLayout android:id="@+id/rowReport" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/report_title"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/report_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <TextView android:id="@+id/reportCount" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginStart="8dp"
+                    android:textColor="@color/green_light" android:textStyle="bold"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/reportBars" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="horizontal"
+                android:gravity="bottom" android:paddingStart="18dp" android:paddingEnd="18dp"
+                android:paddingBottom="14dp" />
+
+            <!-- GitHub-style heatmap -->
+            <TextView
+                android:id="@+id/heatmapSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginBottom="6dp"
+                android:text="@string/heatmap_today"
+                android:textSize="12sp"
+                android:textColor="?attr/textSecondary" />
+
+            <com.contentfilter.app.HeatmapView
+                android:id="@+id/heatmap"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp" />
+        </LinearLayout>
+
+        <!-- ============ PERSISTENCE CARD ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp"
+            android:layout_marginTop="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/security_title"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="?attr/textPrimary" />
+
+            <LinearLayout android:id="@+id/rowAutostart" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/autostart_title"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/autostart_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/autostartSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowAlwaysOn" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/always_on_title"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/always_on_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/alwaysOnSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 

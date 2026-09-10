@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/bg_dark"
+    android:padding="40dp">
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/ic_block"
+        android:background="@drawable/icon_circle_red"
+        android:padding="22dp"
+        android:contentDescription="@string/blocked_app_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/blocked_app_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary_dark" />
+
+    <TextView
+        android:id="@+id/lockedAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary_dark" />
+
+    <Button
+        android:id="@+id/backHomeButton"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/back_home"
+        android:background="@drawable/btn_primary"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+</LinearLayout>

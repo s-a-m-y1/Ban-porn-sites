@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Content Filter</string>
     <string name="protection_title">حالة الحماية</string>
     <string name="status_on">الحماية تعمل</string>
     <string name="status_off">الحماية متوقفة</string>
@@ -12,20 +11,80 @@
     <string name="stats_title">الإحصائيات</string>
     <string name="blocked_count">محاولات محظورة</string>
     <string name="blocklist_size">حجم قائمة الحظر</string>
-    <string name="blocked_count_fmt">%1$d</string>
 
     <string name="settings_title">الإعدادات</string>
     <string name="language">اللغة</string>
-    <string name="theme">المظهر</string>
     <string name="dark_mode">الوضع الليلي</string>
-    <string name="english">English</string>
-    <string name="arabic" translatable="false">العربية</string>
     <string name="blocklist_size_fmt">%1$d دومين</string>
 
     <string name="contact_title">تواصل مع المطوّر</string>
     <string name="contact_subtitle">وجدت مشكلة أو لديك اقتراح؟ تواصل معي:</string>
-    <string name="email_button">البريد: sam858y@gmail.com</string>
+    <string name="email_button">sam858y@gmail.com</string>
     <string name="send_email">أرسل بريداً</string>
-
     <string name="powered_by">يعمل بفلترة DNS محلية — لا تخرج أي بيانات من جهازك.</string>
+
+    <!-- Features -->
+    <string name="features_title">ميزات الحماية</string>
+    <string name="cat_porn">حظر المواقع الإباحية</string>
+    <string name="cat_gambling">حظر مواقع القمار</string>
+    <string name="cat_fakenews">حظر مواقع الأخبار الكاذبة</string>
+    <string name="cat_malware">حظر مواقع الفيروسات</string>
+    <string name="manual_block">مواقع محظورة يدوياً</string>
+    <string name="manual_block_desc">أضف أي موقع لقائمة الحظر بنفسك</string>
+    <string name="add_domain">أضف موقعاً للحظر</string>
+    <string name="domain_hint">example-site.com</string>
+    <string name="add">إضافة</string>
+    <string name="cancel">إلغاء</string>
+    <string name="remove">حذف</string>
+    <string name="empty_custom">لا توجد مواقع محظورة يدوياً بعد</string>
+    <string name="invalid_domain">عنوان الموقع غير صحيح</string>
+    <string name="domain_added">تمت إضافة الموقع لقائمة الحظر</string>
+
+    <string name="schedule_title">جدولة الحماية</string>
+    <string name="schedule_desc">حدد أوقات تشغيل الحماية تلقائياً</string>
+    <string name="schedule_on">الحماية حسب الجدول</string>
+    <string name="schedule_start">وقت التشغيل</string>
+    <string name="schedule_end">وقت الإيقاف</string>
+    <string name="schedule_next">يومياً من %1$s إلى %2$s</string>
+
+    <string name="applock_title">التطبيقات المحظورة</string>
+    <string name="applock_desc">اختر تطبيقات لقفلها تماماً</string>
+    <string name="applock_need_permission">لقفل التطبيقات، اسمح بالوصول للاستخدام أولاً</string>
+    <string name="grant">سماح</string>
+
+    <string name="security_title">الأمان</string>
+    <string name="pin_lock">حماية برقم سري</string>
+    <string name="pin_lock_desc">طلب رقم سري لإيقاف الحماية أو تغيير الإعدادات</string>
+    <string name="uninstall_protect">الحماية من الحذف</string>
+    <string name="uninstall_protect_desc">يجعل التطبيق مسؤول الجهاز — أصعب بكثير في الحذف</string>
+    <string name="enter_pin_reason">أدخل الرقم السري للمتابعة</string>
+    <string name="pin_title">الرقم السري مطلوب</string>
+    <string name="pin_hint">أدخل الرقم السري</string>
+    <string name="pin_wrong">رقم سري خطأ</string>
+    <string name="pin_confirm">تأكيد</string>
+    <string name="pin_enter_new">أدخل رقماً سرياً جديداً (4-6 أرقام)</string>
+
+    <string name="report_title">التقرير الأسبوعي</string>
+    <string name="report_desc">نشاط الحظر خلال آخر 7 أيام</string>
+    <string name="report_total_fmt">إجمالي المحاولات المحظورة</string>
+    <string name="report_today">اليوم</string>
+    <string name="report_empty">لا توجد محاولات محظورة هذا الأسبوع</string>
+    <string name="top_blocked">أكثر المواقع حظراً</string>
+
+    <string name="blocked_app_title">هذا التطبيق محظور</string>
+    <string name="blocked_app_default">التطبيق المحدد</string>
+    <string name="back_home">العودة للرئيسية</string>
+
+    <!-- Heatmap / persistence -->
+    <string name="heatmap_title">نشاط الحظر</string>
+    <string name="heatmap_day_fmt">%1$s — %2$d محظور</string>
+    <string name="heatmap_today">اليوم</string>
+    <string name="autostart_title">التشغيل مع الجهاز</string>
+    <string name="autostart_desc">تبدأ الحماية تلقائياً عند إعادة تشغيل الجهاز</string>
+    <string name="always_on_title">VPN دائم</string>
+    <string name="always_on_desc">حماية على مستوى النظام: لا يمكن تجاوز الحظر من تطبيقات أخرى</string>
+    <string name="always_on_ask">لجعل الحماية دائمة، فعّل "Always-on VPN" لتطبيق Content Filter في الشاشة التي ستفتح.</string>
+    <string name="enable">تفعيل</string>
+    <string name="later">لاحقاً</string>
+    <string name="heatmap_empty">لا يوجد نشاط بعد — ستتملأ المربعات مع الحظر</string>
 </resources>

@@ -6,8 +6,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Manages the blocklist: loads the bundled asset on first run,
- * then syncs with the NestJS backend.
+ * Manages the blocklist: loads category assets, handles custom user domains,
+ * and syncs with the NestJS backend.
  */
 class BlocklistRepository(private val context: Context) {
 
@@ -21,15 +21,69 @@ class BlocklistRepository(private val context: Context) {
 
     suspend fun ensureInitialBlocklist() = withContext(Dispatchers.IO) {
         if (dao.count() == 0) {
-            val domains = context.assets.open("initial_blocklist.txt")
-                .bufferedReader().readLines()
-                .map { it.trim() }
-                .filter { it.isNotEmpty() }
-                .map { BlockedDomain(it) }
-            dao.insertAll(domains)
+            Categories.ALL.forEach { cat -> loadCategoryAsset(cat) }
         }
     }
 
+    private suspend fun loadCategoryAsset(category: String) {
+        val assetFile = when (category) {
+            Categories.PORN -> "blocklist_porn.txt"
+            Categories.GAMBLING -> "blocklist_gambling.txt"
+            Categories.FAKENEWS -> "blocklist_fakenews.txt"
+            Categories.MALWARE -> "blocklist_malware.txt"
+            else -> return
+        }
+        val domains = context.assets.open(assetFile)
+            .bufferedReader().readLines()
+            .mapNotNull { line ->
+                val l = line.trim()
+                when {
+                    l.isEmpty() || l.startsWith("#") -> null
+                    // hosts format: "0.0.0.0 domain.com"
+                    l.startsWith("0.0.0.0 ") -> l.substringAfter("0.0.0.0 ").trim()
+                        .takeIf { it.contains(".") }
+                    // plain domain list
+                    else -> l.takeIf { !it.contains(" ") && it.contains(".") }
+                }
+            }
+            .map { BlockedDomain(it, category) }
+        // chunked inserts to keep transactions small
+        domains.chunked(5000).forEach { dao.insertAll(it) }
+    }
+
+    /** Enable or disable a category (load from asset / delete rows). */
+    suspend fun setCategoryEnabled(category: String, enabled: Boolean) = withContext(Dispatchers.IO) {
+        if (enabled) {
+            loadCategoryAsset(category)
+        } else {
+            dao.deleteByCategory(category)
+        }
+    }
+
+    // ---- custom domains ----
+    suspend fun addCustom(domain: String): Boolean = withContext(Dispatchers.IO) {
+        val d = domain.trim().lowercase()
+            .removePrefix("http://").removePrefix("https://")
+            .removePrefix("www.")
+            .trim().trimEnd('/')
+        if (d.isEmpty() || !d.contains(".") || d.contains(" ")) return@withContext false
+        dao.insertCustom(CustomDomain(d))
+        true
+    }
+
+    suspend fun removeCustom(domain: String) = withContext(Dispatchers.IO) {
+        dao.removeCustom(domain)
+    }
+
+    suspend fun listCustom(): List<CustomDomain> = dao.listCustom()
+
+    // ---- stats ----
+    suspend fun dailyStats(days: Int = 7): List<DailyStat> = dao.recentStats(days)
+
+    suspend fun allStats(): List<Pair<String, Int>> =
+        dao.allStats().map { it.day to it.blockedCount }
+
+    // ---- backend sync ----
     suspend fun syncWithBackend(): SyncResult = withContext(Dispatchers.IO) {
         try {
             val localVersion = prefs.getString("version", "0.0.0")!!
@@ -38,12 +92,12 @@ class BlocklistRepository(private val context: Context) {
                 return@withContext SyncResult.UpToDate
             }
             val domains: List<BlockedDomain> = try {
-                api().getDiff(localVersion).map { BlockedDomain(it) }
+                api().getDiff(localVersion).map { BlockedDomain(it, Categories.PORN) }
             } catch (e: Exception) {
-                api().getBlocklist().map { BlockedDomain(it) }
+                api().getBlocklist().map { BlockedDomain(it, Categories.PORN) }
             }
             if (domains.isNotEmpty()) {
-                dao.insertAll(domains)
+                domains.chunked(5000).forEach { dao.insertAll(it) }
             }
             prefs.edit().putString("version", remoteVersion).apply()
             SyncResult.Updated(domains.size)

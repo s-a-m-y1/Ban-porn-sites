@@ -48,6 +48,7 @@ class FilterVpnService : VpnService() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private lateinit var dnsParser: DnsPacketParser
     private lateinit var blockedDomainDao: BlockedDomainDao
+    private var enabledCategories: List<String> = listOf(Categories.PORN, Categories.MALWARE)
     private var upstreamSocket: DatagramSocket? = null
     private var blockedCount = 0
 
@@ -55,6 +56,7 @@ class FilterVpnService : VpnService() {
         super.onCreate()
         dnsParser = DnsPacketParser()
         blockedDomainDao = BlocklistDatabase.getInstance(this).blockedDomainDao()
+        enabledCategories = Categories.enabled(this)
         createNotificationChannel()
     }
 
@@ -179,9 +181,12 @@ class FilterVpnService : VpnService() {
     }
 
     private suspend fun isBlocked(domain: String): Boolean {
+        // reload enabled categories on each check window (cheap: SharedPreferences read)
+        val cats = Categories.enabled(this)
         var d = domain.trimEnd('.')
         while (d.contains('.')) {
-            if (blockedDomainDao.isBlocked(d) > 0) return true
+            if (blockedDomainDao.isCustomBlocked(d) > 0) return true
+            if (cats.isNotEmpty() && blockedDomainDao.isBlockedIn(d, cats) > 0) return true
             d = d.substringAfter('.')
         }
         return false

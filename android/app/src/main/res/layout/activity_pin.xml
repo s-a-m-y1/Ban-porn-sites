@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_shield"
+        android:background="@drawable/icon_circle_green"
+        android:padding="16dp"
+        android:contentDescription="@string/pin_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/pin_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="?attr/textPrimary" />
+
+    <TextView
+        android:id="@+id/pinReason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:textColor="?attr/textSecondary" />
+
+    <EditText
+        android:id="@+id/pinInput"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="28dp"
+        android:inputType="numberPassword"
+        android:maxLength="6"
+        android:hint="@string/pin_hint"
+        android:imeOptions="actionDone"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/pinError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pin_wrong"
+        android:textColor="@color/red_light"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/pinConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/pin_confirm"
+        android:background="@drawable/btn_primary"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+</LinearLayout>
