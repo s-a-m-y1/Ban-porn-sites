@@ -1,16 +1,16 @@
 package com.contentfilter.app
 
-import android.app.Activity
 import android.content.Intent
 import android.net.VpnService
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var toggleButton: Button
     private lateinit var statusText: TextView
@@ -50,6 +50,7 @@ class MainActivity : Activity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK) onVpnApproved()
