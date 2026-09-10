@@ -94,17 +94,27 @@ class MainActivity : AppCompatActivity() {
 
     // ---------- Theme ----------
     private fun setupTheme() {
-        val savedDark = prefs.getBoolean("dark", false)
-        val darkDefault = (resources.configuration.uiMode and
-            Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        themeSwitch.isChecked = prefs.getBoolean("dark_set", false) && savedDark || darkDefault
+        // theme mode: "system" | "light" | "dark"
+        val mode = prefs.getString("theme_mode", "system") ?: "system"
+        applyThemeMode(mode)
+
+        themeSwitch.isChecked = mode == "dark"
         themeSwitch.setOnCheckedChangeListener { _, checked ->
-            prefs.edit().putBoolean("dark", checked).putBoolean("dark_set", true).apply()
-            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
-                if (checked) androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
-                else androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM,
-            )
+            // toggle cycles dark <-> light (system follows light-off unless changed)
+            val newMode = if (checked) "dark" else "light"
+            prefs.edit().putString("theme_mode", newMode).apply()
+            applyThemeMode(newMode)
         }
+    }
+
+    private fun applyThemeMode(mode: String) {
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
+            when (mode) {
+                "dark" -> androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+                "light" -> androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+                else -> androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            },
+        )
     }
 
     // ---------- Language ----------

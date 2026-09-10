@@ -90,4 +90,5 @@
     <string name="enable">Enable</string>
     <string name="later">Later</string>
     <string name="heatmap_empty">No activity yet — squares will fill as blocking happens</string>
+    <string name="channel_desc">Keeps DNS filtering running silently</string>
 </resources>

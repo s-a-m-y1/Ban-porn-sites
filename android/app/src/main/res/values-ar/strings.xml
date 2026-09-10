@@ -87,4 +87,5 @@
     <string name="enable">تفعيل</string>
     <string name="later">لاحقاً</string>
     <string name="heatmap_empty">لا يوجد نشاط بعد — ستتملأ المربعات مع الحظر</string>
+    <string name="channel_desc">يبقي فلترة DNS تعمل بصمت</string>
 </resources>

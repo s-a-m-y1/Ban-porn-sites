@@ -201,8 +201,12 @@ class FilterVpnService : VpnService() {
         return Notification.Builder(this, CHANNEL_ID)
             .setContentTitle("Content Filter")
             .setContentText(text)
-            .setSmallIcon(android.R.drawable.ic_lock_lock)
+            // subtle icon + dark colorization keeps the status bar clean
+            .setSmallIcon(android.R.drawable.ic_menu_rotate)
+            .setColorized(true)
+            .setColor(0xFF101510.toInt())
             .setOngoing(true)
+            .setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE)
             .setVisibility(Notification.VISIBILITY_SECRET)
             .setCategory(Notification.CATEGORY_SERVICE)
             .setContentIntent(openIntent)
@@ -213,10 +217,13 @@ class FilterVpnService : VpnService() {
         val channel = NotificationChannel(
             CHANNEL_ID,
             "Content Filter",
-            NotificationManager.IMPORTANCE_MIN, // lowest priority: no sound, bottom of list
+            NotificationManager.IMPORTANCE_MIN,
         ).apply {
+            description = "Keeps DNS filtering running silently"
             setSound(null, null)
+            enableVibration(false)
             lockscreenVisibility = Notification.VISIBILITY_SECRET
+            setShowBadge(false)
         }
         getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
     }
