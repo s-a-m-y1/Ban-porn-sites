@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Content Filter</string>
+    <string name="start_blocking">Start Blocking</string>
+    <string name="stop_blocking">Stop Blocking</string>
+    <string name="status_on">Protection active</string>
+    <string name="status_off">Protection disabled</string>
+    <string name="blocklist_size_fmt">Blocklist: %1$d domains</string>
+</resources>

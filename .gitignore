@@ -1,0 +1,14 @@
+# Local
+.env
+*.log
+node_modules/
+dist/
+build/
+.gradle/
+.idea/
+*.iml
+local.properties
+coverage/
+.cxx/
+*.apk
+*.aab
