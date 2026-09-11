@@ -43,6 +43,7 @@
                     android:text="@string/language"
                     style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
                 <TextView android:id="@+id/langValue"
+                    android:fontFamily="@font/plex_semibold"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:paddingStart="10dp" android:paddingEnd="6dp"
                     android:textSize="14sp" android:textColor="@color/green_light"

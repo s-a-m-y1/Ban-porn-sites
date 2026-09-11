@@ -13,10 +13,9 @@
 
         <ImageView
             android:id="@+id/splashIcon"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="118dp"
+            android:layout_height="118dp"
             android:src="@mipmap/ic_launcher"
-            android:elevation="12dp"
             android:contentDescription="@string/app_name" />
 
         <TextView
@@ -24,24 +23,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:text="حصن"
-            android:textSize="38sp"
+            android:text="@string/app_name_ar"
+            android:textSize="40sp"
             android:textStyle="bold"
-            android:textColor="@color/mint"
-            android:letterSpacing="0.05" />
+            android:textColor="@color/parchment"
+            android:fontFamily="@font/cairo_extrabold"
+            android:letterSpacing="0.02" />
 
         <TextView
             android:id="@+id/splashTitleEn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Hisn — Protection, rooted in faith"
-            android:textSize="14sp"
-            android:textColor="#9EC9AE"
-            android:letterSpacing="0.08" />
+            android:layout_marginTop="6dp"
+            android:text="@string/app_name_latin"
+            android:textSize="13sp"
+            android:textColor="@color/stone_light"
+            android:fontFamily="@font/plex_semibold"
+            android:letterSpacing="0.35" />
     </LinearLayout>
 
-    <!-- bottom glow line -->
     <View
         android:id="@+id/splashLine"
         android:layout_width="160dp"

@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand -->
-    <color name="green_primary">#2E7D32</color>
-    <color name="green_light">#4CAF50</color>
-    <color name="green_dark">#1B5E20</color>
-    <color name="red_primary">#D32F2F</color>
-    <color name="red_light">#EF5350</color>
+    <!-- Hisn brand palette (exact landing-page hex values) -->
+    <color name="ink">#1C2B39</color>
+    <color name="ink_2">#26374A</color>
+    <color name="teal">#4B7A73</color>
+    <color name="stone">#A9998A</color>
+    <color name="stone_light">#DCD3C6</color>
+    <color name="parchment">#F2EFE9</color>
 
-    <!-- Extended palette -->
-    <color name="mint">#A8E6CF</color>
-    <color name="teal_accent">#00BFA5</color>
-    <color name="amber">#FFC107</color>
-    <color name="purple_accent">#7E57C2</color>
-    <color name="blue_accent">#42A5F5</color>
+    <!-- semantic aliases (kept for compatibility) -->
+    <color name="green_primary">@color/teal</color>
+    <color name="green_light">@color/teal</color>
+    <color name="green_dark">@color/ink</color>
+    <color name="mint">@color/stone_light</color>
+    <color name="teal_accent">@color/teal</color>
+    <color name="red_primary">@color/ink_2</color>
+    <color name="red_light">@color/ink_2</color>
 
-    <!-- Light theme -->
-    <color name="bg_light">#F2F7F3</color>
-    <color name="bg_light_surface">#FFFFFF</color>
-    <color name="bg_light_elevated">#FAFDFA</color>
-    <color name="text_primary">#0E1F14</color>
-    <color name="text_secondary">#54685B</color>
-    <color name="divider">#14000000</color>
-    <color name="stroke_light">#DDE8DF</color>
+    <!-- light theme -->
+    <color name="bg_light">#F2EFE9</color>
+    <color name="bg_light_surface">#F8F6F1</color>
+    <color name="bg_light_elevated">#FDFCF9</color>
+    <color name="text_primary">#1C2B39</color>
+    <color name="text_secondary">#26374A</color>
+    <color name="divider">#14A9998A</color>
+    <color name="stroke_light">#DCD3C6</color>
 
-    <!-- Dark theme -->
-    <color name="bg_dark">#0A0F0C</color>
-    <color name="bg_dark_surface">#131A15</color>
-    <color name="bg_dark_elevated">#18211B</color>
-    <color name="text_primary_dark">#EAF4EC</color>
-    <color name="text_secondary_dark">#8FA697</color>
-    <color name="divider_dark">#14FFFFFF</color>
-    <color name="stroke_dark">#24312A</color>
+    <!-- dark theme -->
+    <color name="bg_dark">#1C2B39</color>
+    <color name="bg_dark_surface">#223445</color>
+    <color name="bg_dark_elevated">#26374A</color>
+    <color name="text_primary_dark">#F2EFE9</color>
+    <color name="text_secondary_dark">#DCD3C6</color>
+    <color name="divider_dark">#14DCD3C6</color>
+    <color name="stroke_dark">#3A4E62</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="scrim">#66000000</color>
+    <color name="white">#F2EFE9</color>
+    <color name="scrim">#661C2B39</color>
+    <color name="amber">@color/stone</color>
+    <color name="purple_accent">@color/ink_2</color>
+    <color name="blue_accent">@color/teal</color>
+    <color name="green_12">#1E4B7A73</color>
 </resources>

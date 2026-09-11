@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape android:shape="oval">
-            <gradient android:type="radial" android:gradientRadius="90dp"
-                android:startColor="#3DEF5350" android:endColor="#00EF5350" />
+        <shape android:shape="rectangle">
+            <solid android:color="#1C2B39" />
         </shape>
     </item>
     <item android:inset="14dp">
         <shape android:shape="oval">
-            <solid android:color="#22EF5350" />
-            <stroke android:width="2dp" android:color="#55EF5350" />
+            <solid android:color="#1E26374A" />
+            <stroke android:width="2dp" android:color="#3326374A" />
         </shape>
     </item>
 </layer-list>
