@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حِصن — ما لا يليق، لا يدخل</title>
+<meta name="description" content="حِصن: فلترة محتوى محلية تحجب المواقع الضارة عن أجهزتك — من دون مراقبة، ومن دون أن تغادر بياناتك الجهاز.">
+<meta name="theme-color" content="#1C2B39">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z' fill='%231C2B39'/%3E%3Crect x='96' y='60' width='8' height='130' fill='%23F2EFE9'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C2B39;
+    --ink-2:#26374A;
+    --teal:#4B7A73;
+    --stone:#A9998A;
+    --stone-l:#DCD3C6;
+    --parchment:#F2EFE9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Cairo',sans-serif;
+    background:var(--parchment);
+    color:var(--ink-2);
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  .latin{font-family:'IBM Plex Sans',sans-serif}
+  .wrap{max-width:1120px;margin-inline:auto;padding-inline:24px}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--teal);color:var(--parchment)}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+
+  /* ============ MARK ============ */
+  .mark{display:inline-block}
+  .mark .arch{fill:var(--ink)}
+  .mark .slit{fill:var(--parchment)}
+  .on-dark .arch{fill:var(--parchment)}
+  .on-dark .slit{fill:var(--ink)}
+
+  /* ============ HEADER ============ */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:var(--parchment);
+    border-bottom:1px solid var(--stone-l);
+  }
+  .header-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:76px;
+  }
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .mark{width:30px;height:30px}
+  .brand .wordmark{
+    font-weight:800;font-size:27px;line-height:1;
+    color:var(--ink);
+  }
+  .brand .brand-latin{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:600;font-size:10px;letter-spacing:.35em;
+    color:var(--stone);align-self:flex-end;padding-bottom:4px;
+  }
+  nav{display:flex;align-items:center;gap:34px}
+  .nav-link{
+    font-size:15.5px;font-weight:500;color:var(--ink-2);
+    border-bottom:1px solid transparent;
+    transition:color .18s,border-color .18s;
+  }
+  .nav-link:hover{color:var(--ink);border-bottom-color:var(--stone)}
+  .btn{
+    display:inline-block;font-family:'Cairo',sans-serif;
+    font-weight:700;font-size:16px;line-height:1;
+    padding:14px 30px;border-radius:2px;
+    transition:background .18s,color .18s,border-color .18s;
+    cursor:pointer;
+  }
+  .btn-primary{background:var(--teal);color:var(--parchment)}
+  .btn-primary:hover{background:var(--ink)}
+  .btn-outline{border:1px solid var(--ink);color:var(--ink);padding:11px 24px;font-size:14.5px}
+  .btn-outline:hover{background:var(--ink);color:var(--parchment)}
+  .btn-lg{padding:17px 40px;font-size:17.5px}
+
+  /* ============ HERO ============ */
+  .hero{padding:56px 0 110px}
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;
+    gap:72px;align-items:center;
+    min-height:calc(100vh - 76px);
+  }
+  .hero h1{
+    font-size:clamp(42px,6.4vw,78px);
+    font-weight:800;line-height:1.28;
+    color:var(--ink);
+    letter-spacing:-.5px;
+  }
+  .hero .sub{
+    margin-top:26px;max-width:34rem;
+    font-size:18.5px;font-weight:500;color:var(--ink-2);
+  }
+  .cta-row{display:flex;align-items:center;gap:22px;margin-top:42px;flex-wrap:wrap}
+  .cta-quiet{
+    font-size:15.5px;font-weight:600;color:var(--ink-2);
+    border-bottom:1px solid var(--stone);
+    padding-bottom:2px;
+    transition:color .18s,border-color .18s;
+  }
+  .cta-quiet:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+  .hero-visual{display:flex;justify-content:center}
+  .hero-mark{width:100%;max-width:330px}
+  .hero-mark .arch-outline{
+    fill:none;stroke:var(--ink);stroke-width:5;stroke-linejoin:round;
+    stroke-dasharray:900;stroke-dashoffset:900;
+    animation:draw 1.7s ease forwards .25s;
+  }
+  .hero-mark .arch{opacity:0;animation:appear .7s ease forwards 1.35s}
+  .hero-mark .slit{opacity:0;animation:appear .5s ease forwards 1.85s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes appear{to{opacity:1}}
+  @media (prefers-reduced-motion:reduce){
+    .hero-mark .arch-outline{animation:none;stroke-dashoffset:0}
+    .hero-mark .arch,.hero-mark .slit{animation:none;opacity:1}
+  }
+
+  /* ============ SECTIONS ============ */
+  section{padding:130px 0}
+  .section-head{max-width:44rem}
+  .section-head h2{
+    font-size:clamp(30px,4vw,44px);
+    font-weight:800;line-height:1.35;color:var(--ink);
+  }
+  .section-head .lead{
+    margin-top:18px;font-size:18px;font-weight:500;
+  }
+
+  /* how it works */
+  .steps{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:56px;
+    margin-top:80px;
+  }
+  .step{border-top:1px solid var(--stone-l);padding-top:30px}
+  .step .num{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:600;font-size:15px;letter-spacing:.18em;
+    color:var(--stone);
+  }
+  .step h3{
+    margin-top:14px;font-size:22.5px;font-weight:700;color:var(--ink);
+  }
+  .step p{margin-top:12px;font-size:16.5px}
+
+  /* privacy (on ink) */
+  .privacy{background:var(--ink)}
+  .privacy .section-head h2{color:var(--parchment)}
+  .privacy .section-head .lead{color:var(--stone-l)}
+  .trust-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:56px;
+    margin-top:80px;
+  }
+  .trust{border-top:1px solid var(--stone-l);padding-top:30px}
+  .trust h3{font-size:21px;font-weight:700;color:var(--parchment)}
+  .trust p{margin-top:12px;font-size:16.5px;color:var(--stone-l)}
+  .trust a{color:var(--stone-l);border-bottom:1px solid var(--stone)}
+
+  /* final band */
+  .final{padding:110px 0;text-align:center}
+  .final .final-line{
+    font-size:clamp(26px,3.4vw,36px);
+    font-weight:800;color:var(--ink);line-height:1.4;
+  }
+  .final .btn{margin-top:34px}
+
+  /* ============ FOOTER ============ */
+  footer{background:var(--ink);border-top:1px solid var(--stone-l)}
+  .footer-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:28px;
+    padding-block:38px;flex-wrap:wrap;
+  }
+  .footer-brand{display:flex;align-items:center;gap:10px}
+  .footer-brand .mark{width:22px;height:22px}
+  .footer-brand .wordmark{
+    font-weight:800;font-size:20px;color:var(--parchment);line-height:1;
+  }
+  .footer-brand .brand-latin{
+    font-family:'IBM Plex Sans',sans-serif;font-weight:600;
+    font-size:9px;letter-spacing:.32em;color:var(--stone);
+    align-self:flex-end;padding-bottom:2px;
+  }
+  .footer-links{display:flex;gap:28px;flex-wrap:wrap}
+  .footer-links a{
+    font-size:14.5px;font-weight:500;color:var(--stone-l);
+    transition:color .18s;
+  }
+  .footer-links a:hover{color:var(--parchment)}
+  .footer-copy{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:11px;letter-spacing:.14em;color:var(--stone);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:880px){
+    nav .nav-link{display:none}
+    .hero{padding:36px 0 80px}
+    .hero-grid{
+      grid-template-columns:1fr;gap:48px;
+      min-height:0;
+    }
+    .hero-visual{order:-1}
+    .hero-mark{max-width:190px}
+    .hero h1{font-size:clamp(38px,9.5vw,52px)}
+    .hero .sub{font-size:17px}
+    section{padding:90px 0}
+    .steps,.trust-grid{grid-template-columns:1fr;gap:44px;margin-top:56px}
+    .final{padding:90px 0}
+    .footer-inner{flex-direction:column;align-items:flex-start;gap:18px}
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="#top" aria-label="حِصن — الصفحة الرئيسية">
+      <svg class="mark" viewBox="0 0 200 200" aria-hidden="true">
+        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z"/>
+        <rect class="slit" x="96" y="60" width="8" height="130"/>
+      </svg>
+      <span class="wordmark">حِصن</span>
+      <span class="brand-latin">HISN</span>
+    </a>
+    <nav>
+      <a class="nav-link" href="#how">كيف يعمل</a>
+      <a class="nav-link" href="#privacy">الخصوصية</a>
+      <a class="btn btn-outline" href="https://github.com/s-a-m-y1/Ban-porn-sites">حمّل التطبيق</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>ما لا يليق،<br>لا يدخل.</h1>
+      <p class="sub">حِصن يفلّر الإنترنت عند بوابة جهازك: فحص محلي لحظي يحجب المحتوى الضار قبل أن يصل إلى الشاشة — من دون مراقبة، ومن دون أن تغادر بياناتك الجهاز.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="https://github.com/s-a-m-y1/Ban-porn-sites">حمّل التطبيق</a>
+        <a class="cta-quiet" href="#how">كيف يعمل حِصن؟</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg class="hero-mark" viewBox="0 0 200 200" role="img" aria-label="علامة حِصن: قوس بوابة بفتحة رأسية مغلقة">
+        <path class="arch-outline" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z"/>
+        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z"/>
+        <rect class="slit" x="96" y="60" width="8" height="130"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>بوابة واحدة،<br>وكل شيء يمر منها.</h2>
+      <p class="lead">لا إعدادات معقدة ولا لوحات تحكم. حِصن يعمل في الخلفية بهدوء، من اللحظة الأولى.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num latin">01</div>
+        <h3>كل شيء يبدأ بسؤال</h3>
+        <p>أي موقع تفتحه، يسأل جهازك أولًا عن عنوانه. هذا السؤال يمر من نقطة واحدة — كما تدخل القوافل من بوابة المدينة.</p>
+      </div>
+      <div class="step">
+        <div class="num latin">02</div>
+        <h3>الفحص يحدث في مكانه</h3>
+        <p>قبل أن يكمل الطلب طريقه، يقارنه حِصن بقائمة محفوظة على جهازك نفسه. الفحص لحظي، ويعمل حتى دون اتصال.</p>
+      </div>
+      <div class="step">
+        <div class="num latin">03</div>
+        <h3>والقرار يصدر في صمت</h3>
+        <p>الموقع المسموح يفتح بسرعته المعتادة. والمحتوى الضار لا يصل أصلًا — يعود الجواب وكأن الموقع غير موجود. لا نوافذ، لا ضجيج.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRIVACY ============ -->
+<section id="privacy" class="privacy on-dark">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>خصوصيتك ليست<br>بياناتنا.</h2>
+      <p class="lead">بُني حِصن على قاعدة واحدة: الحماية لا تستلزم المراقبة.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust">
+        <h3>الفحص على جهازك، بالكامل</h3>
+        <p>لا تمر تصفحتك عبر أي خادم لنا. الفلترة تعمل داخل هاتفك مباشرة — حتى في وضع الطيران.</p>
+      </div>
+      <div class="trust">
+        <h3>لا حسابات، لا سجلات</h3>
+        <p>لا نطلب بريدًا ولا اسمًا، ولا نحتفظ بسجل يُذكر. لا نعرف من أنت — ولا نحتاج.</p>
+      </div>
+      <div class="trust">
+        <h3>شفافية قابلة للمراجعة</h3>
+        <p>قوائم الحظر مبنية من مصادر عامة مفتوحة، والكود متاح على <a href="https://github.com/s-a-m-y1/Ban-porn-sites" target="_blank" rel="noopener">GitHub</a> لمن أراد التحقق بنفسه.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL ============ -->
+<div class="final">
+  <div class="wrap">
+    <p class="final-line">جهازك محميّ في أقل من دقيقة.</p>
+    <a class="btn btn-primary btn-lg" href="https://github.com/s-a-m-y1/Ban-porn-sites">حمّل حِصن</a>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-brand on-dark">
+      <svg class="mark" viewBox="0 0 200 200" aria-hidden="true">
+        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z"/>
+        <rect class="slit" x="96" y="60" width="8" height="130"/>
+      </svg>
+      <span class="wordmark">حِصن</span>
+      <span class="brand-latin">HISN</span>
+    </div>
+    <div class="footer-links">
+      <a href="#how">كيف يعمل</a>
+      <a href="#privacy">الخصوصية</a>
+      <a href="mailto:sam858y@gmail.com">تواصل معنا</a>
+      <a href="https://github.com/s-a-m-y1/Ban-porn-sites" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="footer-copy latin">HISN © 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
