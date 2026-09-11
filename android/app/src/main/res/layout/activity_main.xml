@@ -17,6 +17,7 @@
 
         <!-- ============ HEADER ============ -->
         <LinearLayout
+            android:id="@+id/headerCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -44,6 +45,7 @@
 
         <!-- ============ PROTECTION CARD ============ -->
         <LinearLayout
+            android:id="@+id/protectionCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -125,6 +127,7 @@
 
         <!-- ============ STATS CARD ============ -->
         <LinearLayout
+            android:id="@+id/statsCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

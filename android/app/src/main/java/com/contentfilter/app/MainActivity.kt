@@ -90,6 +90,14 @@ class MainActivity : AppCompatActivity() {
 
         // apply scheduled state on open
         ScheduleManager.apply(this)
+
+        // ---- Animations ----
+        UiAnim.pressable(powerButton, findViewById(R.id.emailButton))
+        UiAnim.staggeredEntrance(
+            findViewById(R.id.headerCard),
+            findViewById(R.id.protectionCard),
+            findViewById(R.id.statsCard),
+        )
     }
 
     // ---------- Theme ----------
@@ -588,6 +596,8 @@ class MainActivity : AppCompatActivity() {
         statusDot.setBackgroundResource(
             if (active) R.drawable.status_dot_on else R.drawable.status_dot_off,
         )
+        // breathing halo + pulsing dot when active
+        UiAnim.breathe(powerHalo, active)
         if (active) {
             statusDot.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse))
         } else {
@@ -603,14 +613,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun animateCount(view: TextView, target: Int) {
-        if (target <= 0) {
-            view.text = "0"
-            return
-        }
-        android.animation.ValueAnimator.ofInt(0, target).apply {
-            duration = 800
-            addUpdateListener { view.text = (it.animatedValue as Int).toString() }
-            start()
-        }
+        UiAnim.countUp(view, target)
     }
 }
