@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="6dp"
+            android:text="@string/tab_settings"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="?attr/textPrimary" />
+
+        <!-- APPEARANCE -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout android:id="@+id/langRow" style="@style/SettingsRow">
+                <FrameLayout style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_green">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_lang" />
+                </FrameLayout>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_marginStart="14dp"
+                    android:text="@string/language"
+                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                <TextView android:id="@+id/langValue"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:paddingStart="10dp" android:paddingEnd="6dp"
+                    android:textSize="14sp" android:textColor="@color/green_light"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/themeRow" style="@style/SettingsRow">
+                <FrameLayout style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_purple">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_shield" />
+                </FrameLayout>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_marginStart="14dp"
+                    android:text="@string/dark_mode"
+                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/themeSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- SECURITY -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp"
+            android:layout_marginTop="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/security_title"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="?attr/textPrimary" />
+
+            <LinearLayout android:id="@+id/rowPin" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/pin_lock"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/pin_lock_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/pinSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowAdmin" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/uninstall_protect"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/uninstall_protect_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/adminSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowAutostart" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/autostart_title"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/autostart_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/autostartSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+
+            <LinearLayout android:id="@+id/rowAlwaysOn" style="@style/SettingsRow">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/always_on_title"
+                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/always_on_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/alwaysOnSwitch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

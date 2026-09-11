@@ -91,4 +91,8 @@
     <string name="later">Later</string>
     <string name="heatmap_empty">No activity yet — squares will fill as blocking happens</string>
     <string name="channel_desc">Keeps DNS filtering running silently</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_stats">Stats</string>
+    <string name="tab_features">Features</string>
+    <string name="tab_settings">Settings</string>
 </resources>

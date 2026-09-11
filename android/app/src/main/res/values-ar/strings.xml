@@ -88,4 +88,8 @@
     <string name="later">لاحقاً</string>
     <string name="heatmap_empty">لا يوجد نشاط بعد — ستتملأ المربعات مع الحظر</string>
     <string name="channel_desc">يبقي فلترة DNS تعمل بصمت</string>
+    <string name="tab_home">الرئيسية</string>
+    <string name="tab_stats">الإحصائيات</string>
+    <string name="tab_features">الحماية</string>
+    <string name="tab_settings">الإعدادات</string>
 </resources>
