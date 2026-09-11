@@ -6,7 +6,7 @@
 <title>حِصن — ما لا يليق، لا يدخل</title>
 <meta name="description" content="حِصن: فلترة محتوى محلية تحجب المواقع الضارة عن أجهزتك — من دون مراقبة، ومن دون أن تغادر بياناتك الجهاز.">
 <meta name="theme-color" content="#1C2B39">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z' fill='%231C2B39'/%3E%3Crect x='96' y='60' width='8' height='130' fill='%23F2EFE9'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z' fill='%231C2B39'/%3E%3Crect x='96' y='60' width='8' height='130' fill='%23F2EFE9'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -89,17 +89,30 @@
     gap:72px;align-items:center;
     min-height:calc(100vh - 76px);
   }
+  .hero .hero-word{
+    font-size:clamp(26px,3vw,34px);
+    font-weight:800;color:var(--teal);
+    line-height:1;margin-bottom:18px;
+    opacity:0;transform:translateY(16px);
+    animation:rise-soft .8s cubic-bezier(.22,.61,.36,1) forwards 2.9s;
+  }
   .hero h1{
     font-size:clamp(42px,6.4vw,78px);
+    opacity:0;
+    animation:rise-soft .8s cubic-bezier(.22,.61,.36,1) forwards 3.1s;
     font-weight:800;line-height:1.28;
     color:var(--ink);
     letter-spacing:-.5px;
   }
   .hero .sub{
     margin-top:26px;max-width:34rem;
+    opacity:0;
+    animation:rise-soft .8s ease forwards 3.45s;
     font-size:18.5px;font-weight:500;color:var(--ink-2);
   }
-  .cta-row{display:flex;align-items:center;gap:22px;margin-top:42px;flex-wrap:wrap}
+  .cta-row{display:flex;align-items:center;gap:22px;margin-top:42px;flex-wrap:wrap;
+    opacity:0;
+    animation:rise-soft .8s ease forwards 3.8s;}
   .cta-quiet{
     font-size:15.5px;font-weight:600;color:var(--ink-2);
     border-bottom:1px solid var(--stone);
@@ -110,18 +123,33 @@
 
   .hero-visual{display:flex;justify-content:center}
   .hero-mark{width:100%;max-width:330px}
+  /* opening sequence: trace → fill → slit → wordmark. Plays once. */
   .hero-mark .arch-outline{
-    fill:none;stroke:var(--ink);stroke-width:5;stroke-linejoin:round;
-    stroke-dasharray:900;stroke-dashoffset:900;
-    animation:draw 1.7s ease forwards .25s;
+    fill:none;stroke:var(--ink);stroke-width:6;stroke-linejoin:round;stroke-linecap:round;
+    stroke-dasharray:560;stroke-dashoffset:560;
+    animation:trace 1.6s cubic-bezier(.65,.05,.36,1) forwards .3s;
   }
-  .hero-mark .arch{opacity:0;animation:appear .7s ease forwards 1.35s}
-  .hero-mark .slit{opacity:0;animation:appear .5s ease forwards 1.85s}
-  @keyframes draw{to{stroke-dashoffset:0}}
-  @keyframes appear{to{opacity:1}}
+  .hero-mark .arch{
+    fill:var(--ink);opacity:0;
+    animation:settle-in .6s ease forwards 1.9s;
+  }
+  .hero-mark .slit{
+    fill:var(--parchment);opacity:0;
+    animation:settle-in .5s ease forwards 2.5s;
+  }
+  .hero-latin{
+    opacity:0;
+    animation:settle-in .6s ease forwards 3.5s;
+  }
+  @keyframes trace{to{stroke-dashoffset:0}}
+  @keyframes settle-in{to{opacity:1}}
+  @keyframes rise-soft{to{opacity:1;transform:translateY(0)}}
   @media (prefers-reduced-motion:reduce){
-    .hero-mark .arch-outline{animation:none;stroke-dashoffset:0}
-    .hero-mark .arch,.hero-mark .slit{animation:none;opacity:1}
+    .hero-mark .arch-outline,
+    .hero-mark .arch,
+    .hero-mark .slit,
+    .hero-word,
+    .hero-latin{animation:none;opacity:1;transform:none;stroke-dashoffset:0}
   }
 
   /* ============ SECTIONS ============ */
@@ -225,7 +253,7 @@
   <div class="wrap header-inner">
     <a class="brand" href="#top" aria-label="حِصن — الصفحة الرئيسية">
       <svg class="mark" viewBox="0 0 200 200" aria-hidden="true">
-        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z"/>
+        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z"/>
         <rect class="slit" x="96" y="60" width="8" height="130"/>
       </svg>
       <span class="wordmark">حِصن</span>
@@ -243,6 +271,7 @@
 <div class="hero">
   <div class="wrap hero-grid">
     <div>
+      <div class="hero-word">حِصن</div>
       <h1>ما لا يليق،<br>لا يدخل.</h1>
       <p class="sub">حِصن يفلّر الإنترنت عند بوابة جهازك: فحص محلي لحظي يحجب المحتوى الضار قبل أن يصل إلى الشاشة — من دون مراقبة، ومن دون أن تغادر بياناتك الجهاز.</p>
       <div class="cta-row">
@@ -252,8 +281,8 @@
     </div>
     <div class="hero-visual">
       <svg class="hero-mark" viewBox="0 0 200 200" role="img" aria-label="علامة حِصن: قوس بوابة بفتحة رأسية مغلقة">
-        <path class="arch-outline" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z"/>
-        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z"/>
+        <path class="arch-outline" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z"/>
+        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z"/>
         <rect class="slit" x="96" y="60" width="8" height="130"/>
       </svg>
     </div>
@@ -324,7 +353,7 @@
   <div class="wrap footer-inner">
     <div class="footer-brand on-dark">
       <svg class="mark" viewBox="0 0 200 200" aria-hidden="true">
-        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H130 V95 C130 62 118 45 100 45 C82 45 70 62 70 95 V190 Z"/>
+        <path class="arch" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z"/>
         <rect class="slit" x="96" y="60" width="8" height="130"/>
       </svg>
       <span class="wordmark">حِصن</span>

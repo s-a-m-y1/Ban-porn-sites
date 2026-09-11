@@ -37,7 +37,8 @@ class FeaturesFragment : Fragment() {
     }
 
     private fun setupCategories(view: View) {
-        val enabled = prefs.getStringSet("enabled_cats", setOf(Categories.PORN, Categories.MALWARE))!!
+        val enabled = prefs.getStringSet("enabled_cats", null)?.takeIf { it.isNotEmpty() }
+            ?: setOf(Categories.PORN)
 
         fun bind(switch: SwitchCompat, cat: String) {
             switch.isChecked = cat in enabled
@@ -45,7 +46,7 @@ class FeaturesFragment : Fragment() {
                 lifecycleScope.launch {
                     BlocklistRepository(requireContext()).setCategoryEnabled(cat, checked)
                     val current = prefs.getStringSet(
-                        "enabled_cats", setOf(Categories.PORN, Categories.MALWARE),
+                        "enabled_cats", setOf(Categories.PORN),
                     )!!.toMutableSet()
                     if (checked) current.add(cat) else current.remove(cat)
                     prefs.edit().putStringSet("enabled_cats", current).apply()

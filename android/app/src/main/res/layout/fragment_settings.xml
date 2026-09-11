@@ -46,7 +46,7 @@
                     android:fontFamily="@font/plex_semibold"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:paddingStart="10dp" android:paddingEnd="6dp"
-                    android:textSize="14sp" android:textColor="@color/green_light"
+                    android:textSize="14sp" android:textColor="@color/teal"
                     android:textStyle="bold" />
             </LinearLayout>
             <View android:layout_width="match_parent" android:layout_height="1dp"

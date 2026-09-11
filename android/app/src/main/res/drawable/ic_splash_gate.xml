@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static gate mark (splash visual): solid arch + slit cut-through -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- outline that traces itself -->
+    <path
+        android:name="outline"
+        android:strokeColor="#F2EFE9"
+        android:strokeWidth="6"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M40,190 V95 C40,45 65,15 100,15 C135,15 160,45 160,95 V190 H40 Z" />
+
+    <!-- solid fill (reveals after trace completes) -->
+    <path
+        android:name="fill"
+        android:fillColor="#F2EFE9"
+        android:pathData="M40,190 V95 C40,45 65,15 100,15 C135,15 160,45 160,95 V190 H40 Z"
+        android:alpha="0" />
+
+    <!-- center slit: cut-through, fades in last -->
+    <path
+        android:name="slit"
+        android:fillColor="#1C2B39"
+        android:pathData="M96,190 V60 H104 V190 Z"
+        android:alpha="0" />
+</vector>

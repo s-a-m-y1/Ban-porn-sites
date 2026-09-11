@@ -54,7 +54,7 @@
                         android:text="@string/status_off"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        android:textColor="@color/mint"
+                        android:textColor="@color/stone_light"
                         android:letterSpacing="0.06" />
                 </LinearLayout>
 
@@ -87,7 +87,7 @@
                         android:layout_width="124dp"
                         android:layout_height="124dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_power"
+                        android:src="@drawable/ic_gate"
                         android:background="@drawable/btn_danger"
                         android:scaleType="centerInside"
                         android:padding="36dp"
@@ -127,7 +127,7 @@
                 android:text="@string/hadith_card_title"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                android:textColor="@color/teal_accent"
+                android:textColor="@color/teal"
                 android:letterSpacing="0.06" />
 
             <TextView
@@ -164,7 +164,7 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:src="@drawable/ic_block"
-                    app:tint="@color/red_light"
+                    app:tint="@color/ink"
                     android:contentDescription="@string/blocked_count" />
 
                 <TextView
@@ -198,7 +198,7 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:src="@drawable/ic_shield"
-                    app:tint="@color/green_light"
+                    app:tint="@color/teal"
                     android:contentDescription="@string/blocklist_size" />
 
                 <TextView

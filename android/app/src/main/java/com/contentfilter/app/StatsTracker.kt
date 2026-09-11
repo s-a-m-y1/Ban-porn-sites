@@ -18,9 +18,10 @@ object Categories {
 
     fun enabled(context: Context): List<String> {
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val default = prefs.getStringSet("enabled_cats", null)
-            ?: setOf(PORN, MALWARE) // porn + malware on by default
-        return ALL.filter { it in default }
+        val saved = prefs.getStringSet("enabled_cats", null)
+        // missing OR empty set -> sensible default (porn always guards)
+        val effective = if (saved.isNullOrEmpty()) setOf(PORN) else saved
+        return ALL.filter { it in effective }
     }
 }
 

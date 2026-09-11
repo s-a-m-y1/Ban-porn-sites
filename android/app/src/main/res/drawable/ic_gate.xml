@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static gate mark: solid arch silhouette + vertical slit (cut-through via even-odd) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <path
+        android:name="arch"
+        android:fillColor="#F2EFE9"
+        android:fillType="evenOdd"
+        android:pathData="M40,190 V95 C40,45 65,15 100,15 C135,15 160,45 160,95 V190 H40 Z M96,190 V60 H104 V190 Z" />
+</vector>

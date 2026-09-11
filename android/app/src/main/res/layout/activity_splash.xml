@@ -11,21 +11,37 @@
         android:gravity="center"
         android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/splashIcon"
-            android:layout_width="118dp"
-            android:layout_height="118dp"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="@string/app_name" />
+        <!-- gate mark, layered: outline (traces) -> solid body -> slit -->
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp">
+
+            <ImageView
+                android:id="@+id/splashOutline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/splashSolid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_splash_solid" />
+
+            <ImageView
+                android:id="@+id/splashSlit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_splash_slit" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/splashTitleAr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="26dp"
             android:text="@string/app_name_ar"
-            android:textSize="40sp"
-            android:textStyle="bold"
+            android:textSize="42sp"
             android:textColor="@color/parchment"
             android:fontFamily="@font/cairo_extrabold"
             android:letterSpacing="0.02" />
@@ -34,19 +50,11 @@
             android:id="@+id/splashTitleEn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
             android:text="@string/app_name_latin"
             android:textSize="13sp"
             android:textColor="@color/stone_light"
             android:fontFamily="@font/plex_semibold"
             android:letterSpacing="0.35" />
     </LinearLayout>
-
-    <View
-        android:id="@+id/splashLine"
-        android:layout_width="160dp"
-        android:layout_height="3dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="120dp"
-        android:background="@drawable/splash_line" />
 </FrameLayout>

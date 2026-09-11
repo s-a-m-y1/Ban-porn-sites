@@ -30,22 +30,22 @@ class HeatmapView @JvmOverloads constructor(
 
     // colors: 5 levels (dark theme aware via isDark)
     private val lightColors = intArrayOf(
-        0xFFE8E8E8.toInt(), 0xFF9BE09B.toInt(), 0xFF4CAF50.toInt(),
-        0xFF2E7D32.toInt(), 0xFF1B5E20.toInt(),
+        0xFFDCD3C6.toInt(), 0xFFC8D2CC.toInt(), 0xFF9FB5AF.toInt(),
+        0xFF759791.toInt(), 0xFF4B7A73.toInt(),
     )
     private val darkColors = intArrayOf(
-        0xFF1E2921.toInt(), 0xFF1E5B26.toInt(), 0xFF2E7D32.toInt(),
-        0xFF4CAF50.toInt(), 0xFF8BE39C.toInt(),
+        0xFF26374A.toInt(), 0xFF283F48.toInt(), 0xFF345356.toInt(),
+        0xFF4B7A73.toInt(), 0xFF9FB5AF.toInt(),
     )
     private var dark = false
     private val labelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 20f
-        color = Color.GRAY
+        color = 0xFFA9998A.toInt()
     }
     private val selPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 4f
-        color = 0xFF1565C0.toInt()
+        color = 0xFF4B7A73.toInt()
     }
 
     var selectedDay: String? = null
