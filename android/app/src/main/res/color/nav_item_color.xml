@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Light mode: checked = Guard Teal, unchecked = warm Stone (good on parchment) -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/teal_accent" android:state_checked="true" />
-    <item android:color="@color/text_secondary" />
+    <item android:color="@color/teal" android:state_checked="true" />
+    <item android:color="@color/ink" />
 </selector>

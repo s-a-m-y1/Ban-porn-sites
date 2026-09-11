@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- brighter Guard Teal tint for dark surfaces (stays within brand family) -->
+    <color name="mint">#9FB5AF</color>
+</resources>
