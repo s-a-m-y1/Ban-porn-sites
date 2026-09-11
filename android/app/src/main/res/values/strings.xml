@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Content Filter</string>
+    <string name="app_name">Hisn</string>
     <string name="protection_title">Protection Status</string>
     <string name="status_on">Protection active</string>
     <string name="status_off">Protection disabled</string>

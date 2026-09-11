@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -10,48 +11,193 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:paddingBottom="24dp">
 
-        <!-- HEADER -->
+        <!-- ===== HERO PROTECTION CARD ===== -->
+        <FrameLayout
+            android:id="@+id/heroContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/hero_card"
+                android:paddingTop="30dp"
+                android:paddingBottom="34dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/chip_teal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp">
+
+                    <View
+                        android:id="@+id/statusDot"
+                        android:layout_width="9dp"
+                        android:layout_height="9dp"
+                        android:background="@drawable/status_dot_off"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/statusText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status_off"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/mint"
+                        android:letterSpacing="0.06" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/statusSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/status_off_subtitle"
+                    android:textSize="13sp"
+                    android:textColor="#B8D8C4"
+                    android:gravity="center"
+                    android:paddingHorizontal="32dp" />
+
+                <!-- Layered power button -->
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp">
+
+                    <View
+                        android:id="@+id/powerHalo"
+                        android:layout_width="168dp"
+                        android:layout_height="168dp"
+                        android:background="@drawable/power_bg_off"
+                        android:layout_gravity="center" />
+
+                    <ImageButton
+                        android:id="@+id/powerButton"
+                        android:layout_width="124dp"
+                        android:layout_height="124dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_power"
+                        android:background="@drawable/btn_danger"
+                        android:scaleType="centerInside"
+                        android:padding="36dp"
+                        android:elevation="8dp"
+                        android:contentDescription="@string/start_blocking" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/powerLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="@string/start_blocking"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#9EC9AE"
+                    android:letterSpacing="0.18" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- ===== QUICK STATS (chips row) ===== -->
         <LinearLayout
-            android:id="@+id/headerCard"
+            android:id="@+id/quickStatsRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="18dp"
-            android:paddingBottom="6dp">
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
 
-            <ImageView
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:src="@drawable/ic_shield"
-                app:tint="@color/green_primary"
-                android:contentDescription="@string/app_name" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                android:text="@string/app_name"
-                android:textSize="21sp"
-                android:textStyle="bold"
-                android:textColor="?attr/textPrimary" />
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/card_bg"
+                android:padding="16dp"
+                android:layout_marginEnd="6dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_block"
+                    app:tint="@color/red_light"
+                    android:contentDescription="@string/blocked_count" />
+
+                <TextView
+                    android:id="@+id/blockedCountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    tools:text="0"
+                    style="@style/StatValue"
+                    android:textColor="?attr/textPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/blocked_count"
+                    style="@style/StatLabel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/card_bg"
+                android:padding="16dp"
+                android:layout_marginStart="6dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_shield"
+                    app:tint="@color/green_light"
+                    android:contentDescription="@string/blocklist_size" />
+
+                <TextView
+                    android:id="@+id/statsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    tools:text="0"
+                    style="@style/StatValue"
+                    android:textColor="?attr/textPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/blocklist_size"
+                    style="@style/StatLabel" />
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- PROTECTION CARD -->
+        <!-- ===== CONTACT ===== -->
         <LinearLayout
-            android:id="@+id/protectionCard"
+            android:id="@+id/contactCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
             android:background="@drawable/card_bg"
-            android:padding="24dp"
-            android:layout_marginTop="12dp">
+            android:padding="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -59,161 +205,8 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <View
-                    android:id="@+id/statusDot"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:background="@drawable/status_dot_off" />
-
-                <TextView
-                    android:id="@+id/statusText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/status_off"
-                    android:textSize="19sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/textPrimary" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/statusSubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/status_off_subtitle"
-                android:textSize="13sp"
-                android:textColor="?attr/textSecondary"
-                android:gravity="center"
-                android:paddingHorizontal="8dp" />
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp">
-
-                <View
-                    android:id="@+id/powerHalo"
-                    android:layout_width="152dp"
-                    android:layout_height="152dp"
-                    android:background="@drawable/power_bg_off"
-                    android:layout_gravity="center" />
-
-                <ImageButton
-                    android:id="@+id/powerButton"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_power"
-                    android:background="@drawable/btn_danger"
-                    android:scaleType="centerInside"
-                    android:padding="34dp"
-                    android:contentDescription="@string/start_blocking" />
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/powerLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:text="@string/start_blocking"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="?attr/textSecondary"
-                android:letterSpacing="0.12" />
-        </LinearLayout>
-
-        <!-- QUICK STATS CARD -->
-        <LinearLayout
-            android:id="@+id/statsCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/card_bg"
-            android:padding="18dp"
-            android:layout_marginTop="14dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/blockedCountText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="0"
-                        style="@style/StatValue"
-                        android:textColor="@color/red_light"
-                        xmlns:tools="http://schemas.android.com/tools" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="@string/blocked_count"
-                        style="@style/StatLabel"
-                        android:textColor="?attr/textSecondary" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="44dp"
-                    android:background="?attr/dividerColor" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/statsText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="0"
-                        style="@style/StatValue"
-                        android:textColor="@color/green_light"
-                        xmlns:tools="http://schemas.android.com/tools" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="@string/blocklist_size"
-                        style="@style/StatLabel"
-                        android:textColor="?attr/textSecondary" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- CONTACT CARD -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/card_bg"
-            android:padding="18dp"
-            android:layout_marginTop="14dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="10dp">
-
                 <FrameLayout style="@style/IconCircle"
-                    android:background="@drawable/icon_circle_green"
-                    xmlns:android="http://schemas.android.com/apk/res/android">
+                    android:background="@drawable/icon_circle_green">
                     <ImageView android:layout_width="20dp" android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_mail" />
@@ -222,19 +215,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:text="@string/contact_title"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="?attr/textPrimary" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/contact_subtitle"
-                android:textSize="13sp"
-                android:textColor="?attr/textSecondary" />
 
             <Button
                 android:id="@+id/emailButton"
@@ -246,6 +232,7 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textAllCaps="false"
+                android:stateListAnimator="@null"
                 android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="10dp"
                 android:paddingStart="24dp"

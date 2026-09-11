@@ -1,48 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="cardBg" format="color" />
+    <attr name="cardBgElevated" format="color" />
     <attr name="textPrimary" format="color" />
     <attr name="textSecondary" format="color" />
     <attr name="dividerColor" format="color" />
+    <attr name="strokeColor" format="color" />
+    <attr name="accentColor" format="color" />
 
     <style name="Theme.ContentFilter" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/green_primary</item>
-        <item name="colorPrimaryDark">@color/green_dark</item>
-        <item name="colorAccent">@color/green_light</item>
+        <item name="colorPrimaryDark">@color/bg_light</item>
+        <item name="colorAccent">@color/teal_accent</item>
         <item name="android:windowBackground">@color/bg_light</item>
         <item name="android:statusBarColor">@color/bg_light</item>
+        <item name="android:navigationBarColor">@color/bg_light_surface</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="cardBg">@color/card_light</item>
+        <item name="cardBg">@color/bg_light_surface</item>
+        <item name="cardBgElevated">@color/bg_light_elevated</item>
         <item name="textPrimary">@color/text_primary</item>
         <item name="textSecondary">@color/text_secondary</item>
         <item name="dividerColor">@color/divider</item>
+        <item name="strokeColor">@color/stroke_light</item>
+        <item name="accentColor">@color/teal_accent</item>
+    </style>
+
+    <!-- Type -->
+    <style name="Display">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/textPrimary</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="SectionHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.10</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/green_light</item>
     </style>
 
     <style name="StatValue">
-        <item name="android:textSize">26sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="StatLabel">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">?attr/textSecondary</item>
+        <item name="android:letterSpacing">0.04</item>
     </style>
 
+    <!-- Components -->
     <style name="SettingsRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">18dp</item>
         <item name="android:paddingEnd">18dp</item>
-        <item name="android:paddingTop">14dp</item>
-        <item name="android:paddingBottom">14dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
         <item name="android:gravity">center_vertical</item>
-    </style>    <style name="SettingsLabel">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="SettingsLabel">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:textColor">?attr/textPrimary</item>
+    </style>
+
+    <style name="SettingsSublabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/textSecondary</item>
     </style>
 
     <style name="IconCircle">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">42dp</item>
+        <item name="android:layout_height">42dp</item>
+    </style>
+
+    <style name="NavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#1A00BFA5</item>
+    </style>
+
+    <style name="Chip">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

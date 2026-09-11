@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
@@ -76,11 +78,13 @@ class HomeFragment : Fragment() {
         setUiState(vpnActive, animated = false)
 
         UiAnim.pressable(powerButton, view.findViewById(R.id.emailButton))
-        UiAnim.staggeredEntrance(
-            view.findViewById(R.id.headerCard),
-            view.findViewById(R.id.protectionCard),
-            view.findViewById(R.id.statsCard),
-        )
+        // hero + quick stats + contact cards entrance
+        val hero = view.findViewById<FrameLayout>(R.id.heroContainer)
+        val quickStats = view.findViewById<LinearLayout>(R.id.quickStatsRow)
+        val contact = view.findViewById<LinearLayout>(R.id.contactCard)
+        if (hero != null && quickStats != null && contact != null) {
+            UiAnim.staggeredEntrance(hero, quickStats, contact)
+        }
 
         lifecycleScope.launch {
             val repo = BlocklistRepository(requireContext())

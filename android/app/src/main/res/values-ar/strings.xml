@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">حصن</string>
     <string name="protection_title">حالة الحماية</string>
     <string name="status_on">الحماية تعمل</string>
     <string name="status_off">الحماية متوقفة</string>
