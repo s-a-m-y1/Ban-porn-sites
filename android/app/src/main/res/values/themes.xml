@@ -12,6 +12,8 @@
         <item name="colorPrimary">@color/green_primary</item>
         <item name="colorPrimaryDark">@color/bg_light</item>
         <item name="colorAccent">@color/teal_accent</item>
+        <item name="colorSurface">@color/bg_light_surface</item>
+        <item name="android:colorBackground">@color/bg_light</item>
         <item name="android:windowBackground">@color/bg_light</item>
         <item name="android:statusBarColor">@color/bg_light</item>
         <item name="android:navigationBarColor">@color/bg_light_surface</item>

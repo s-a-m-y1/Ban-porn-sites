@@ -108,6 +108,38 @@
             </LinearLayout>
         </FrameLayout>
 
+        <!-- ===== HADITH CARD (rotates on every open) ===== -->
+        <LinearLayout
+            android:id="@+id/hadithCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_outlined"
+            android:padding="18dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:id="@+id/hadithTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hadith_card_title"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@color/teal_accent"
+                android:letterSpacing="0.06" />
+
+            <TextView
+                android:id="@+id/hadithText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:lineSpacingMultiplier="1.35"
+                android:textColor="?attr/textPrimary" />
+        </LinearLayout>
+
         <!-- ===== QUICK STATS (chips row) ===== -->
         <LinearLayout
             android:id="@+id/quickStatsRow"

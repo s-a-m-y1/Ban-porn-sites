@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_bg">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/splashIcon"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:src="@mipmap/ic_launcher"
+            android:elevation="12dp"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/splashTitleAr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="حصن"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            android:textColor="@color/mint"
+            android:letterSpacing="0.05" />
+
+        <TextView
+            android:id="@+id/splashTitleEn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Hisn — Protection, rooted in faith"
+            android:textSize="14sp"
+            android:textColor="#9EC9AE"
+            android:letterSpacing="0.08" />
+    </LinearLayout>
+
+    <!-- bottom glow line -->
+    <View
+        android:id="@+id/splashLine"
+        android:layout_width="160dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/splash_line" />
+</FrameLayout>

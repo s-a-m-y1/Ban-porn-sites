@@ -86,6 +86,17 @@ class HomeFragment : Fragment() {
             UiAnim.staggeredEntrance(hero, quickStats, contact)
         }
 
+        // rotating hadith card — new one every open
+        val hadithText = view.findViewById<TextView>(R.id.hadithText)
+        val hadithCard = view.findViewById<LinearLayout>(R.id.hadithCard)
+        val isAr = (prefs.getString("lang", "en") == "ar")
+        val res = resources
+        val pool = res.getStringArray(if (isAr) R.array.hadiths_ar else R.array.hadiths_en)
+        val idx = System.currentTimeMillis().toInt().mod(pool.size)
+        hadithText.text = pool[idx]
+        hadithCard.alpha = 0f
+        hadithCard.animate().alpha(1f).setDuration(600).setStartDelay(500).start()
+
         lifecycleScope.launch {
             val repo = BlocklistRepository(requireContext())
             repo.ensureInitialBlocklist()

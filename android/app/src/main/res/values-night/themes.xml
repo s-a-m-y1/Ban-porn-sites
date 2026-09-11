@@ -4,6 +4,8 @@
         <item name="colorPrimary">@color/mint</item>
         <item name="colorPrimaryDark">@color/bg_dark</item>
         <item name="colorAccent">@color/teal_accent</item>
+        <item name="colorSurface">@color/bg_dark_surface</item>
+        <item name="android:colorBackground">@color/bg_dark</item>
         <item name="android:windowBackground">@color/bg_dark</item>
         <item name="android:statusBarColor">@color/bg_dark</item>
         <item name="android:navigationBarColor">@color/bg_dark_surface</item>
@@ -15,5 +17,9 @@
         <item name="dividerColor">@color/divider_dark</item>
         <item name="strokeColor">@color/stroke_dark</item>
         <item name="accentColor">@color/mint</item>
+    </style>
+
+    <style name="NavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#1A00BFA5</item>
     </style>
 </resources>

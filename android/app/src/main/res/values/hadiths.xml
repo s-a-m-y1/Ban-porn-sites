@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="hadiths_ar">
+        <item>قال ﷺ: «من ضارّ مسلماً فقد ضارّ الله»… واحفظ قلبك: «الطُّهْرُ عَشَرَةُ أَجْزاءٍ، فأطهَرُها الحياء»</item>
+        <item>قال ﷺ: «إنَّ اللهَ كتبَ الإحسانَ على كلِّ شيءٍ» — فأحسِن إلى نفسك، وباعِدْها عمّا يضرُّها</item>
+        <item>قال ﷺ: «مَن تركَ شيئاً للهِ، عوَّضَه اللهُ خيراً منه» — كلُّ نظرةٍ تدَعْها لله، بِقَدرٍ خيرٌ منها</item>
+        <item>قال ﷺ: «العينُ حقٌّ، والطَّاعةُ سلاحُ المؤمنِ في مواجهةِ ما يُسخطُ الله»</item>
+        <item>قال ﷺ: «مَن صَمَتَ نَجَا» — اسكُت عمَّا لا يَرضي الله، تَسْلَمْ دنياك وآخرتُك</item>
+        <item>قال ﷺ: «مَن سَلَكَ طَريقاً يَلتمِسُ فيهِ عِلماً، سهَّلَ اللهُ لهُ طَريقاً إلى الجنة»</item>
+        <item>قال ﷺ: «التَّائبُ مِنَ الذَّنبِ كَمَن لا ذَنبَ له» — لا تُقنِّطْ نفسَك مِن رَحمةِ الله</item>
+        <item>قال ﷺ: «مَن حَفِظَ ما بَيْنَ فَكَّيهِ ورِجْلَيهِ، دَخَلَ الجنة»</item>
+        <item>قال ﷺ: «الدُّعاءُ سِلاحُ المؤمنِ وَعِمادُ الدِّينِ — فَأكثِرْ مِنهُ في السَّراءِ والضَّراء»</item>
+        <item>قال ﷺ: «احفَظِ اللهَ يَحفَظْك» — كُنْ معَهُ يَكُنْ مَعَك</item>
+    </string-array>
+
+    <string-array name="hadiths_en">
+        <item>The Prophet ﷺ said: "Modesty is a branch of faith." — Guard your heart and your gaze.</item>
+        <item>The Prophet ﷺ said: "Allah has prescribed excellence in all things." — Be excellent to your soul; keep it from what harms it.</item>
+        <item>The Prophet ﷺ said: "Whoever leaves something for Allah\'s sake, Allah will replace it with something better."</item>
+        <item>The Prophet ﷺ said: "Whoever remains silent is saved." — Silence over what angers Allah saves both worlds.</item>
+        <item>The Prophet ﷺ said: "Whoever treads a path seeking knowledge, Allah will ease for him a path to Paradise."</item>
+        <item>The Prophet ﷺ said: "The one who repents from sin is like the one who never sinned."</item>
+        <item>The Prophet ﷺ said: "Whoever guards what is between his jaws and his legs will enter Paradise."</item>
+        <item>The Prophet ﷺ said: "Supplication is the weapon of the believer." — Call upon Him often.</item>
+        <item>The Prophet ﷺ said: "Protect (the commandments of) Allah, and He will protect you."</item>
+        <item>The Prophet ﷺ said: "The strong believer is better than the weak one" — and true strength is mastering oneself.</item>
+    </string-array>
+
+    <string name="hadith_card_title">خُطوة إلى النور · A step toward light</string>
+</resources>

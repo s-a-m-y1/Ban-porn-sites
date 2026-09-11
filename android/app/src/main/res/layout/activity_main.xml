@@ -21,4 +21,5 @@
         app:itemIconTint="@color/nav_item_color"
         app:itemTextColor="@color/nav_item_color"
         app:itemActiveIndicatorStyle="@style/NavIndicator" />
+
 </LinearLayout>
