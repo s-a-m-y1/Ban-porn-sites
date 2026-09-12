@@ -8,4 +8,6 @@
         android:title="@string/tab_features" />
     <item android:id="@+id/navSettings" android:icon="@drawable/ic_tab_settings"
         android:title="@string/tab_settings" />
+    <item android:id="@+id/navControl" android:icon="@drawable/ic_tab_home"
+        android:title="@string/tab_control" />
 </menu>

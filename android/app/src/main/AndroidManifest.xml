@@ -28,7 +28,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <service
             android:name=".FilterVpnService"
@@ -50,6 +50,15 @@
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="app_lock_monitor" />
+        </service>
+
+        <service
+            android:name=".ControlService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="android_control_bridge" />
         </service>
 
         <service

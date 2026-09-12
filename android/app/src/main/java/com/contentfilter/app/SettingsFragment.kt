@@ -119,7 +119,8 @@ class SettingsFragment : Fragment() {
                     .setPositiveButton(R.string.pin_confirm) { _, _ ->
                         val pin = input.text.toString()
                         if (pin.length >= 4) {
-                            prefs.edit().putString("pin", pin).putBoolean("pin_enabled", true).apply()
+                            PinManager.savePin(requireContext(), pin)
+                            prefs.edit().putBoolean("pin_enabled", true).apply()
                         } else {
                             pinSwitch.isChecked = false
                             Toast.makeText(

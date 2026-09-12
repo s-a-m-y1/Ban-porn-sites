@@ -12,3 +12,21 @@ coverage/
 .cxx/
 *.apk
 *.aab
+
+# Android Control
+/build/
+/desktop/build/
+*.o
+*.so
+*.a
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+cmake_install.cmake
+Makefile
+/test_results.xml
+.DS_Store
+.vscode/
+*.user
+/sysroot/
+/tmp/

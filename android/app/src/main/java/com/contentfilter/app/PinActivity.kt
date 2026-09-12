@@ -43,9 +43,9 @@ class PinActivity : AppCompatActivity() {
 
     private fun verify() {
         val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val pin = prefs.getString("pin", "1234")!!
         val entered = findViewById<EditText>(R.id.pinInput).text.toString()
-        if (entered == pin) {
+        val ok = PinManager.isPinSet(this) && PinManager.verify(this, entered)
+        if (ok) {
             prefs.edit().putBoolean("pin_verified", true).apply()
             setResult(RESULT_OK)
             finish()
