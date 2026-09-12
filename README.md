@@ -84,7 +84,70 @@ See [docs/architecture/README.md](docs/architecture/README.md) for details, [doc
 - **Ubuntu:** 24.04+ (tested on 26.04), x86_64, CMake 3.16+, Qt6 base, g++15, pkg-config, spdlog, fmt, gtest, android-sdk-platform-tools, scrcpy, ffmpeg optional
 - **Android:** 7.0+ (API 24), USB Debugging enabled
 
-## Installation
+## Download for Phone (Universal — Any Android Phone)
+
+**Works for ANY phone: Android 7.0+ (API 24), any manufacturer (Realme, Samsung, Xiaomi, Pixel, etc.) — minSdk 24 covers 99%+ devices.**
+
+### Option 1: Direct on Phone (easiest)
+Open on your phone's browser:
+```
+https://github.com/s-a-m-y1/android-control/releases/download/v0.1.0/app-debug.apk
+```
+Or local Docker: `http://localhost:8080/app-debug.apk` (when `apk-server` running). Tap to install (allow unknown apps if asked).
+
+### Option 2: USB via ADB (any phone)
+```bash
+./scripts/install-phone.sh              # auto-detects any connected phone
+./scripts/install-phone.sh 0I74325I271005CA  # specific serial
+# or manually:
+adb devices -l                          # should show "device" not "unauthorized"
+adb install android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+### Option 3: Docker ADB (any phone without host ADB)
+```bash
+docker run --rm --privileged -v /dev/bus/usb:/dev/bus/usb -v $PWD:/apk instrumentisto/adb adb devices -l
+docker run --rm --privileged -v /dev/bus/usb:/dev/bus/usb -v $PWD:/apk instrumentisto/adb adb install /apk/android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+**APK:** `8.7M` `app-debug.apk` universal, no extra permissions beyond core. After install: open app → **Control** tab → **Start Service**.
+
+## Docker Deployment (Universal — No Local Build Needed)
+
+**Any phone + any Ubuntu host: one command.**
+
+### Quick Start (universal)
+```bash
+./scripts/docker-install.sh
+# Builds android-control:0.1.0 image (Qt6 + scrcpy + ADB), starts APK server at http://localhost:8080/app-debug.apk, installs to any connected phone if present
+```
+
+### Docker Compose
+```bash
+# Full stack (backend + desktop headless)
+docker compose -f docker-compose.yml -f docker-compose.android-control.yml up -d
+
+# Desktop GUI only (X11 forwarding, any phone via USB)
+xhost +local:docker
+docker compose -f docker-compose.android-control.yml run --rm --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /dev/bus/usb:/dev/bus/usb android-control-desktop
+# or
+docker run --rm -it --privileged -v /dev/bus/usb:/dev/bus/usb -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $HOME/.config/android-control:/root/.config/android-control android-control:0.1.0
+
+# APK download server for any phone
+docker compose -f docker-compose.android-control.yml up -d apk-server
+# → http://localhost:8080/app-debug.apk (open on phone same WiFi)
+
+# Manual Docker build
+docker build -t android-control:0.1.0 .
+docker run --rm --privileged -v /dev/bus/usb:/dev/bus/usb android-control:0.1.0 adb devices -l
+```
+
+### Dockerfile & Compose
+- `Dockerfile` — Ubuntu 24.04 base, Qt6, scrcpy, ADB, builds `desktop` → `/build/android-control`
+- `docker-compose.android-control.yml` — services `android-control-desktop` (GUI), `apk-server` (Python HTTP), `adb-bridge`
+- Host X11: `-e DISPLAY -v /tmp/.X11-unix` ; USB: `--privileged -v /dev/bus/usb:/dev/bus/usb`
+
+## Installation (Host without Docker)
 
 ### Automated
 ```bash
@@ -107,15 +170,10 @@ sudo cp desktop/resources/icons/android-control.svg /usr/share/icons/hicolor/sca
 sudo update-desktop-database
 ```
 
-### Android Setup
+### Android Setup (any phone)
 1. **Phone:** Settings → About phone → tap Build number 7× → Developer options → enable **USB Debugging**
 2. **USB:** Connect phone via USB, on phone tap **Allow** at "Allow USB debugging?" (never bypass this)
-3. **Install APK:**
-   ```bash
-   adb devices -l                # should show "device" not "unauthorized"
-   adb install android/app/build/outputs/apk/debug/app-debug.apk
-   # or via Android Studio: open android/, run
-   ```
+3. **Install APK:** see Download section above (works for any phone)
 4. Open app → **Control** tab → **Start Service** (grants `POST_NOTIFICATIONS` on Android 13+ if needed)
 
 ### Build Scripts
