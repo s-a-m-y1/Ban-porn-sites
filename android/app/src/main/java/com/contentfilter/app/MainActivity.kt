@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.navStats -> switchTo(StatsFragment(), item.itemId)
                 R.id.navFeatures -> switchTo(FeaturesFragment(), item.itemId)
                 R.id.navSettings -> switchTo(SettingsFragment(), item.itemId)
-                R.id.navControl -> switchTo(ControlFragment(), item.itemId)
             }
             true
         }
