@@ -36,13 +36,12 @@ Modern Android screen mirroring and control for Ubuntu — connect your phone vi
 
 | Device Info | Recording | File Transfer |
 |-------------|-----------|---------------|
-| ![Device Info](docs/screenshots/desktop-device-info.png) | ![Recording](docs/screenshots/desktop-recording.png) | ![File Transfer](docs/screenshots/desktop-file-transfer.png) |
+| ![Device Info](docs/screenshots/desktop-device-info.png) |
 
 ### Android (Realme RMX3760, Android 15 — real device)
 
 | Home | Connected | Settings / Control Status |
 |------|-----------|---------------------------|
-| ![Android Home](docs/screenshots/android-home.png) | ![Android Connected](docs/screenshots/android-connected.png) | ![Android Settings](docs/screenshots/android-settings.png) |
 
 > All screenshots are actual captures of the implemented application (desktop via Qt offscreen render, Android via `adb exec-out screencap -p` on real hardware).
 
