@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -21,8 +20,9 @@ import kotlinx.coroutines.launch
  * PIN gate: shown before stopping protection or changing security settings.
  * There is no default PIN — nothing verifies until a PIN is set in Settings.
  *
- * UX: a hidden field captures keystrokes, animated dots render them, the dots
- * shake on a wrong PIN, glow teal on success, and auto-submit at 6 digits.
+ * UX: an on-screen keypad writes into a hidden capture field, designed dots
+ * render the states (empty stroke, filled accent, error clay, success teal),
+ * the row shakes on a wrong PIN, and the PIN auto-submits at 6 digits.
  */
 class PinActivity : BaseActivity() {
 
@@ -41,6 +41,7 @@ class PinActivity : BaseActivity() {
     private var attempts = 0
     private lateinit var input: EditText
     private lateinit var dots: List<View>
+    private lateinit var errorRow: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,47 +55,65 @@ class PinActivity : BaseActivity() {
             findViewById(R.id.dot3), findViewById(R.id.dot4),
             findViewById(R.id.dot5), findViewById(R.id.dot6),
         )
+        errorRow = findViewById(R.id.pinErrorRow)
 
-        // capture field sits transparently over the dots — tapping anywhere
-        // in that area focuses it; the keypad follows the focus
+        // capture field: a 1dp sink the on-screen keypad writes into — the
+        // TextWatcher renders the dots and auto-verifies at 6 digits
         input = findViewById(R.id.pinInput)
-        input.setOnClickListener { showKeypad() }
-        input.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) showKeypad() }
-
-        // raise the keypad right away so the user can start typing immediately.
-        // Some IMEs ignore a request made before the window is fully shown,
-        // so retry on window focus and once more shortly after.
-        input.post { showKeypad() }
-        input.postDelayed({ if (!isFinishing) showKeypad() }, 400)
-        window.setSoftInputMode(
-            android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE,
-        )
-
         input.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
             override fun onTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
             override fun afterTextChanged(s: Editable?) {
+                // retyping dismisses the stale wrong-PIN error (presentation
+                // only — the failure branch re-shows it after this pass)
+                errorRow.visibility = View.GONE
                 renderDots(s?.length ?: 0)
                 // 6 digits is always a complete PIN — submit without a tap
                 if ((s?.length ?: 0) == MAX_PIN_LENGTH) verify()
             }
         })
-        input.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) verify()
-            false
-        }
+
+        bindKeypad()
         findViewById<View>(R.id.pinConfirm).setOnClickListener { verify() }
     }
 
-    private fun showKeypad() {
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
-        imm.showSoftInput(input, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
+    /** On-screen keypad: digits append to the capture field, backspace removes. */
+    private fun bindKeypad() {
+        val digitKeys = mapOf(
+            R.id.key1 to '1', R.id.key2 to '2', R.id.key3 to '3',
+            R.id.key4 to '4', R.id.key5 to '5', R.id.key6 to '6',
+            R.id.key7 to '7', R.id.key8 to '8', R.id.key9 to '9',
+            R.id.key0 to '0',
+        )
+        val keyViews = mutableListOf<View>()
+        digitKeys.forEach { (id, digit) ->
+            val key = findViewById<View>(id)
+            key.setOnClickListener {
+                appendDigit(digit)
+                haptic()
+            }
+            keyViews.add(key)
+        }
+        val backspace = findViewById<View>(R.id.keyBackspace)
+        backspace.setOnClickListener {
+            deleteDigit()
+            haptic()
+        }
+        keyViews.add(backspace)
+        keyViews.add(findViewById(R.id.pinConfirm))
+        UiAnim.pressable(*keyViews.toTypedArray())
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        // IMEs reliably honor the request once we truly have window focus
-        if (hasFocus) input.post { showKeypad() }
+    private fun appendDigit(digit: Char) {
+        val current = input.text.toString()
+        if (current.length >= MAX_PIN_LENGTH) return
+        input.setText(current + digit)
+    }
+
+    private fun deleteDigit() {
+        val current = input.text.toString()
+        if (current.isEmpty()) return
+        input.setText(current.dropLast(1))
     }
 
     private fun renderDots(length: Int) {
@@ -108,8 +127,8 @@ class PinActivity : BaseActivity() {
             }
             dot.setBackgroundResource(
                 when {
-                    i < length -> R.drawable.pin_dot_filled
-                    else -> R.drawable.pin_dot_empty
+                    i < length -> R.drawable.f6_pin_dot_filled
+                    else -> R.drawable.f6_pin_dot_empty
                 },
             )
             if (i == length) {
@@ -128,7 +147,7 @@ class PinActivity : BaseActivity() {
         if (ok) {
             prefs.edit().putBoolean("pin_verified", true).apply()
             // teal flash, then hand the result back
-            dots.forEach { it.setBackgroundResource(R.drawable.pin_dot_success) }
+            dots.forEach { it.setBackgroundResource(R.drawable.f6_pin_dot_success) }
             haptic()
             CoroutineScope(Dispatchers.Main).launch {
                 delay(180)
@@ -137,11 +156,14 @@ class PinActivity : BaseActivity() {
             }
         } else {
             attempts++
-            findViewById<TextView>(R.id.pinError).visibility = View.VISIBLE
-            dots.forEach { it.setBackgroundResource(R.drawable.pin_dot_error) }
+            // clear first so the watcher's re-render doesn't overwrite the
+            // clay state — the row then shakes in error color (UI-only
+            // reorder; attempts / kick-home logic unchanged)
+            input.setText("")
+            errorRow.visibility = View.VISIBLE
+            dots.forEach { it.setBackgroundResource(R.drawable.f6_pin_dot_error) }
             shakeDots()
             haptic()
-            input.setText("")
             if (attempts >= 5) {
                 // too many wrong attempts: kick to home
                 val home = Intent(Intent.ACTION_MAIN).apply {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- F6 · keypad key: elevated surface card with the 14dp corner family used
+     by btn_primary, a 1dp theme stroke for definition, and a translucent
+     teal ripple that stays visible on both light and dark surfaces. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#338FC4B6">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/cardBgElevated" />
+            <corners android:radius="14dp" />
+            <stroke android:width="1dp" android:color="?attr/strokeColor" />
+        </shape>
+    </item>
+</ripple>

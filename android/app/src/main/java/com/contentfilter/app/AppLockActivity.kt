@@ -2,6 +2,7 @@ package com.contentfilter.app
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 
@@ -31,7 +32,8 @@ class AppLockActivity : BaseActivity() {
             findViewById<TextView>(R.id.lockedAppName).text = appLabel
         }
 
-        findViewById<Button>(R.id.backHomeButton).setOnClickListener {
+        val backHome = findViewById<Button>(R.id.backHomeButton)
+        backHome.setOnClickListener {
             val home = Intent(Intent.ACTION_MAIN).apply {
                 addCategory(Intent.CATEGORY_HOME)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -39,6 +41,17 @@ class AppLockActivity : BaseActivity() {
             startActivity(home)
             finish()
         }
+
+        // calm staged entrance: icon → reminder → rule → context → action
+        UiAnim.staggeredEntrance(
+            findViewById<View>(R.id.lockIcon),
+            findViewById<View>(R.id.lockHero),
+            findViewById<View>(R.id.lockRule),
+            findViewById<View>(R.id.lockedAppName),
+            findViewById<View>(R.id.blockedMessage),
+            backHome,
+        )
+        UiAnim.pressable(backHome)
     }
 
     @Deprecated("Deprecated in Java")

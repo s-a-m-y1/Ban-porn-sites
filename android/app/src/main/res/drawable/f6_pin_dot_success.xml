@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- F6 · PIN dots · success state: teal. @color/teal is overridden in
+     values-night, keeping the confirmed flash brand-true around the clock. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/teal" />
+    <size android:width="16dp" android:height="16dp" />
+</shape>

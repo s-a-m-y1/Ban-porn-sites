@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- F6 · PIN dots · error state: clay. @color/clay is overridden in
+     values-night to a softer terracotta, so the wrong-PIN flash stays
+     calm in both themes. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/clay" />
+    <size android:width="16dp" android:height="16dp" />
+</shape>

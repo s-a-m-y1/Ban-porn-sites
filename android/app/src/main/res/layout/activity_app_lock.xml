@@ -1,44 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Full-screen cover over a blocked app: the reminder IS the screen. -->
+<!-- F6 · app-lock cover: a lockout moment that stays calm.
+     The gate rests on an elevated disc with a whisper-thin brass ring, the
+     reminder carries the weight, and one quiet primary action leads home.
+     Ink-dark by design in both themes. Flow in AppLockActivity unchanged. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/bg_dark"
-    android:padding="40dp">
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
 
-    <ImageView
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:src="@drawable/ic_gate"
-        android:contentDescription="@string/app_name_ar"
-        android:alpha="0.55" />
+    <!-- icon seat: 112dp dark elevated disc, 1dp brass_12 ring -->
+    <FrameLayout
+        android:id="@+id/lockIcon"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:background="@drawable/f6_icon_circle_lock">
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_gate"
+            android:contentDescription="@string/app_name_ar"
+            android:alpha="0.9" />
+    </FrameLayout>
 
     <TextView
+        android:id="@+id/lockHero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="24dp"
         android:text="@string/attqi_allah"
         android:textSize="52sp"
         android:textColor="@color/parchment"
         android:fontFamily="@font/amiri"
-        android:lineSpacingMultiplier="1.2" />
+        android:lineSpacingMultiplier="1.6" />
 
-    <!-- thin stone rule under the phrase -->
+    <!-- thin brass rule under the phrase -->
     <View
+        android:id="@+id/lockRule"
         android:layout_width="72dp"
         android:layout_height="1dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="16dp"
         android:background="@color/brass" />
 
     <TextView
         android:id="@+id/lockedAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="24dp"
         android:textSize="15sp"
         android:textColor="@color/text_secondary_dark"
+        android:textDirection="ltr"
         android:maxWidth="320dp"
         android:gravity="center" />
 
@@ -52,16 +70,16 @@
         android:lineSpacingMultiplier="1.5"
         android:gravity="center"
         android:maxWidth="320dp"
-        android:textColor="@color/stone" />
+        android:textColor="@color/stone_light" />
 
     <Button
         android:id="@+id/backHomeButton"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="40dp"
-        android:maxWidth="320dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="48dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/back_home"
+        android:textAllCaps="false"
         android:background="@drawable/btn_primary"
         android:textColor="?attr/onAccent"
         android:textStyle="bold" />
