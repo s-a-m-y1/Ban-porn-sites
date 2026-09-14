@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- F4: SwitchCompat track — pill that turns brand teal when checked.
+     Theme attrs resolve per light/night (precedent: card_bg.xml uses ?attr/cardBg). -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <size android:width="48dp" android:height="24dp" />
+            <corners android:radius="12dp" />
+            <solid android:color="?attr/accentColor" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <size android:width="48dp" android:height="24dp" />
+            <corners android:radius="12dp" />
+            <solid android:color="?attr/strokeColor" />
+        </shape>
+    </item>
+</selector>

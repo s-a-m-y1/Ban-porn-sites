@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- F4: Settings — three labeled sections (App / Protection / Network) over
+     card surfaces. Section titles use SectionHeaderAr (Arabic-correct
+     typography: no caps, no letter-spacing) and sit above their cards.
+     Dividers are inset to the label column: 18 row pad + 42 icon + 14 gap
+     = 74dp from the card content edge. SwitchCompat is themed through
+     f4_switch_thumb / f4_switch_track state drawables built on theme tokens
+     (accentColor, onAccent, textSecondary, strokeColor) so on/off reads
+     unambiguously in both light and night. All view IDs unchanged. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,154 +25,231 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/tab_settings"
             style="@style/Display" />
 
-        <!-- APPEARANCE -->
+        <!-- ═══ التطبيق · App ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/settings_section_app"
+            style="@style/SectionHeaderAr" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/card_bg"
-            android:padding="8dp"
-            android:layout_marginTop="12dp">
+            android:padding="8dp">
 
             <LinearLayout android:id="@+id/langRow" style="@style/SettingsRow">
                 <FrameLayout style="@style/IconCircle"
                     android:background="@drawable/icon_circle_green">
                     <ImageView android:layout_width="20dp" android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_lang" />
+                        android:src="@drawable/ic_lang" android:importantForAccessibility="no" />
                 </FrameLayout>
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:layout_marginStart="14dp"
                     android:text="@string/language"
-                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    style="@style/SettingsLabel" />
                 <TextView android:id="@+id/langValue"
-                    android:fontFamily="@font/plex_semibold"
+                    android:fontFamily="@font/cairo"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:paddingStart="10dp" android:paddingEnd="6dp"
+                    android:paddingStart="10dp" android:paddingEnd="4dp"
                     android:textSize="14sp" android:textColor="@color/teal"
                     android:textStyle="bold" />
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:autoMirrored="true"
+                    android:src="@drawable/f4_ic_chevron" />
             </LinearLayout>
+
             <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+                android:background="?attr/dividerColor" android:layout_marginStart="74dp" />
 
             <LinearLayout android:id="@+id/themeRow" style="@style/SettingsRow">
                 <FrameLayout style="@style/IconCircle"
                     android:background="@drawable/icon_circle_purple">
                     <ImageView android:layout_width="20dp" android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_shield" />
+                        android:src="@drawable/f4_ic_moon" android:importantForAccessibility="no" />
                 </FrameLayout>
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:layout_marginStart="14dp"
                     android:text="@string/dark_mode"
-                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                    style="@style/SettingsLabel" />
                 <androidx.appcompat.widget.SwitchCompat android:id="@+id/themeSwitch"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:thumb="@drawable/f4_switch_thumb"
+                    android:track="@drawable/f4_switch_track" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- SECURITY -->
+        <!-- ═══ الحماية · Protection ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/settings_section_protection"
+            style="@style/SectionHeaderAr" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/card_bg"
-            android:padding="8dp"
-            android:layout_marginTop="14dp">
+            android:padding="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="4dp"
-                android:text="@string/security_title"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="?attr/textPrimary" />
-
+            <!-- row order matters: rowPin, rowChangePin (conditional), then the
+                 divider — so hiding rowChangePin still leaves rowPin | divider |
+                 rowAdmin -->
             <LinearLayout android:id="@+id/rowPin" style="@style/SettingsRow">
+                <FrameLayout style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_green">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f4_ic_lock" android:importantForAccessibility="no" />
+                </FrameLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
+                    android:layout_weight="1" android:layout_marginStart="14dp"
+                    android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="@string/pin_lock"
-                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                        style="@style/SettingsLabel" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:text="@string/pin_lock_desc"
-                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                        style="@style/SettingsSublabel" />
                 </LinearLayout>
                 <androidx.appcompat.widget.SwitchCompat android:id="@+id/pinSwitch"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:thumb="@drawable/f4_switch_thumb"
+                    android:track="@drawable/f4_switch_track" />
             </LinearLayout>
+
             <LinearLayout android:id="@+id/rowChangePin" style="@style/SettingsRow"
                 android:visibility="gone">
+                <FrameLayout style="@style/IconCircle"
+                    android:background="@drawable/f4_icon_circle_brass">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f4_ic_key" android:importantForAccessibility="no" />
+                </FrameLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
+                    android:layout_weight="1" android:layout_marginStart="14dp"
+                    android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="@string/pin_change_title"
                         style="@style/SettingsLabel" android:textColor="@color/teal" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:text="@string/pin_change_desc"
-                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                        style="@style/SettingsSublabel" />
                 </LinearLayout>
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:autoMirrored="true"
+                    android:src="@drawable/f4_ic_chevron" />
             </LinearLayout>
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
 
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="74dp" />
+
+            <!-- destructive: device-admin / uninstall protection reads clay -->
             <LinearLayout android:id="@+id/rowAdmin" style="@style/SettingsRow">
+                <FrameLayout style="@style/IconCircle"
+                    android:background="@drawable/f4_icon_circle_clay">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_shield" android:importantForAccessibility="no" />
+                </FrameLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
+                    android:layout_weight="1" android:layout_marginStart="14dp"
+                    android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="@string/uninstall_protect"
-                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                        style="@style/SettingsLabel" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:text="@string/uninstall_protect_desc"
-                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                        style="@style/SettingsSublabel" />
                 </LinearLayout>
                 <androidx.appcompat.widget.SwitchCompat android:id="@+id/adminSwitch"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:thumb="@drawable/f4_switch_thumb"
+                    android:track="@drawable/f4_switch_track" />
             </LinearLayout>
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+        </LinearLayout>
+
+        <!-- ═══ الشبكة · Network ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/settings_section_network"
+            style="@style/SectionHeaderAr" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="8dp">
 
             <LinearLayout android:id="@+id/rowAutostart" style="@style/SettingsRow">
+                <FrameLayout style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_green">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_power" android:importantForAccessibility="no" />
+                </FrameLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
+                    android:layout_weight="1" android:layout_marginStart="14dp"
+                    android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="@string/autostart_title"
-                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                        style="@style/SettingsLabel" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:text="@string/autostart_desc"
-                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                        style="@style/SettingsSublabel" />
                 </LinearLayout>
                 <androidx.appcompat.widget.SwitchCompat android:id="@+id/autostartSwitch"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:thumb="@drawable/f4_switch_thumb"
+                    android:track="@drawable/f4_switch_track" />
             </LinearLayout>
+
             <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
+                android:background="?attr/dividerColor" android:layout_marginStart="74dp" />
 
             <LinearLayout android:id="@+id/rowAlwaysOn" style="@style/SettingsRow">
+                <FrameLayout style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_purple">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gate" android:importantForAccessibility="no" />
+                </FrameLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
+                    android:layout_weight="1" android:layout_marginStart="14dp"
+                    android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="@string/always_on_title"
-                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
+                        style="@style/SettingsLabel" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:text="@string/always_on_desc"
-                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                        style="@style/SettingsSublabel" />
                 </LinearLayout>
                 <androidx.appcompat.widget.SwitchCompat android:id="@+id/alwaysOnSwitch"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:thumb="@drawable/f4_switch_thumb"
+                    android:track="@drawable/f4_switch_track" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

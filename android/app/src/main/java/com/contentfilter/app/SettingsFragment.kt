@@ -43,6 +43,18 @@ class SettingsFragment : Fragment() {
                 PinActivity.intent(requireContext(), getString(R.string.enter_pin_reason)), 6,
             )
         }
+
+        // UI polish only: gentle press feedback on every settings row (visual
+        // touch scale — UiAnim.pressable returns false so row clicks still fire)
+        UiAnim.pressable(
+            view.findViewById<View>(R.id.langRow),
+            view.findViewById<View>(R.id.themeRow),
+            view.findViewById<View>(R.id.rowPin),
+            changePinRow,
+            view.findViewById<View>(R.id.rowAdmin),
+            view.findViewById<View>(R.id.rowAutostart),
+            view.findViewById<View>(R.id.rowAlwaysOn),
+        )
     }
 
     private fun setupLanguage(view: View) {
