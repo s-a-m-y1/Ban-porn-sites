@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icon mark: the Hisn gate (arch + closed slit), sized to the adaptive safe
+     zone (66dp circle) — 200-unit art scaled 0.5 around its centre. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <group
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:pivotX="100"
+        android:pivotY="100">
+        <path
+            android:fillColor="#F4F1EA"
+            android:fillType="evenOdd"
+            android:pathData="M40,190 V95 C40,45 65,15 100,15 C135,15 160,45 160,95 V190 H40 Z M90,190 V50 H110 V190 Z" />
+    </group>
+</vector>

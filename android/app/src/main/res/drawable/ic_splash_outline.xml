@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Outline only: the pen-traced gate shape -->
+<!-- Brand-integrity trace: the arch is drawn like a pen line (outer contour,
+     then the inner contour), then the ring quietly fills to become solid —
+     matching the reference brand video. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="200dp"
     android:height="200dp"
     android:viewportWidth="200"
     android:viewportHeight="200">
+
     <path
-        android:name="outline"
+        android:name="outerOutline"
         android:strokeColor="#F2EFE9"
-        android:strokeWidth="6"
-        android:strokeLineJoin="round"
+        android:strokeWidth="2.5"
         android:strokeLineCap="round"
         android:fillColor="#00000000"
-        android:pathData="M40,190 V95 C40,45 65,15 100,15 C135,15 160,45 160,95 V190 H40 Z" />
+        android:pathData="M40,190 V95 C40,45 65,15 100,15 C135,15 160,45 160,95 V190" />
+
+    <path
+        android:name="innerOutline"
+        android:strokeColor="#F2EFE9"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M74,190 V88 C74,58 84,48 100,48 C116,48 126,58 126,88 V190" />
+
+    <path
+        android:name="ringSolid"
+        android:fillColor="#F2EFE9"
+        android:fillType="evenOdd"
+        android:fillAlpha="0"
+        android:pathData="M40,190 V95 C40,45 65,15 100,15 C135,15 160,45 160,95 V190 H40 Z M74,190 V88 C74,58 84,48 100,48 C116,48 126,58 126,88 V190 Z" />
 </vector>

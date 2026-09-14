@@ -102,6 +102,19 @@
                 <androidx.appcompat.widget.SwitchCompat android:id="@+id/pinSwitch"
                     android:layout_width="wrap_content" android:layout_height="wrap_content" />
             </LinearLayout>
+            <LinearLayout android:id="@+id/rowChangePin" style="@style/SettingsRow"
+                android:visibility="gone">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/pin_change_title"
+                        style="@style/SettingsLabel" android:textColor="@color/teal" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/pin_change_desc"
+                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                </LinearLayout>
+            </LinearLayout>
             <View android:layout_width="match_parent" android:layout_height="1dp"
                 android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
 

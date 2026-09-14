@@ -26,7 +26,7 @@
     <!-- center slit: cut-through, fades in last -->
     <path
         android:name="slit"
-        android:fillColor="#1C2B39"
+        android:fillColor="#16242F"
         android:pathData="M96,190 V60 H104 V190 Z"
         android:alpha="0" />
 </vector>

@@ -24,78 +24,113 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View = inflater.inflate(R.layout.fragment_home, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val powerButton = view.findViewById<ImageButton>(R.id.powerButton)
+    private fun setUiState(active: Boolean, animated: Boolean) {
+        val view = view ?: return
+        val powerButton = view.findViewById<ImageButton>(R.id.powerButton) ?: return
         val powerHalo = view.findViewById<View>(R.id.powerHalo)
         val statusText = view.findViewById<TextView>(R.id.statusText)
         val statusSubtitle = view.findViewById<TextView>(R.id.statusSubtitle)
         val statusDot = view.findViewById<View>(R.id.statusDot)
         val powerLabel = view.findViewById<TextView>(R.id.powerLabel)
-        val blockedCountText = view.findViewById<TextView>(R.id.blockedCountText)
-        val statsText = view.findViewById<TextView>(R.id.statsText)
 
-        fun setUiState(active: Boolean, animated: Boolean) {
-            vpnActive = active
-            powerButton.background = ContextCompat.getDrawable(
-                requireContext(), if (active) R.drawable.btn_primary else R.drawable.btn_danger,
-            )
-            powerHalo.setBackgroundResource(
-                if (active) R.drawable.power_bg_on else R.drawable.power_bg_off,
-            )
-            if (animated) {
-                val punchX = android.animation.ObjectAnimator.ofFloat(powerButton, "scaleX", 1f, 0.85f, 1.15f, 1f)
-                val punchY = android.animation.ObjectAnimator.ofFloat(powerButton, "scaleY", 1f, 0.85f, 1.15f, 1f)
-                android.animation.AnimatorSet().apply {
-                    playTogether(punchX, punchY); duration = 450; start()
-                }
-            }
-            statusDot.setBackgroundResource(
-                if (active) R.drawable.status_dot_on else R.drawable.status_dot_off,
-            )
-            UiAnim.breathe(powerHalo, active)
-            if (active) statusDot.startAnimation(
-                AnimationUtils.loadAnimation(requireContext(), R.anim.pulse),
-            ) else statusDot.clearAnimation()
-
-            statusText.text = getString(if (active) R.string.status_on else R.string.status_off)
-            statusSubtitle.text = getString(
-                if (active) R.string.status_on_subtitle else R.string.status_off_subtitle,
-            )
-            powerLabel.text = getString(
-                if (active) R.string.stop_blocking else R.string.start_blocking,
-            )
-            if (animated) {
-                val fade = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
-                statusText.startAnimation(fade)
-                statusSubtitle.startAnimation(fade)
+        vpnActive = active
+        // gate face breathes between flat ink tones; halo ring carries the accent
+        powerHalo.setBackgroundResource(
+            if (active) R.drawable.power_bg_on else R.drawable.power_bg_off,
+        )
+        if (animated) {
+            val punchX = android.animation.ObjectAnimator.ofFloat(powerButton, "scaleX", 1f, 0.96f, 1f)
+            val punchY = android.animation.ObjectAnimator.ofFloat(powerButton, "scaleY", 1f, 0.96f, 1f)
+            android.animation.AnimatorSet().apply {
+                playTogether(punchX, punchY); duration = 350; start()
             }
         }
+        statusDot.setBackgroundResource(
+            if (active) R.drawable.status_dot_on else R.drawable.status_dot_off,
+        )
+        UiAnim.breathe(powerHalo, active)
+        if (active) statusDot.startAnimation(
+            AnimationUtils.loadAnimation(requireContext(), R.anim.pulse),
+        ) else statusDot.clearAnimation()
+
+        statusText.text = getString(if (active) R.string.status_on else R.string.status_off)
+        statusSubtitle.text = getString(
+            if (active) R.string.status_on_subtitle else R.string.status_off_subtitle,
+        )
+        powerLabel.text = getString(
+            if (active) R.string.stop_blocking else R.string.start_blocking,
+        )
+        powerButton.contentDescription = powerLabel.text
+        if (animated) {
+            val fade = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+            statusText.startAnimation(fade)
+            statusSubtitle.startAnimation(fade)
+        }
+    }
+
+    /** time-of-day greeting, personalised with the name chosen during onboarding */
+    private fun bindGreeting() {
+        val greetingText = view?.findViewById<TextView>(R.id.greetingText) ?: return
+        val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        val greetRes = when (hour) {
+            in 4..11 -> R.string.greet_morning
+            in 12..16 -> R.string.greet_afternoon
+            in 17..20 -> R.string.greet_evening
+            else -> R.string.greet_night
+        }
+        val name = prefs.getString("user_name", null)?.trim().orEmpty()
+        val isAr = prefs.getString("lang", "ar") == "ar"
+        val greeting = getString(greetRes)
+        greetingText.text = when {
+            name.isEmpty() -> greeting
+            isAr -> "$greeting يا $name"
+            else -> "$greeting, $name"
+        }
+    }
+
+    /** "Day N of your journey" — counted from the onboarding start day */
+    private fun bindJourneyChip() {
+        val chip = view?.findViewById<TextView>(R.id.journeyChip) ?: return
+        val firstDay = prefs.getString("first_open_day", null) ?: return
+        val days = try {
+            val fmt = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
+            val start = fmt.parse(firstDay) ?: return
+            val today = fmt.parse(fmt.format(java.util.Date()))!!
+            ((today.time - start.time) / 86_400_000L).toInt() + 1
+        } catch (_: Exception) {
+            return
+        }
+        if (days < 1) return
+        chip.text = getString(R.string.journey_day_fmt, days)
+        chip.visibility = View.VISIBLE
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val powerButton = view.findViewById<ImageButton>(R.id.powerButton)
+        val blockedCountText = view.findViewById<TextView>(R.id.blockedCountText)
+        val statsText = view.findViewById<TextView>(R.id.statsText)
 
         // restore state
         vpnActive = prefs.getBoolean("vpn_running", false)
         setUiState(vpnActive, animated = false)
 
         UiAnim.pressable(powerButton, view.findViewById(R.id.emailButton))
-        // hero + quick stats + contact cards entrance
-        val hero = view.findViewById<FrameLayout>(R.id.heroContainer)
-        val quickStats = view.findViewById<LinearLayout>(R.id.quickStatsRow)
-        val contact = view.findViewById<LinearLayout>(R.id.contactCard)
-        if (hero != null && quickStats != null && contact != null) {
-            UiAnim.staggeredEntrance(hero, quickStats, contact)
-        }
+        // hero + trust sections entrance
+        val hero = view.findViewById<LinearLayout>(R.id.heroContainer)
+        if (hero != null) UiAnim.staggeredEntrance(hero)
 
-        // rotating hadith card — new one every open
+        bindGreeting()
+        bindJourneyChip()
+
+        // rotating hadith card — new one every open; the pool is Arabic in both locales
         val hadithText = view.findViewById<TextView>(R.id.hadithText)
-        val hadithCard = view.findViewById<LinearLayout>(R.id.hadithCard)
-        val isAr = (prefs.getString("lang", "en") == "ar")
-        val res = resources
-        val pool = res.getStringArray(if (isAr) R.array.hadiths_ar else R.array.hadiths_en)
+        val pool = resources.getStringArray(R.array.hadiths_ar)
         val idx = System.currentTimeMillis().toInt().mod(pool.size)
         hadithText.text = pool[idx]
-        hadithCard.alpha = 0f
-        hadithCard.animate().alpha(1f).setDuration(600).setStartDelay(500).start()
+        hadithText.alpha = 0f
+        hadithText.animate().alpha(1f).setDuration(600).setStartDelay(500).start()
 
         lifecycleScope.launch {
             val repo = BlocklistRepository(requireContext())
@@ -106,6 +141,8 @@ class HomeFragment : Fragment() {
         }
 
         powerButton.setOnClickListener {
+            // a tiny pulse under the finger — the toggle should feel physical
+            powerButton.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             if (vpnActive) {
                 if (prefs.getBoolean("pin_enabled", false)) {
                     startActivityForResult(
@@ -123,6 +160,7 @@ class HomeFragment : Fragment() {
                 FilterVpnService.start(requireContext())
                 prefs.edit().putBoolean("vpn_running", true).apply()
                 setUiState(true, animated = true)
+                askOverlayPermissionIfNeeded()
             }
         }
 
@@ -144,13 +182,41 @@ class HomeFragment : Fragment() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 3 && resultCode == android.app.Activity.RESULT_OK) {
+            if (!prefs.getBoolean("vpn_running", false)) return
+            FilterVpnService.stop(requireContext())
+            prefs.edit().putBoolean("vpn_running", false).apply()
+            setUiState(false, animated = true)
+        }
         if (requestCode == 1 && resultCode == android.app.Activity.RESULT_OK) {
             FilterVpnService.start(requireContext())
             prefs.edit().putBoolean("vpn_running", true).apply()
-            view?.let {
-                it.findViewById<ImageButton>(R.id.powerButton)?.performClick()
-            }
+            setUiState(true, animated = true)
+            askOverlayPermissionIfNeeded()
         }
+    }
+
+    /**
+     * The blocked-site screen needs "display over other apps" (Android 14+
+     * blocks service-launched activities otherwise). Ask once, quietly, the
+     * first time protection is switched on.
+     */
+    private fun askOverlayPermissionIfNeeded() {
+        if (android.provider.Settings.canDrawOverlays(requireContext())) return
+        if (prefs.getBoolean("overlay_asked", false)) return
+        prefs.edit().putBoolean("overlay_asked", true).apply()
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setMessage(R.string.blockscreen_need_overlay)
+            .setPositiveButton(R.string.grant) { _, _ ->
+                startActivityForResult(
+                    android.content.Intent(
+                        android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        android.net.Uri.parse("package:${requireContext().packageName}"),
+                    ), 8,
+                )
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
     override fun onResume() {
@@ -160,10 +226,7 @@ class HomeFragment : Fragment() {
         // sync UI with external state changes (e.g. schedule turned it off)
         val running = prefs.getBoolean("vpn_running", false)
         if (running != vpnActive) {
-            vpnActive = running
-            view?.let { v ->
-                v.findViewById<ImageButton>(R.id.powerButton)?.performClick()
-            }
+            setUiState(running, animated = false)
         }
     }
 }

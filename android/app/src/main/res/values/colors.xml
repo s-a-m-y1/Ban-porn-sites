@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Hisn brand palette (exact landing-page hex values) -->
-    <color name="ink">#1C2B39</color>
+    <!-- Hisn brand palette — refreshed: deeper ink, livelier emerald-teal,
+         warmer brass/clay. Calm, but no longer muddy. -->
+    <color name="ink">#16242F</color>
     <color name="ink_2">#26374A</color>
-    <color name="teal">#4B7A73</color>
-    <color name="stone">#A9998A</color>
+    <color name="teal">#2F7A6B</color>
+    <color name="stone">#8A8272</color>
     <color name="stone_light">#DCD3C6</color>
-    <color name="parchment">#F2EFE9</color>
+    <color name="parchment">#F4F1EA</color>
 
     <!-- semantic aliases (kept for compatibility) -->
     <color name="green_primary">@color/teal</color>
@@ -14,31 +15,44 @@
     <color name="green_dark">@color/ink</color>
     <color name="mint">@color/stone_light</color>
     <color name="teal_accent">@color/teal</color>
-    <color name="red_primary">@color/ink_2</color>
-    <color name="red_light">@color/ink_2</color>
+    <color name="red_primary">@color/clay</color>
+    <color name="red_light">@color/clay</color>
+
+    <!-- Hisn extended palette -->
+    <color name="clay">#B4573E</color>
+    <color name="brass">#B8863B</color>
+    <color name="brass_light">#CDA55C</color>
+    <color name="sand_amber">#C9A45C</color>
+    <color name="teal_night">#8FC4B6</color>
 
     <!-- light theme -->
-    <color name="bg_light">#F2EFE9</color>
-    <color name="bg_light_surface">#F8F6F1</color>
-    <color name="bg_light_elevated">#FDFCF9</color>
-    <color name="text_primary">#1C2B39</color>
+    <color name="bg_light">#F7F5EF</color>
+    <color name="bg_light_surface">#FFFFFF</color>
+    <color name="bg_light_elevated">#FFFFFF</color>
+    <color name="text_primary">#182634</color>
     <color name="text_secondary">#26374A</color>
     <color name="divider">#14A9998A</color>
-    <color name="stroke_light">#DCD3C6</color>
+    <color name="stroke_light">#E4DDCF</color>
 
     <!-- dark theme -->
-    <color name="bg_dark">#1C2B39</color>
-    <color name="bg_dark_surface">#223445</color>
+    <color name="bg_dark">#16242F</color>
+    <color name="bg_dark_surface">#22344A</color>
     <color name="bg_dark_elevated">#26374A</color>
-    <color name="text_primary_dark">#F2EFE9</color>
+    <color name="text_primary_dark">#F4F1EA</color>
     <color name="text_secondary_dark">#DCD3C6</color>
     <color name="divider_dark">#14DCD3C6</color>
     <color name="stroke_dark">#3A4E62</color>
 
-    <color name="white">#F2EFE9</color>
-    <color name="scrim">#661C2B39</color>
-    <color name="amber">@color/stone</color>
+    <color name="white">#F4F1EA</color>
+    <color name="scrim">#6616242F</color>
+    <color name="amber">@color/sand_amber</color>
     <color name="purple_accent">@color/ink_2</color>
     <color name="blue_accent">@color/teal</color>
-    <color name="green_12">#1E4B7A73</color>
+    <color name="green_12">#1E2F7A6B</color>
+    <color name="clay_12">#1EB4573E</color>
+    <color name="brass_12">#1EB8863B</color>
+
+    <!-- hadith banner: dark enough for parchment text in BOTH themes -->
+    <color name="hadith_card_bg">#2F7A6B</color>
+    <color name="hadith_card_title">#B8DCD3C6</color>
 </resources>

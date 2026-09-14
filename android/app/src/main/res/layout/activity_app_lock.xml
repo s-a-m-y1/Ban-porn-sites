@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Full-screen cover over a blocked app: the reminder IS the screen. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,37 +9,60 @@
     android:padding="40dp">
 
     <ImageView
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:src="@drawable/ic_block"
-        android:background="@drawable/icon_circle_red"
-        android:padding="22dp"
-        android:contentDescription="@string/blocked_app_title" />
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/ic_gate"
+        android:contentDescription="@string/app_name_ar"
+        android:alpha="0.55" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="@string/blocked_app_title"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/text_primary_dark" />
+        android:layout_marginTop="26dp"
+        android:text="@string/attqi_allah"
+        android:textSize="52sp"
+        android:textColor="@color/parchment"
+        android:fontFamily="@font/amiri"
+        android:lineSpacingMultiplier="1.2" />
+
+    <!-- thin stone rule under the phrase -->
+    <View
+        android:layout_width="72dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="22dp"
+        android:background="@color/brass" />
 
     <TextView
         android:id="@+id/lockedAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:textColor="@color/text_secondary_dark" />
+        android:layout_marginTop="22dp"
+        android:textSize="15sp"
+        android:textColor="@color/text_secondary_dark"
+        android:maxWidth="320dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/blockedMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/blocked_app_message"
+        android:textSize="13sp"
+        android:lineSpacingMultiplier="1.5"
+        android:gravity="center"
+        android:maxWidth="320dp"
+        android:textColor="@color/stone" />
 
     <Button
         android:id="@+id/backHomeButton"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
+        android:maxWidth="320dp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/back_home"
         android:background="@drawable/btn_primary"
-        android:textColor="@color/white"
+        android:textColor="?attr/onAccent"
         android:textStyle="bold" />
 </LinearLayout>

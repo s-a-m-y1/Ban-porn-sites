@@ -90,10 +90,22 @@ class AppLockService : Service() {
 
     private fun foregroundApp(): String? {
         val now = System.currentTimeMillis()
-        val stats = usageStats.queryUsageStats(
-            UsageStatsManager.INTERVAL_DAILY, now - 5000, now,
-        )
-        return stats.maxByOrNull { it.lastTimeUsed }?.packageName
+        // queryEvents is the reliable way to find the foreground app —
+        // queryUsageStats buckets are unreliable on some OEM builds
+        val events = usageStats.queryEvents(now - 10_000, now)
+        var fg: String? = null
+        val event = android.app.usage.UsageEvents.Event()
+        while (events.hasNextEvent()) {
+            events.getNextEvent(event)
+            if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
+                fg = event.packageName
+            }
+        }
+        if (fg != null) return fg
+        // fallback: most recently used app in the last minute
+        return usageStats.queryUsageStats(
+            UsageStatsManager.INTERVAL_DAILY, now - 60_000, now,
+        ).maxByOrNull { it.lastTimeUsed }?.packageName
     }
 
     private fun buildNotification(): Notification {

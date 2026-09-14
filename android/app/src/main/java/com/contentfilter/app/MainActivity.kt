@@ -8,28 +8,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import java.util.Locale
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun attachBaseContext(newBase: Context) {
-        val lang = newBase.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-            .getString("lang", Locale.getDefault().language.takeIf { it == "ar" } ?: "en")
-            ?: "en"
-        val locale = Locale(lang)
-        Locale.setDefault(locale)
-        val config = Configuration(newBase.resources.configuration)
-        config.setLocale(locale)
-        super.attachBaseContext(newBase.createConfigurationContext(config))
-    }
+    private var currentTabId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // theme mode: system | light | dark
-        when (prefs().getString("theme_mode", "system")) {
+        // theme mode: light is the default; system | dark opt-in
+        when (prefs().getString("theme_mode", "light")) {
             "dark" -> androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
                 androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES,
             )
-            "light" -> androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
+            "system" -> androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
+                androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM,
+            )
+            else -> androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
                 androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO,
             )
         }
@@ -43,20 +37,46 @@ class MainActivity : AppCompatActivity() {
             switchTo(HomeFragment(), R.id.navHome)
         }
         nav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navHome -> switchTo(HomeFragment(), item.itemId)
-                R.id.navStats -> switchTo(StatsFragment(), item.itemId)
-                R.id.navFeatures -> switchTo(FeaturesFragment(), item.itemId)
-                R.id.navSettings -> switchTo(SettingsFragment(), item.itemId)
-            }
+            switchTo(fragmentFor(item.itemId), item.itemId)
             true
         }
     }
 
+    private fun fragmentFor(itemId: Int): Fragment {
+        // reuse the fragment already managed by the FragmentManager
+        // (survives activity recreation) instead of stacking new instances
+        val tag = "tab_$itemId"
+        supportFragmentManager.findFragmentByTag(tag)?.let { return it }
+        return when (itemId) {
+            R.id.navStats -> StatsFragment()
+            R.id.navFeatures -> FeaturesFragment()
+            R.id.navSettings -> SettingsFragment()
+            else -> HomeFragment()
+        }
+    }
+
     private fun switchTo(fragment: Fragment, itemId: Int) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
+        val fm = supportFragmentManager
+
+        fm.fragments.forEach { f ->
+            if (f != fragment && !f.isHidden) {
+                fm.beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                    .hide(f).commit()
+            }
+        }
+
+        if (fragment.isAdded) {
+            if (fragment.isHidden) fm.beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .show(fragment).commit()
+        } else {
+            fm.beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .add(R.id.fragmentContainer, fragment, "tab_$itemId")
+                .commit()
+        }
+        currentTabId = itemId
     }
 
     private fun prefs() = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -65,5 +85,25 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         // re-apply schedule whenever user returns to the app
         ScheduleManager.apply(this)
+        if (!prefs().getBoolean("vpn_running", false)) return
+
+        if (FilterVpnService.needsConsent) {
+            // VPN consent was revoked/lost — ask the user again (once per loss)
+            android.net.VpnService.prepare(this)?.let {
+                startActivityForResult(it, 1)
+            }
+        } else if (!FilterVpnService.isRunning) {
+            // service died silently (force-stop/crash): resume quietly
+            FilterVpnService.start(this)
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            FilterVpnService.needsConsent = false
+            FilterVpnService.start(this)
+        }
     }
 }

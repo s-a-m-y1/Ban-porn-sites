@@ -2,12 +2,12 @@
 <resources>
     <string name="app_name" translatable="false">حصن</string>
     <string name="protection_title">حالة الحماية</string>
-    <string name="status_on">الحماية تعمل</string>
-    <string name="status_off">الحماية متوقفة</string>
-    <string name="status_on_subtitle">جهازك في أمان. المواقع الإباحية يتم حظرها الآن.</string>
-    <string name="status_off_subtitle">اضغط زر الطاقة لبدء حظر المواقع الإباحية.</string>
-    <string name="start_blocking">تشغيل الحماية</string>
-    <string name="stop_blocking">إيقاف الحماية</string>
+    <string name="status_on">البوابة مغلقة</string>
+    <string name="status_off">البوابة مفتوحة</string>
+    <string name="status_on_subtitle">حِصن يحرس هذا الجهاز من المواقع المؤذية بهدوء، ومن داخل الهاتف.</string>
+    <string name="status_off_subtitle">اضغط البوابة لبدء الحماية. نسأل الله لك العون والثبات.</string>
+    <string name="start_blocking">إغلاق البوابة</string>
+    <string name="stop_blocking">فتح البوابة</string>
 
     <string name="stats_title">الإحصائيات</string>
     <string name="blocked_count">محاولات محظورة</string>
@@ -22,6 +22,16 @@
     <string name="contact_subtitle">وجدت مشكلة أو لديك اقتراح؟ تواصل معي:</string>
     <string name="email_button">sam858y@gmail.com</string>
     <string name="send_email">أرسل بريداً</string>
+    <string name="how_it_works_title">كيف تعمل البوابة</string>
+    <string name="how_it_works_body">يقف حِصن بهدوء بين جهازك وبين الويب. كل موقع تزوره يمر عبر سؤال واحد: هل هذا العنوان مدرج في قائمة الحظر؟ لا أكثر ولا أقل.</string>
+    <string name="step_1_title">ضغطة واحدة</string>
+    <string name="step_1_body">افتح البوابة أو أغلقها. تبدأ الحماية بضغطة واحدة.</string>
+    <string name="step_2_title">سؤال واحد</string>
+    <string name="step_2_body">يُفحص طلب كل موقع مقابل قائمة حظر محلية على جهازك.</string>
+    <string name="step_3_title">جواب واحد</string>
+    <string name="step_3_body">العناوين المحظورة لا تغادر هاتفك أبداً. والمسموحة تمر دون مساس.</string>
+    <string name="trust_title">خصوصية بالبناء</string>
+    <string name="trust_body">القائمة تعيش على جهازك. الفلترة تحدث محلياً وفي صمت. لا نرى تصفحك، ولا نجمعه، ولا يوجد شيء لنبيعه.</string>
     <string name="powered_by">يعمل بفلترة DNS محلية — لا تخرج أي بيانات من جهازك.</string>
 
     <!-- Features -->
@@ -31,7 +41,8 @@
     <string name="cat_fakenews">حظر مواقع الأخبار الكاذبة</string>
     <string name="cat_malware">حظر مواقع الفيروسات</string>
     <string name="manual_block">مواقع محظورة يدوياً</string>
-    <string name="manual_block_desc">أضف أي موقع لقائمة الحظر بنفسك</string>
+    <string name="manual_block_desc">أضف أو راجع أو احذف المواقع التي تختارها بنفسك</string>
+    <string name="manual_review">مراجعة المواقع المحفوظة</string>
     <string name="add_domain">أضف موقعاً للحظر</string>
     <string name="domain_hint">example-site.com</string>
     <string name="add">إضافة</string>
@@ -51,7 +62,20 @@
     <string name="applock_title">التطبيقات المحظورة</string>
     <string name="applock_desc">اختر تطبيقات لقفلها تماماً</string>
     <string name="applock_need_permission">لقفل التطبيقات، اسمح بالوصول للاستخدام أولاً</string>
+    <string name="applock_need_overlay">علشان شاشة "اتقي الله" تظهر فوق أي تطبيق، اسمح لحصن بـ "العرض فوق التطبيقات الأخرى"</string>
     <string name="grant">سماح</string>
+
+    <!-- welcome / journey -->
+    <string name="welcome_subtitle">رفيق هادئ لشاشة أنقى</string>
+    <string name="welcome_identity">أنا مسلم…\nوأستعين بالله لأكون أفضل</string>
+    <string name="welcome_features">حجب المواقع المؤذية تلقائيًا\nتذكير رفيق عند اللحظة الصعبة\nرحلة خاصة ترجع لها كل يوم</string>
+    <string name="welcome_name_hint">بنناديك إيه؟ (اختياري)</string>
+    <string name="welcome_start">ابدأ رحلتي</string>
+    <string name="greet_morning">صباح الخير</string>
+    <string name="greet_afternoon">طاب نهارك</string>
+    <string name="greet_evening">مساء الخير</string>
+    <string name="greet_night">أسعد الله ليلك</string>
+    <string name="journey_day_fmt">اليوم %1$d من رحلتك</string>
 
     <string name="security_title">الأمان</string>
     <string name="pin_lock">حماية برقم سري</string>
@@ -63,7 +87,22 @@
     <string name="pin_hint">أدخل الرقم السري</string>
     <string name="pin_wrong">رقم سري خطأ</string>
     <string name="pin_confirm">تأكيد</string>
+    <string name="done">تم</string>
     <string name="pin_enter_new">أدخل رقماً سرياً جديداً (4-6 أرقام)</string>
+    <string name="pin_create_title">إنشاء كلمة مرور التطبيق</string>
+    <string name="pin_change_title">تغيير كلمة مرور التطبيق</string>
+    <string name="pin_create_hint">4-6 أرقام. تجنّب التسلسل مثل 1234.</string>
+    <string name="pin_confirm_new">تأكيد الرقم السري</string>
+    <string name="pin_save">حفظ الرقم السري</string>
+    <string name="pin_err_length">يجب أن يكون الرقم السري 4-6 أرقام</string>
+    <string name="pin_err_digits">يجب أن يحتوي الرقم السري على أرقام فقط</string>
+    <string name="pin_err_same">لا يمكن أن يكون كل الأرقام متشابهة</string>
+    <string name="pin_err_seq">لا يمكن أن يكون الرقم السري متسلسلاً (1234، 4321)</string>
+    <string name="pin_err_common">هذا الرقم السري سهل التخمين جداً</string>
+    <string name="pin_err_mismatch">الرقمان السريان غير متطابقين</string>
+    <string name="pin_change_needed">عيّن كلمة مرور التطبيق أولاً</string>
+    <string name="pin_saved">تم حفظ كلمة مرور التطبيق</string>
+    <string name="pin_change_desc">تغيير كلمة مرور التطبيق الحالية</string>
 
     <string name="report_title">التقرير الأسبوعي</string>
     <string name="report_desc">نشاط الحظر خلال آخر 7 أيام</string>
@@ -74,6 +113,10 @@
 
     <string name="blocked_app_title">هذا التطبيق محظور</string>
     <string name="blocked_app_default">التطبيق المحدد</string>
+    <string name="attqi_allah">اتقي الله</string>
+    <string name="blocked_app_message">هذا التطبيق من التطبيقات التي اخترت حجبها. خذ نفسًا، واذكر الله، وارجع.</string>
+    <string name="blocked_site_message">هذا الموقع من المواقع التي اخترت حجبها. خذ نفسًا، واذكر الله، وارجع.</string>
+    <string name="blockscreen_need_overlay">علشان شاشة "اتقي الله" تظهر لما تحاول تفتح موقع محجوب، اسمح لحصن بـ "العرض فوق التطبيقات الأخرى"</string>
     <string name="back_home">العودة للرئيسية</string>
 
     <!-- Heatmap / persistence -->

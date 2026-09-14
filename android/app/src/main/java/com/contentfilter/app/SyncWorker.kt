@@ -14,7 +14,13 @@ class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
 
     override suspend fun doWork(): Result {
         val repo = BlocklistRepository(applicationContext)
-        return when (repo.syncWithBackend()) {
+        val result = repo.syncWithBackend()
+        // blocklist changed on disk → refresh the in-memory index so a
+        // running filter picks the new domains up without a restart
+        if (result is BlocklistRepository.SyncResult.Updated) {
+            runCatching { BlocklistIndex.load(applicationContext) }
+        }
+        return when (result) {
             is BlocklistRepository.SyncResult.Updated,
             is BlocklistRepository.SyncResult.UpToDate,
             -> Result.success()

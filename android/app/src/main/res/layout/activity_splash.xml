@@ -11,8 +11,9 @@
         android:gravity="center"
         android:layout_gravity="center">
 
-        <!-- gate mark, layered: outline (traces) -> solid body -> slit -->
+        <!-- gate mark, layered: outline (builds) -> solid body -> slit -->
         <FrameLayout
+            android:id="@+id/splashMark"
             android:layout_width="150dp"
             android:layout_height="150dp">
 

@@ -7,14 +7,22 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- haptic feedback on the PIN gate and the power toggle -->
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+    <!-- lets the "اتقي الله" block screen launch reliably over a blocked app
+         (the SAW grant is the Android 14+ exemption to background-activity limits) -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.ContentFilter">
+        android:theme="@style/Theme.ContentFilter"
+        android:supportsRtl="true"
+        android:windowLayoutInDisplayCutoutMode="shortEdges"
+        tools:targetApi="o_mr1">
 
         <activity
             android:name=".SplashActivity"
@@ -29,6 +37,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="false" />
 
         <service
             android:name=".FilterVpnService"
@@ -88,6 +100,11 @@
 
         <activity
             android:name=".PinActivity"
+            android:exported="false"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name=".SetPinActivity"
             android:exported="false"
             android:excludeFromRecents="true" />
     </application>

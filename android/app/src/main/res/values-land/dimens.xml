@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- compact hero so the gate + stats fit the shorter landscape viewport
+         without being clipped behind the bottom navigation -->
+    <dimen name="hero_padding_v">16dp</dimen>
+    <dimen name="hero_padding_h">56dp</dimen>
+    <dimen name="gate_margin_top">14dp</dimen>
+    <dimen name="power_label_margin_top">10dp</dimen>
+    <dimen name="gate_halo_size">140dp</dimen>
+    <dimen name="gate_button_size">112dp</dimen>
+    <dimen name="gate_button_inset">36dp</dimen>
+
+    <!-- smaller type so rows stay single-line -->
+    <dimen name="stat_value_size">22sp</dimen>
+    <dimen name="hadith_text_size">14sp</dimen>
+    <dimen name="status_subtitle_size">13sp</dimen>
+</resources>

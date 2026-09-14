@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Hero/footer band: theme-aware surface — soft mint-white in light,
+     ink at night. The gate button stays dark in both: one strong focal point. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#1C2B39" />
-    <corners android:radius="32dp" />
+    <solid android:color="?attr/heroBg" />
 </shape>

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- brighter Guard Teal tint for dark surfaces (stays within brand family) -->
-    <color name="mint">#9FB5AF</color>
+    <!-- brighter accents for dark surfaces (stay within the brand family) -->
+    <color name="mint">#A9C6BE</color>
+    <!-- night-safe accent tints (readable on Ink) -->
+    <color name="teal">#8FC4B6</color>
+    <!-- keep the hadith banner a DEEP teal at night: parchment text stays readable,
+         and the banner no longer glows like a light card inside the dark UI -->
+    <color name="hadith_card_bg">#2E5F55</color>
+    <color name="teal_accent">#8FC4B6</color>
+    <color name="green_primary">#8FC4B6</color>
+    <color name="green_light">#8FC4B6</color>
+    <color name="brass">#D2AC63</color>
+    <color name="clay">#D08A6E</color>
+    <color name="blue_accent">#8FC4B6</color>
 </resources>

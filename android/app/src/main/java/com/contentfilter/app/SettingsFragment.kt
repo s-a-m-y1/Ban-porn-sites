@@ -32,11 +32,22 @@ class SettingsFragment : Fragment() {
         setupLanguage(view)
         setupTheme(view)
         setupSecurity(view)
+
+        // change-PIN row: only visible when a PIN exists
+        val changePinRow = view.findViewById<View>(R.id.rowChangePin)
+        changePinRow.visibility =
+            if (PinManager.isPinSet(requireContext())) View.VISIBLE else View.GONE
+        changePinRow.setOnClickListener {
+            // verify current PIN first, then open the change screen
+            startActivityForResult(
+                PinActivity.intent(requireContext(), getString(R.string.enter_pin_reason)), 6,
+            )
+        }
     }
 
     private fun setupLanguage(view: View) {
         val langValue = view.findViewById<TextView>(R.id.langValue)
-        val currentLang = prefs.getString("lang", "en") ?: "en"
+        val currentLang = prefs.getString("lang", "ar") ?: "ar"
         langValue.text = if (currentLang == "ar") getString(R.string.arabic)
         else getString(R.string.english)
         view.findViewById<View>(R.id.langRow).setOnClickListener {
@@ -48,6 +59,7 @@ class SettingsFragment : Fragment() {
     private fun setupTheme(view: View) {
         val themeSwitch = view.findViewById<SwitchCompat>(R.id.themeSwitch)
         val mode = prefs.getString("theme_mode", "system") ?: "system"
+        themeSwitch.contentDescription = getString(R.string.dark_mode)
         themeSwitch.isChecked = mode == "dark"
         themeSwitch.setOnCheckedChangeListener { _, checked ->
             val newMode = if (checked) "dark" else "light"
@@ -60,6 +72,9 @@ class SettingsFragment : Fragment() {
                 },
             )
         }
+        view.findViewById<View>(R.id.themeRow).setOnClickListener {
+            themeSwitch.performClick()
+        }
     }
 
     private fun setupSecurity(view: View) {
@@ -67,6 +82,11 @@ class SettingsFragment : Fragment() {
         val adminSwitch = view.findViewById<SwitchCompat>(R.id.adminSwitch)
         val autostartSwitch = view.findViewById<SwitchCompat>(R.id.autostartSwitch)
         val alwaysOnSwitch = view.findViewById<SwitchCompat>(R.id.alwaysOnSwitch)
+
+        pinSwitch.contentDescription = getString(R.string.pin_lock)
+        adminSwitch.contentDescription = getString(R.string.uninstall_protect)
+        autostartSwitch.contentDescription = getString(R.string.autostart_title)
+        alwaysOnSwitch.contentDescription = getString(R.string.always_on_title)
 
         pinSwitch.isChecked = prefs.getBoolean("pin_enabled", false)
         adminSwitch.isChecked = prefs.getBoolean("admin_enabled", false)
@@ -108,30 +128,15 @@ class SettingsFragment : Fragment() {
 
         pinSwitch.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                val input = EditText(requireContext()).apply {
-                    hint = getString(R.string.pin_enter_new)
-                    inputType = InputType.TYPE_CLASS_NUMBER
-                    filters = arrayOf(android.text.InputFilter.LengthFilter(6))
-                }
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.pin_lock)
-                    .setView(input)
-                    .setPositiveButton(R.string.pin_confirm) { _, _ ->
-                        val pin = input.text.toString()
-                        if (pin.length >= 4) {
-                            PinManager.savePin(requireContext(), pin)
-                            prefs.edit().putBoolean("pin_enabled", true).apply()
-                        } else {
-                            pinSwitch.isChecked = false
-                            Toast.makeText(
-                                requireContext(), R.string.invalid_domain, Toast.LENGTH_SHORT,
-                            ).show()
-                        }
-                    }
-                    .setNegativeButton(R.string.cancel) { _, _ -> pinSwitch.isChecked = false }
-                    .show()
+                // create a new PIN with full validation
+                startActivityForResult(SetPinActivity.intent(requireContext()), 4)
             } else {
-                prefs.edit().putBoolean("pin_enabled", false).apply()
+                if (PinManager.isPinSet(requireContext())) {
+                    // require current PIN before disabling protection
+                    startActivityForResult(PinActivity.intent(requireContext(), getString(R.string.enter_pin_reason)), 5)
+                } else {
+                    prefs.edit().putBoolean("pin_enabled", false).apply()
+                }
             }
         }
 
@@ -160,20 +165,50 @@ class SettingsFragment : Fragment() {
                 prefs.edit().putBoolean("admin_enabled", false).apply()
             }
         }
+
+        view.findViewById<View>(R.id.rowPin).setOnClickListener { pinSwitch.performClick() }
+        view.findViewById<View>(R.id.rowAdmin).setOnClickListener { adminSwitch.performClick() }
+        view.findViewById<View>(R.id.rowAutostart).setOnClickListener { autostartSwitch.performClick() }
+        view.findViewById<View>(R.id.rowAlwaysOn).setOnClickListener { alwaysOnSwitch.performClick() }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 2) {
-            val dpm = requireContext().getSystemService(
-                android.app.admin.DevicePolicyManager::class.java,
-            )
-            val active = dpm.isAdminActive(
-                android.content.ComponentName(requireContext(), AdminReceiver::class.java),
-            )
-            prefs.edit().putBoolean("admin_enabled", active).apply()
-            view?.findViewById<SwitchCompat>(R.id.adminSwitch)?.isChecked = active
+        when (requestCode) {
+            2 -> {
+                val dpm = requireContext().getSystemService(
+                    android.app.admin.DevicePolicyManager::class.java,
+                )
+                val active = dpm.isAdminActive(
+                    android.content.ComponentName(requireContext(), AdminReceiver::class.java),
+                )
+                prefs.edit().putBoolean("admin_enabled", active).apply()
+                view?.findViewById<SwitchCompat>(R.id.adminSwitch)?.isChecked = active
+            }
+            // create/change PIN flow
+            4 -> {
+                val enabled = resultCode == android.app.Activity.RESULT_OK &&
+                    PinManager.isPinSet(requireContext())
+                prefs.edit().putBoolean("pin_enabled", enabled).apply()
+                view?.findViewById<SwitchCompat>(R.id.pinSwitch)?.isChecked = enabled
+                if (enabled) Toast.makeText(requireContext(), R.string.pin_saved, Toast.LENGTH_SHORT).show()
+            }
+            // PIN verified before disabling
+            5 -> {
+                if (resultCode == android.app.Activity.RESULT_OK) {
+                    prefs.edit().putBoolean("pin_enabled", false).apply()
+                    view?.findViewById<SwitchCompat>(R.id.pinSwitch)?.isChecked = false
+                } else {
+                    view?.findViewById<SwitchCompat>(R.id.pinSwitch)?.isChecked = true
+                }
+            }
+            // current PIN verified → open change-PIN screen
+            6 -> {
+                if (resultCode == android.app.Activity.RESULT_OK) {
+                    startActivityForResult(SetPinActivity.intent(requireContext(), true), 4)
+                }
+            }
         }
     }
 }

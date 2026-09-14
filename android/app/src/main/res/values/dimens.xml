@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home hero (portrait defaults) -->
+    <dimen name="hero_padding_v">30dp</dimen>
+    <dimen name="hero_padding_h">28dp</dimen>
+    <dimen name="gate_margin_top">22dp</dimen>
+    <dimen name="power_label_margin_top">14dp</dimen>
+    <dimen name="gate_halo_size">172dp</dimen>
+    <dimen name="gate_button_size">138dp</dimen>
+    <dimen name="gate_button_inset">46dp</dimen>
+
+    <!-- typographic scale -->
+    <dimen name="stat_value_size">32sp</dimen>
+    <dimen name="hadith_text_size">18sp</dimen>
+    <dimen name="status_subtitle_size">14sp</dimen>
+</resources>

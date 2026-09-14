@@ -12,12 +12,12 @@ import java.nio.ByteOrder
  */
 class DnsPacketParser {
 
-    fun isDnsPacket(packet: ByteArray): Boolean {
-        if (packet.size < 28) return false
+    fun isDnsPacket(packet: ByteArray, length: Int = packet.size): Boolean {
+        if (length < 28) return false
         val versionIhl = packet[0].toInt() and 0xFF
         if (versionIhl shr 4 != 4) return false // not IPv4
         val ihl = (versionIhl and 0x0F) * 4
-        if (ihl < 20 || packet.size < ihl + 8) return false
+        if (ihl < 20 || length < ihl + 8) return false
         if (packet[9].toInt() and 0xFF != 17) return false // not UDP
         val dstPort = ((packet[ihl + 2].toInt() and 0xFF) shl 8) or
             (packet[ihl + 3].toInt() and 0xFF)
@@ -25,6 +25,9 @@ class DnsPacketParser {
     }
 
     private fun ihl(packet: ByteArray): Int = (packet[0].toInt() and 0x0F) * 4
+
+    fun dnsPayloadStart(packet: ByteArray): Int? =
+        if (isDnsPacket(packet)) ihl(packet) + 8 else null
 
     fun dnsPayload(packet: ByteArray): ByteArray {
         val start = ihl(packet) + 8
@@ -35,27 +38,28 @@ class DnsPacketParser {
     fun extractQueryDomain(packet: ByteArray): String? {
         if (!isDnsPacket(packet)) return null
         val dnsStart = ihl(packet) + 8
-        val dns = dnsPayload(packet)
-        if (dns.size < 12) return null
+        if (packet.size < dnsStart + 12) return null
 
-        val flags = ((dns[2].toInt() and 0xFF) shl 8) or (dns[3].toInt() and 0xFF)
+        val flags = ((packet[dnsStart + 2].toInt() and 0xFF) shl 8) or
+            (packet[dnsStart + 3].toInt() and 0xFF)
         if (flags and 0x8000 != 0) return null // already a response
 
-        val qdcount = ((dns[4].toInt() and 0xFF) shl 8) or (dns[5].toInt() and 0xFF)
+        val qdcount = ((packet[dnsStart + 4].toInt() and 0xFF) shl 8) or
+            (packet[dnsStart + 5].toInt() and 0xFF)
         if (qdcount < 1) return null
 
         val sb = StringBuilder()
-        var pos = 12
+        var pos = dnsStart + 12
         while (true) {
-            if (pos >= dns.size) return null
-            val labelLen = dns[pos].toInt() and 0xFF
+            if (pos >= packet.size) return null
+            val labelLen = packet[pos].toInt() and 0xFF
             if (labelLen == 0) break
             if (labelLen and 0xC0 != 0) return null // compression pointer, bail
             pos++
-            if (pos + labelLen > dns.size) return null
+            if (pos + labelLen > packet.size) return null
             if (sb.isNotEmpty()) sb.append('.')
             for (i in 0 until labelLen) {
-                val c = dns[pos + i].toInt() and 0xFF
+                val c = packet[pos + i].toInt() and 0xFF
                 if (c !in 0x21..0x7E) return null
                 sb.append(c.toChar())
             }
@@ -122,7 +126,6 @@ class DnsPacketParser {
      * addressed back to the original client (as if from our DNS server).
      */
     fun buildDnsResponse(queryPacket: ByteArray, dnsAnswer: ByteArray): ByteArray {
-        val ihl = ihl(queryPacket)
         val clientAddr = clientAddress(queryPacket)
         val clientPort = clientPort(queryPacket)
 

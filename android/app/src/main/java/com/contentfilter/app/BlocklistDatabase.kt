@@ -38,6 +38,14 @@ interface BlockedDomainDao {
     @Query("SELECT COUNT(*) FROM blocked_domains WHERE domain = :domain AND category IN (:cats)")
     suspend fun isBlockedIn(domain: String, cats: List<String>): Int
 
+    // ---- full-table reads for the in-memory BlocklistIndex (load-once) ----
+
+    @Query("SELECT domain FROM blocked_domains WHERE category IN (:cats)")
+    suspend fun domainsIn(cats: List<String>): List<String>
+
+    @Query("SELECT domain FROM custom_domains")
+    suspend fun customDomains(): List<String>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(domains: List<BlockedDomain>)
 

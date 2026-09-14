@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- First-launch welcome: identity, name, and the start of the journey -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/welcomeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@color/bg_dark"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="36dp">
+
+        <ImageView
+            android:id="@+id/welcomeGate"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:src="@drawable/ic_gate"
+            android:contentDescription="@string/app_name_ar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/app_name_ar"
+            android:textSize="34sp"
+            android:textColor="@color/parchment"
+            android:fontFamily="@font/cairo_extrabold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/welcome_subtitle"
+            android:textSize="14sp"
+            android:textColor="@color/stone"
+            android:letterSpacing="0.06" />
+
+        <View
+            android:layout_width="72dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/brass" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:maxWidth="340dp"
+            android:text="@string/welcome_identity"
+            android:textSize="24sp"
+            android:lineSpacingMultiplier="1.5"
+            android:textColor="@color/parchment"
+            android:fontFamily="@font/amiri" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:gravity="center"
+            android:maxWidth="340dp"
+            android:text="@string/welcome_features"
+            android:textSize="13sp"
+            android:lineSpacingMultiplier="1.9"
+            android:textColor="@color/text_secondary_dark" />
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="30dp"
+            android:maxWidth="360dp"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textPersonName"
+            android:maxLength="24"
+            android:hint="@string/welcome_name_hint"
+            android:textColor="@color/parchment"
+            android:textColorHint="@color/stone"
+            android:imeOptions="actionDone" />
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="18dp"
+            android:maxWidth="360dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/welcome_start"
+            android:textSize="16sp"
+            android:background="@drawable/btn_primary"
+            android:textColor="?attr/onAccent"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

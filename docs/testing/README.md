@@ -41,6 +41,25 @@ cd android && ./gradlew testDebugUnitTest
 ./gradlew connectedDebugAndroidTest  # needs device/emulator
 ```
 
+## Android VPN Performance (real device required)
+
+Hisn's VPN service must remain DNS-only: normal packets are not inspected, HTTPS
+and TLS SNI are never parsed, and blocklist checks use the in-memory
+`BlocklistIndex` rather than per-query database or file reads.
+
+On a physical Android phone:
+- Install the debug APK and grant VPN consent.
+- With Hisn off, load the same normal site 5 times in Chrome and record the
+  median page-load time.
+- Turn Hisn on, repeat the same 5 loads, and compare medians. Expected
+  difference: imperceptible, at most low tens of milliseconds.
+- Leave the service active for one hour of normal browsing and compare battery
+  drain with a similar one-hour baseline run with the service off.
+
+If either check regresses noticeably, profile `FilterVpnService.pumpPackets()`
+first. The likely causes are accidental per-packet logging, extra parsing,
+redundant buffer copies, or slow I/O on the DNS hot path.
+
 ## CI
 - `.github/workflows/desktop-build.yml` — builds desktop, runs tests
 - `.github/workflows/android-build.yml` — builds Android, runs unit tests

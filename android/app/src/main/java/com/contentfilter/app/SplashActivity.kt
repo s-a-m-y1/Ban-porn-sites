@@ -14,27 +14,30 @@ import kotlinx.coroutines.launch
 import android.view.animation.DecelerateInterpolator
 
 /**
- * Opening sequence (single run, brand spec):
- * 0.00s  arch outline traces itself (pen draw, 1.6s)
- * 1.60s  solid arch body fades in over the traced outline
- * 2.35s  vertical slit (closed gate) fades in last
- * 2.80s  wordmark حِصن rises softly
- * 3.30s  HISN companion label fades in
- * 4.10s  continue to home
+ * Opening sequence (brand video spec):
+ * 0.00s  the pen draws the arch — outer contour, then the inner one (thin line)
+ * 1.30s  the drawn outline dissolves into the solid ring (fill crossfade)
+ * 2.10s  the arch body fills — the ring becomes the full gate
+ * 2.60s  the slit (closed gate) appears last
+ * 2.70s  wordmark حِصن rises softly
+ * 3.20s  HISN companion label fades in
+ * 3.60s  whole composition settles with one quiet zoom-out
+ * 4.40s  continue to welcome / home
  */
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        val mark = findViewById<android.view.View>(R.id.splashMark)
         val outline = findViewById<ImageView>(R.id.splashOutline)
         val solid = findViewById<ImageView>(R.id.splashSolid)
         val slit = findViewById<ImageView>(R.id.splashSlit)
         val titleAr = findViewById<TextView>(R.id.splashTitleAr)
         val titleEn = findViewById<TextView>(R.id.splashTitleEn)
 
-        // 1) pen trace
+        // 1) the pen trace: outer contour, inner contour, then fill crossfade
         val avd = ContextCompat.getDrawable(this, R.drawable.splash_gate_avd) as? AnimatedVectorDrawable
         if (avd != null) {
             outline.setImageDrawable(avd)
@@ -43,21 +46,21 @@ class SplashActivity : AppCompatActivity() {
             outline.setImageResource(R.drawable.ic_splash_outline)
         }
 
-        // 2) solid body settles in after the trace completes
+        // 2) the full gate body fills the ring
         solid.alpha = 0f
         solid.animate()
             .alpha(1f)
-            .setStartDelay(1600)
-            .setDuration(600)
+            .setStartDelay(2100)
+            .setDuration(500)
             .setInterpolator(DecelerateInterpolator())
             .start()
 
-        // 3) the slit (closed gate) fades in last
+        // 3) the slit (closed gate) appears last
         slit.alpha = 0f
         slit.animate()
             .alpha(1f)
-            .setStartDelay(2350)
-            .setDuration(450)
+            .setStartDelay(2600)
+            .setDuration(400)
             .setInterpolator(DecelerateInterpolator())
             .start()
 
@@ -66,7 +69,7 @@ class SplashActivity : AppCompatActivity() {
         titleAr.translationY = 22f
         titleAr.animate()
             .alpha(1f).translationY(0f)
-            .setStartDelay(2800)
+            .setStartDelay(2700)
             .setDuration(700)
             .setInterpolator(DecelerateInterpolator())
             .start()
@@ -75,14 +78,30 @@ class SplashActivity : AppCompatActivity() {
         titleEn.alpha = 0f
         titleEn.animate()
             .alpha(1f)
-            .setStartDelay(3300)
+            .setStartDelay(3200)
             .setDuration(600)
             .start()
 
-        // 6) continue to home
+        // 6) one quiet settle: the composition exhales into place
+        mark.scaleX = 1.04f
+        mark.scaleY = 1.04f
+        mark.animate()
+            .scaleX(1f).scaleY(1f)
+            .setStartDelay(3600)
+            .setDuration(600)
+            .setInterpolator(DecelerateInterpolator())
+            .start()
+
+        // 7) continue — first launch goes to the welcome/onboarding screen
         CoroutineScope(Dispatchers.Main).launch {
-            delay(4100)
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            delay(4400)
+            val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+            val next = if (prefs.getBoolean("onboarding_done", false)) {
+                MainActivity::class.java
+            } else {
+                WelcomeActivity::class.java
+            }
+            startActivity(Intent(this@SplashActivity, next))
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }

@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -40,11 +42,16 @@ class FeaturesFragment : Fragment() {
         val enabled = prefs.getStringSet("enabled_cats", null)?.takeIf { it.isNotEmpty() }
             ?: setOf(Categories.PORN)
 
-        fun bind(switch: SwitchCompat, cat: String) {
+        fun bind(row: View, switch: SwitchCompat, cat: String, label: String) {
+            switch.contentDescription = label
             switch.isChecked = cat in enabled
             switch.setOnCheckedChangeListener { _, checked ->
                 lifecycleScope.launch {
-                    BlocklistRepository(requireContext()).setCategoryEnabled(cat, checked)
+                    val ctx = requireContext()
+                    BlocklistRepository(ctx).setCategoryEnabled(cat, checked)
+                    // refresh the in-memory index so the running filter sees
+                    // the change instantly — without a service restart
+                    BlocklistIndex.load(ctx)
                     val current = prefs.getStringSet(
                         "enabled_cats", setOf(Categories.PORN),
                     )!!.toMutableSet()
@@ -52,11 +59,12 @@ class FeaturesFragment : Fragment() {
                     prefs.edit().putStringSet("enabled_cats", current).apply()
                 }
             }
+            row.setOnClickListener { switch.performClick() }
         }
-        bind(view.findViewById(R.id.switchPorn), Categories.PORN)
-        bind(view.findViewById(R.id.switchGambling), Categories.GAMBLING)
-        bind(view.findViewById(R.id.switchFakenews), Categories.FAKENEWS)
-        bind(view.findViewById(R.id.switchMalware), Categories.MALWARE)
+        bind(view.findViewById(R.id.rowPorn), view.findViewById(R.id.switchPorn), Categories.PORN, getString(R.string.cat_porn))
+        bind(view.findViewById(R.id.rowGambling), view.findViewById(R.id.switchGambling), Categories.GAMBLING, getString(R.string.cat_gambling))
+        bind(view.findViewById(R.id.rowFakenews), view.findViewById(R.id.switchFakenews), Categories.FAKENEWS, getString(R.string.cat_fakenews))
+        bind(view.findViewById(R.id.rowMalware), view.findViewById(R.id.switchMalware), Categories.MALWARE, getString(R.string.cat_malware))
     }
 
     private fun setupManual(view: View) {
@@ -64,13 +72,14 @@ class FeaturesFragment : Fragment() {
         fun refreshCount() {
             lifecycleScope.launch {
                 val list = BlocklistRepository(requireContext()).listCustom()
-                manualCount.text = if (list.isEmpty()) "" else list.size.toString()
+                manualCount.text = if (list.isEmpty()) "+" else list.size.toString()
             }
         }
         refreshCount()
 
         view.findViewById<View>(R.id.rowManual).apply {
-            setOnClickListener { showAddDialog(manualCount) }
+            contentDescription = getString(R.string.manual_block_desc)
+            setOnClickListener { showManualActions(manualCount) }
             setOnLongClickListener {
                 showCustomList(manualCount)
                 true
@@ -78,12 +87,35 @@ class FeaturesFragment : Fragment() {
         }
     }
 
+    private fun showManualActions(manualCount: TextView) {
+        val actions = arrayOf(
+            getString(R.string.add_domain),
+            getString(R.string.manual_review),
+        )
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.manual_block)
+            .setItems(actions) { _, which ->
+                if (which == 0) showAddDialog(manualCount) else showCustomList(manualCount)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
     private fun showAddDialog(manualCount: TextView) {
         val layout = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(60, 40, 60, 20)
         }
-        val input = EditText(requireContext()).apply { hint = getString(R.string.domain_hint) }
+        val input = EditText(requireContext()).apply {
+            hint = getString(R.string.domain_hint)
+            inputType = InputType.TYPE_CLASS_TEXT or
+                InputType.TYPE_TEXT_VARIATION_URI or
+                InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+            imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+            layoutDirection = View.LAYOUT_DIRECTION_LTR
+            textDirection = View.TEXT_DIRECTION_LTR
+            setSingleLine(true)
+        }
         layout.addView(input)
 
         val dialog = AlertDialog.Builder(requireContext())
@@ -94,13 +126,23 @@ class FeaturesFragment : Fragment() {
             .create()
 
         dialog.setOnShowListener {
+            input.requestFocus()
+            dialog.window?.setSoftInputMode(
+                android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE,
+            )
+            input.post {
+                val imm = requireContext().getSystemService(InputMethodManager::class.java)
+                imm.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT)
+            }
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val domain = input.text.toString()
                 lifecycleScope.launch {
                     val repo = BlocklistRepository(requireContext())
                     if (repo.addCustom(domain)) {
+                        // new manual domain: live-refresh the in-memory index
+                        BlocklistIndex.load(requireContext())
                         val list = repo.listCustom()
-                        manualCount.text = if (list.isEmpty()) "" else list.size.toString()
+                        manualCount.text = if (list.isEmpty()) "+" else list.size.toString()
                         Toast.makeText(
                             requireContext(), R.string.domain_added, Toast.LENGTH_SHORT,
                         ).show()
@@ -108,6 +150,14 @@ class FeaturesFragment : Fragment() {
                     } else {
                         input.error = getString(R.string.invalid_domain)
                     }
+                }
+            }
+            input.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+                    true
+                } else {
+                    false
                 }
             }
         }
@@ -131,8 +181,9 @@ class FeaturesFragment : Fragment() {
                                 lifecycleScope.launch {
                                     val repo = BlocklistRepository(requireContext())
                                     repo.removeCustom(domain)
+                                    BlocklistIndex.load(requireContext())
                                     val l = repo.listCustom()
-                                    manualCount.text = if (l.isEmpty()) "" else l.size.toString()
+                                    manualCount.text = if (l.isEmpty()) "+" else l.size.toString()
                                 }
                             }
                             .setNegativeButton(R.string.cancel, null)
@@ -150,6 +201,7 @@ class FeaturesFragment : Fragment() {
         val btnStart = view.findViewById<Button>(R.id.btnStartTime)
         val btnEnd = view.findViewById<Button>(R.id.btnEndTime)
         val scheduleValue = view.findViewById<TextView>(R.id.scheduleValue)
+        scheduleSwitch.contentDescription = getString(R.string.schedule_title)
 
         fun refreshScheduleUi() {
             val enabled = prefs.getBoolean("schedule_enabled", false)
@@ -166,6 +218,9 @@ class FeaturesFragment : Fragment() {
             } else {
                 scheduleValue.text = getString(R.string.schedule_desc)
             }
+        }
+        view.findViewById<View>(R.id.rowSchedule).setOnClickListener {
+            scheduleSwitch.performClick()
         }
 
         scheduleSwitch.setOnCheckedChangeListener { _, checked ->
@@ -193,6 +248,7 @@ class FeaturesFragment : Fragment() {
 
     private fun setupAppLock(view: View) {
         val applockSwitch = view.findViewById<SwitchCompat>(R.id.applockSwitch)
+        applockSwitch.contentDescription = getString(R.string.applock_title)
         applockSwitch.isChecked = prefs.getBoolean("applock_enabled", false)
 
         applockSwitch.setOnCheckedChangeListener { _, checked ->
@@ -207,13 +263,49 @@ class FeaturesFragment : Fragment() {
                     .show()
                 return@setOnCheckedChangeListener
             }
+            if (checked && !Settings.canDrawOverlays(requireContext())) {
+                // Android 14+ blocks activity launches from background services;
+                // the "display over other apps" grant is the documented exemption
+                // that lets the block screen appear reliably over a blocked app.
+                applockSwitch.isChecked = false
+                AlertDialog.Builder(requireContext())
+                    .setMessage(R.string.applock_need_overlay)
+                    .setPositiveButton(R.string.grant) { _, _ ->
+                        startActivityForResult(
+                            Intent(
+                                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                android.net.Uri.parse("package:${requireContext().packageName}"),
+                            ), 7,
+                        )
+                    }
+                    .setNegativeButton(R.string.cancel, null)
+                    .show()
+                return@setOnCheckedChangeListener
+            }
             prefs.edit().putBoolean("applock_enabled", checked).apply()
-            if (checked) AppLockService.start(requireContext())
-            else AppLockService.stop(requireContext())
+            if (checked) {
+                AppLockService.start(requireContext())
+                showAppPicker()
+            } else {
+                AppLockService.stop(requireContext())
+            }
         }
 
         view.findViewById<View>(R.id.rowApplock).setOnClickListener {
-            if (applockSwitch.isChecked) showAppPicker()
+            if (applockSwitch.isChecked) showAppPicker() else applockSwitch.performClick()
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 7) {
+            // back from the overlay-permission screen: finish enabling app lock
+            val view = view ?: return
+            val applockSwitch = view.findViewById<SwitchCompat>(R.id.applockSwitch)
+            if (Settings.canDrawOverlays(requireContext())) {
+                applockSwitch.isChecked = true // triggers the enable path in the listener
+            }
         }
     }
 
@@ -253,7 +345,7 @@ class FeaturesFragment : Fragment() {
                 if (isChecked) current.add(pkg) else current.remove(pkg)
                 prefs.edit().putStringSet("blocked_apps", current).apply()
             }
-            .setPositiveButton(R.string.pin_confirm, null)
+            .setPositiveButton(R.string.done, null)
             .setNegativeButton(R.string.cancel, null)
             .show()
     }

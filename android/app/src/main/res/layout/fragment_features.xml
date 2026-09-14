@@ -130,13 +130,13 @@
                     android:layout_height="44dp" android:layout_weight="1"
                     android:text="@string/schedule_start"
                     android:textAllCaps="false" android:textSize="13sp"
-                    android:background="@drawable/btn_primary" android:textColor="@color/white" />
+                    android:background="@drawable/btn_primary" android:textColor="?attr/onAccent" />
                 <Button android:id="@+id/btnEndTime" android:layout_width="0dp"
                     android:layout_height="44dp" android:layout_weight="1"
                     android:layout_marginStart="12dp"
                     android:text="@string/schedule_end"
                     android:textAllCaps="false" android:textSize="13sp"
-                    android:background="@drawable/btn_primary" android:textColor="@color/white" />
+                    android:background="@drawable/btn_primary" android:textColor="?attr/onAccent" />
             </LinearLayout>
         </LinearLayout>
 

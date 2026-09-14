@@ -4,12 +4,12 @@
     <string name="app_name_ar" translatable="false">حِصن</string>
     <string name="app_name_latin" translatable="false">HISN</string>
     <string name="protection_title">Protection Status</string>
-    <string name="status_on">Protection active</string>
-    <string name="status_off">Protection disabled</string>
-    <string name="status_on_subtitle">Your device is safe. Adult content is being blocked.</string>
-    <string name="status_off_subtitle">Tap the power button to start blocking adult content.</string>
-    <string name="start_blocking">START PROTECTION</string>
-    <string name="stop_blocking">STOP PROTECTION</string>
+    <string name="status_on">The gate is closed</string>
+    <string name="status_off">The gate is open</string>
+    <string name="status_on_subtitle">Hisn is guarding this device from harmful sites, quietly and locally.</string>
+    <string name="status_off_subtitle">Tap the gate to begin protection. May Allah make it easy.</string>
+    <string name="start_blocking">Close the gate</string>
+    <string name="stop_blocking">Open the gate</string>
 
     <string name="stats_title">Statistics</string>
     <string name="blocked_count">Blocked attempts</string>
@@ -26,6 +26,16 @@
     <string name="contact_subtitle">Found an issue or have a suggestion? Contact me:</string>
     <string name="email_button">sam858y@gmail.com</string>
     <string name="send_email">Send Email</string>
+    <string name="how_it_works_title">How the gate works</string>
+    <string name="how_it_works_body">Hisn stands quietly between your device and the web. Every site you visit passes through one question: is this address on the block list? Nothing more, nothing less.</string>
+    <string name="step_1_title">One tap</string>
+    <string name="step_1_body">Open the gate or close it. Protection starts with a single press.</string>
+    <string name="step_2_title">One question</string>
+    <string name="step_2_body">Each site request is checked against a local block list on your device.</string>
+    <string name="step_3_title">One answer</string>
+    <string name="step_3_body">Blocked addresses never leave your phone. Allowed ones pass untouched.</string>
+    <string name="trust_title">Private by construction</string>
+    <string name="trust_body">The list lives on your device. Filtering happens locally, in silence. We do not see your browsing, we do not collect it, and there is nothing to sell.</string>
     <string name="powered_by">Powered by local DNS filtering — no data leaves your device.</string>
 
     <!-- Features -->
@@ -35,7 +45,8 @@
     <string name="cat_fakenews">Block fake news sites</string>
     <string name="cat_malware">Block malware sites</string>
     <string name="manual_block">Manually blocked sites</string>
-    <string name="manual_block_desc">Add any site to the blocklist yourself</string>
+    <string name="manual_block_desc">Add, review, or remove sites you choose yourself</string>
+    <string name="manual_review">Review saved sites</string>
     <string name="add_domain">Add site to block</string>
     <string name="domain_hint">example-site.com</string>
     <string name="add">Add</string>
@@ -55,7 +66,20 @@
     <string name="applock_title">Blocked apps</string>
     <string name="applock_desc">Choose apps to lock completely</string>
     <string name="applock_need_permission">To lock apps, grant Usage access first</string>
+    <string name="applock_need_overlay">To show the reminder screen over any app, allow "Display over other apps" for Hisn</string>
     <string name="grant">Grant</string>
+
+    <!-- welcome / journey -->
+    <string name="welcome_subtitle">A quiet companion for a cleaner screen</string>
+    <string name="welcome_identity">I am a Muslim…\nseeking Allah’s help to be better</string>
+    <string name="welcome_features">Harmful sites blocked automatically\nA gentle reminder at the hard moment\nA private journey you can keep returning to</string>
+    <string name="welcome_name_hint">What shall we call you? (optional)</string>
+    <string name="welcome_start">Start my journey</string>
+    <string name="greet_morning">Good morning</string>
+    <string name="greet_afternoon">Good afternoon</string>
+    <string name="greet_evening">Good evening</string>
+    <string name="greet_night">Peaceful night</string>
+    <string name="journey_day_fmt">Day %1$d of your journey</string>
 
     <string name="security_title">Security</string>
     <string name="pin_lock">PIN protection</string>
@@ -67,7 +91,22 @@
     <string name="pin_hint">Enter PIN</string>
     <string name="pin_wrong">Wrong PIN</string>
     <string name="pin_confirm">Confirm</string>
+    <string name="done">Done</string>
     <string name="pin_enter_new">Enter a new PIN (4–6 digits)</string>
+    <string name="pin_create_title">Create app password</string>
+    <string name="pin_change_title">Change app password</string>
+    <string name="pin_create_hint">4–6 digits. Avoid sequences like 1234.</string>
+    <string name="pin_confirm_new">Confirm PIN</string>
+    <string name="pin_save">Save PIN</string>
+    <string name="pin_err_length">PIN must be 4–6 digits</string>
+    <string name="pin_err_digits">PIN must contain digits only</string>
+    <string name="pin_err_same">PIN cannot be all the same digit</string>
+    <string name="pin_err_seq">PIN cannot be a sequence (1234, 4321)</string>
+    <string name="pin_err_common">This PIN is too easy to guess</string>
+    <string name="pin_err_mismatch">PINs do not match</string>
+    <string name="pin_change_needed">Set your app password first</string>
+    <string name="pin_saved">App password saved</string>
+    <string name="pin_change_desc">Change the current app password</string>
 
     <string name="report_title">Weekly report</string>
     <string name="report_desc">Your blocking activity over the last 7 days</string>
@@ -78,6 +117,11 @@
 
     <string name="blocked_app_title">This app is blocked</string>
     <string name="blocked_app_default">Selected app</string>
+    <!-- the app-lock hero phrase — Arabic in every locale, it is the point -->
+    <string name="attqi_allah">اتقي الله</string>
+    <string name="blocked_app_message">This app is on your blocked list. Take a breath, remember Allah, and step away.</string>
+    <string name="blocked_site_message">This site is on your blocked list. Take a breath, remember Allah, and step away.</string>
+    <string name="blockscreen_need_overlay">So the "اتقي الله" screen appears when a blocked site is opened, allow Hisn to "Display over other apps"</string>
     <string name="back_home">Back to home</string>
 
     <!-- Heatmap / persistence -->

@@ -32,6 +32,21 @@ object PinManager {
         context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
             .getString("pin_hash", null) != null
 
+    /** validation rules: 4–6 digits, not all-same, not a simple sequence */
+    fun validate(pin: String): Int {
+        if (pin.length !in 4..6) return R.string.pin_err_length
+        if (!pin.all { it.isDigit() }) return R.string.pin_err_digits
+        if (pin.all { it == pin[0] }) return R.string.pin_err_same
+        val nums = pin.map { it - '0' }
+        val ascending = nums.zipWithNext().all { (a, b) -> b == a + 1 }
+        val descending = nums.zipWithNext().all { (a, b) -> b == a - 1 }
+        if (ascending || descending) return R.string.pin_err_seq
+        if (pin in setOf("1234", "0000", "1111", "1212", "6969", "1004", "2000", "2020", "1122")) {
+            return R.string.pin_err_common
+        }
+        return 0 // valid
+    }
+
     /** per-install random salt (regenerated if wiped) */
     private fun getDeviceSalt(context: Context): String {
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)

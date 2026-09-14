@@ -7,6 +7,10 @@
     <attr name="dividerColor" format="color" />
     <attr name="strokeColor" format="color" />
     <attr name="accentColor" format="color" />
+    <!-- text/icon color that sits ON top of the accent (teal) fill -->
+    <attr name="onAccent" format="color" />
+    <!-- hero/footer band surface: ink at night, soft mint-white in light -->
+    <attr name="heroBg" format="color" />
 
     <style name="Theme.ContentFilter" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:fontFamily">@font/cairo</item>
@@ -27,6 +31,8 @@
         <item name="dividerColor">@color/divider</item>
         <item name="strokeColor">@color/stroke_light</item>
         <item name="accentColor">@color/teal_accent</item>
+        <item name="onAccent">#FFFFFF</item>
+        <item name="heroBg">#EAF2EF</item>
     </style>
 
     <!-- Type -->
