@@ -36,6 +36,16 @@ class FeaturesFragment : Fragment() {
         setupManual(view)
         setupSchedule(view)
         setupAppLock(view)
+
+        // F3: one entrance pass down the screen's rhythm (header, then each
+        // card). Re-call safe: UiAnim resets state on every invocation, so
+        // re-created fragment views animate again cleanly.
+        UiAnim.staggeredEntrance(
+            view.findViewById(R.id.f3Header),
+            view.findViewById(R.id.f3CardCategories),
+            view.findViewById(R.id.f3CardSchedule),
+            view.findViewById(R.id.f3CardAppLock),
+        )
     }
 
     private fun setupCategories(view: View) {
@@ -59,6 +69,7 @@ class FeaturesFragment : Fragment() {
                     prefs.edit().putStringSet("enabled_cats", current).apply()
                 }
             }
+            UiAnim.pressable(row)
             row.setOnClickListener { switch.performClick() }
         }
         bind(view.findViewById(R.id.rowPorn), view.findViewById(R.id.switchPorn), Categories.PORN, getString(R.string.cat_porn))
@@ -78,6 +89,7 @@ class FeaturesFragment : Fragment() {
         refreshCount()
 
         view.findViewById<View>(R.id.rowManual).apply {
+            UiAnim.pressable(this)
             contentDescription = getString(R.string.manual_block_desc)
             setOnClickListener { showManualActions(manualCount) }
             setOnLongClickListener {
@@ -219,8 +231,9 @@ class FeaturesFragment : Fragment() {
                 scheduleValue.text = getString(R.string.schedule_desc)
             }
         }
-        view.findViewById<View>(R.id.rowSchedule).setOnClickListener {
-            scheduleSwitch.performClick()
+        view.findViewById<View>(R.id.rowSchedule).apply {
+            UiAnim.pressable(this)
+            setOnClickListener { scheduleSwitch.performClick() }
         }
 
         scheduleSwitch.setOnCheckedChangeListener { _, checked ->
@@ -240,6 +253,7 @@ class FeaturesFragment : Fragment() {
                 }
             }, current / 60, current % 60, true).show()
         }
+        UiAnim.pressable(btnStart, btnEnd)
         btnStart.setOnClickListener { timePicker("schedule_start") }
         btnEnd.setOnClickListener { timePicker("schedule_end") }
 
@@ -291,8 +305,11 @@ class FeaturesFragment : Fragment() {
             }
         }
 
-        view.findViewById<View>(R.id.rowApplock).setOnClickListener {
-            if (applockSwitch.isChecked) showAppPicker() else applockSwitch.performClick()
+        view.findViewById<View>(R.id.rowApplock).apply {
+            UiAnim.pressable(this)
+            setOnClickListener {
+                if (applockSwitch.isChecked) showAppPicker() else applockSwitch.performClick()
+            }
         }
     }
 

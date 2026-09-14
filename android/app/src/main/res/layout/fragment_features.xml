@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- F3 redesign: single-column vertical rhythm for RTL-first reading.
+     Icon-led rows on 42dp tinted circles, ?attr/cardBg cards (24dp radius,
+     16dp internal padding), and a single ?attr/cardBgElevated moment (the
+     schedule times panel). All row/switch/button IDs are unchanged so
+     FeaturesFragment.kt binds exactly as before. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +18,7 @@
         android:paddingEnd="20dp"
         android:paddingBottom="24dp">
 
+        <!-- Screen title: mirrors the settings-screen title idiom -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,146 +28,422 @@
             android:text="@string/tab_features"
             style="@style/Display" />
 
-        <!-- FEATURES CARD -->
+        <TextView
+            android:id="@+id/f3Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/features_title"
+            style="@style/SectionHeaderAr" />
+
+        <!-- ============ Protection categories + manual blocklist ============ -->
         <LinearLayout
+            android:id="@+id/f3CardCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/card_bg"
-            android:padding="8dp"
-            android:layout_marginTop="12dp">
+            android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/rowPorn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="4dp"
-                android:text="@string/features_title"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="?attr/textPrimary" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:background="?android:attr/selectableItemBackground">
 
-            <LinearLayout android:id="@+id/rowPorn" style="@style/SettingsRow">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:text="@string/cat_porn"
-                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
-                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchPorn"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <FrameLayout
+                    style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_green">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f3_ic_shield_alert"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:fontFamily="@font/cairo"
+                    android:text="@string/cat_porn"
+                    style="@style/SettingsLabel"
+                    android:textColor="?attr/textPrimary" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchPorn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
 
-            <LinearLayout android:id="@+id/rowGambling" style="@style/SettingsRow">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:text="@string/cat_gambling"
-                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
-                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchGambling"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="56dp"
+                android:background="?attr/dividerColor" />
+
+            <LinearLayout
+                android:id="@+id/rowGambling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <FrameLayout
+                    style="@style/IconCircle"
+                    android:background="@drawable/f3_circle_clay">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f3_ic_dice"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:fontFamily="@font/cairo"
+                    android:text="@string/cat_gambling"
+                    style="@style/SettingsLabel"
+                    android:textColor="?attr/textPrimary" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchGambling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
 
-            <LinearLayout android:id="@+id/rowFakenews" style="@style/SettingsRow">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:text="@string/cat_fakenews"
-                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
-                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchFakenews"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="56dp"
+                android:background="?attr/dividerColor" />
+
+            <LinearLayout
+                android:id="@+id/rowFakenews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <FrameLayout
+                    style="@style/IconCircle"
+                    android:background="@drawable/f3_circle_brass">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f3_ic_news"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:fontFamily="@font/cairo"
+                    android:text="@string/cat_fakenews"
+                    style="@style/SettingsLabel"
+                    android:textColor="?attr/textPrimary" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchFakenews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
 
-            <LinearLayout android:id="@+id/rowMalware" style="@style/SettingsRow">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:text="@string/cat_malware"
-                    style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
-                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchMalware"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="56dp"
+                android:background="?attr/dividerColor" />
+
+            <LinearLayout
+                android:id="@+id/rowMalware"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <FrameLayout
+                    style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_green">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f3_ic_bug"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:fontFamily="@font/cairo"
+                    android:text="@string/cat_malware"
+                    style="@style/SettingsLabel"
+                    android:textColor="?attr/textPrimary" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchMalware"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="?attr/dividerColor" android:layout_marginStart="68dp" />
 
-            <LinearLayout android:id="@+id/rowManual" style="@style/SettingsRow">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="56dp"
+                android:background="?attr/dividerColor" />
+
+            <LinearLayout
+                android:id="@+id/rowManual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <FrameLayout
+                    style="@style/IconCircle"
+                    android:background="@drawable/f3_circle_clay">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f3_ic_edit_list"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
                         android:text="@string/manual_block"
-                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        style="@style/SettingsLabel"
+                        android:textColor="?attr/textPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
+                        android:lineSpacingMultiplier="1.4"
                         android:text="@string/manual_block_desc"
-                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                        style="@style/SettingsSublabel" />
                 </LinearLayout>
-                <TextView android:id="@+id/manualCount"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textColor="?attr/textSecondary" android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/manualCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/chip_green"
+                    android:fontFamily="@font/plexmono_semibold"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textColor="@color/teal"
+                    style="@style/Chip" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- SCHEDULE CARD -->
+        <!-- ============ Schedule ============ -->
         <LinearLayout
+            android:id="@+id/f3CardSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
             android:orientation="vertical"
             android:background="@drawable/card_bg"
-            android:padding="8dp"
-            android:layout_marginTop="14dp">
+            android:padding="16dp">
 
-            <LinearLayout android:id="@+id/rowSchedule" style="@style/SettingsRow">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/rowSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <FrameLayout
+                    style="@style/IconCircle"
+                    android:background="@drawable/f3_circle_brass">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f3_ic_clock"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
                         android:text="@string/schedule_title"
-                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
-                    <TextView android:id="@+id/scheduleValue" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        style="@style/SettingsLabel"
+                        android:textColor="?attr/textPrimary" />
+
+                    <TextView
+                        android:id="@+id/scheduleValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:lineSpacingMultiplier="1.4"
                         android:text="@string/schedule_desc"
-                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                        style="@style/SettingsSublabel" />
                 </LinearLayout>
-                <androidx.appcompat.widget.SwitchCompat android:id="@+id/scheduleSwitch"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/scheduleSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/scheduleTimesRow" style="@style/SettingsRow"
-                android:visibility="gone">
-                <Button android:id="@+id/btnStartTime" android:layout_width="0dp"
-                    android:layout_height="44dp" android:layout_weight="1"
+            <!-- Elevated tier (?attr/cardBgElevated): the one raised surface on
+                 the screen, shown only while scheduling is enabled. -->
+            <LinearLayout
+                android:id="@+id/scheduleTimesRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:background="@drawable/f3_card_elevated"
+                android:padding="12dp">
+
+                <Button
+                    android:id="@+id/btnStartTime"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_primary"
+                    android:fontFamily="@font/cairo"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:text="@string/schedule_start"
-                    android:textAllCaps="false" android:textSize="13sp"
-                    android:background="@drawable/btn_primary" android:textColor="?attr/onAccent" />
-                <Button android:id="@+id/btnEndTime" android:layout_width="0dp"
-                    android:layout_height="44dp" android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/onAccent"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnEndTime"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
                     android:layout_marginStart="12dp"
+                    android:background="@drawable/btn_primary"
+                    android:fontFamily="@font/cairo"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:text="@string/schedule_end"
-                    android:textAllCaps="false" android:textSize="13sp"
-                    android:background="@drawable/btn_primary" android:textColor="?attr/onAccent" />
+                    android:textAllCaps="false"
+                    android:textColor="?attr/onAccent"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- APP LOCK CARD -->
+        <!-- ============ App lock ============ -->
         <LinearLayout
+            android:id="@+id/f3CardAppLock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
             android:orientation="vertical"
             android:background="@drawable/card_bg"
-            android:padding="8dp"
-            android:layout_marginTop="14dp">
+            android:padding="16dp">
 
-            <LinearLayout android:id="@+id/rowApplock" style="@style/SettingsRow">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/rowApplock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <FrameLayout
+                    style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_green">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/f3_ic_lock"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cairo"
                         android:text="@string/applock_title"
-                        style="@style/SettingsLabel" android:textColor="?attr/textPrimary" />
-                    <TextView android:id="@+id/applockDesc" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        style="@style/SettingsLabel"
+                        android:textColor="?attr/textPrimary" />
+
+                    <TextView
+                        android:id="@+id/applockDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:lineSpacingMultiplier="1.4"
                         android:text="@string/applock_desc"
-                        android:textSize="12sp" android:textColor="?attr/textSecondary" />
+                        style="@style/SettingsSublabel" />
                 </LinearLayout>
-                <androidx.appcompat.widget.SwitchCompat android:id="@+id/applockSwitch"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/applockSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

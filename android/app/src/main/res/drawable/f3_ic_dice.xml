@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- F3: protection category icon — die / gambling, line weight 1.8 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="@color/clay"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M7.4,5.4 H16.6 A2,2 0 0 1 18.6,7.4 V16.6 A2,2 0 0 1 16.6,18.6 H7.4 A2,2 0 0 1 5.4,16.6 V7.4 A2,2 0 0 1 7.4,5.4 Z" />
+    <path
+        android:fillColor="@color/clay"
+        android:pathData="M8.9,8.9 m-1.1,0 a1.1,1.1 0 1 0 2.2,0 a1.1,1.1 0 1 0 -2.2,0" />
+    <path
+        android:fillColor="@color/clay"
+        android:pathData="M12,12 m-1.1,0 a1.1,1.1 0 1 0 2.2,0 a1.1,1.1 0 1 0 -2.2,0" />
+    <path
+        android:fillColor="@color/clay"
+        android:pathData="M15.1,15.1 m-1.1,0 a1.1,1.1 0 1 0 2.2,0 a1.1,1.1 0 1 0 -2.2,0" />
+</vector>
