@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,86 +15,284 @@
         android:paddingEnd="20dp"
         android:paddingBottom="24dp">
 
+        <!-- Screen title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/tab_stats"
-            style="@style/Display" />
+            android:fontFamily="@font/cairo_extrabold"
+            android:textSize="26sp"
+            android:textColor="?attr/textPrimary"
+            android:layout_gravity="start" />
 
-        <!-- WEEKLY REPORT CARD -->
+        <!-- ===================== Stat cards row ===================== -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/card_bg"
-            android:padding="18dp"
-            android:layout_marginTop="12dp">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
+            <!-- Card 1: weekly total -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/statCardTotal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="14dp">
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical"
+                android:gravity="start"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
-                <FrameLayout style="@style/IconCircle"
-                    android:background="@drawable/icon_circle_red">
-                    <ImageView android:layout_width="22dp" android:layout_height="22dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_block" />
-                </FrameLayout>
+                <TextView
+                    android:id="@+id/statTotalValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plexmono_semibold"
+                    android:textSize="24sp"
+                    android:textColor="?attr/textPrimary"
+                    android:textDirection="ltr"
+                    android:text="0"
+                    android:includeFontPadding="false"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/report_title"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/textPrimary" />
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/cairo_medium"
+                    android:textSize="11sp"
+                    android:textColor="?attr/textSecondary"
+                    android:text="@string/report_total_fmt"
+                    android:includeFontPadding="false" />
+            </LinearLayout>
+
+            <!-- Card 2: today -->
+            <LinearLayout
+                android:id="@+id/statCardToday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical"
+                android:gravity="start"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
                 <TextView
-                    android:id="@+id/reportCount"
+                    android:id="@+id/statTodayValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plexmono_semibold"
+                    android:textSize="24sp"
+                    android:textColor="?attr/textPrimary"
+                    android:textDirection="ltr"
+                    android:text="0"
+                    android:includeFontPadding="false"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/cairo_medium"
+                    android:textSize="11sp"
+                    android:textColor="?attr/textSecondary"
+                    android:text="@string/report_today"
+                    android:includeFontPadding="false" />
+            </LinearLayout>
+
+            <!-- Card 3: daily average -->
+            <LinearLayout
+                android:id="@+id/statCardAverage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical"
+                android:gravity="start"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/statAverageValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plexmono_semibold"
+                    android:textSize="24sp"
+                    android:textColor="?attr/textPrimary"
+                    android:textDirection="ltr"
+                    android:text="0"
+                    android:includeFontPadding="false"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/cairo_medium"
+                    android:textSize="11sp"
+                    android:textColor="?attr/textSecondary"
+                    android:text="@string/stats_daily_avg"
+                    android:includeFontPadding="false"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===================== Weekly report card ===================== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <FrameLayout
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/icon_circle_red">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_block"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:textColor="@color/teal"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/cairo_bold"
+                    android:textSize="15sp"
+                    android:textColor="?attr/textPrimary"
+                    android:text="@string/report_title" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/report_desc"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/cairo_regular"
                 android:textSize="13sp"
-                android:textColor="?attr/textSecondary" />
+                android:textColor="?attr/textSecondary"
+                android:text="@string/report_desc" />
 
-            <LinearLayout android:id="@+id/reportBars"
+            <!-- 7-day bar chart -->
+            <LinearLayout
+                android:id="@+id/reportBars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="bottom" />
+
+            <!-- Empty state: zero blocked attempts this week -->
+            <TextView
+                android:id="@+id/reportEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:fontFamily="@font/cairo_regular"
+                android:textSize="13sp"
+                android:textColor="?attr/textSecondary"
+                android:lineSpacingMultiplier="1.6"
+                android:visibility="gone"
+                android:text="@string/report_empty" />
+        </LinearLayout>
+
+        <!-- ===================== Heatmap card ===================== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <!-- Header -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="bottom"
-                android:layout_marginTop="16dp" />
+                android:gravity="center_vertical">
 
+                <FrameLayout
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/icon_circle_green">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_shield"
+                        android:importantForAccessibility="no" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/cairo_bold"
+                    android:textSize="15sp"
+                    android:textColor="?attr/textPrimary"
+                    android:text="@string/heatmap_title" />
+            </LinearLayout>
+
+            <!-- Selected-day readout (defaults to "Today") -->
             <TextView
                 android:id="@+id/heatmapSelected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="6dp"
-                android:text="@string/heatmap_today"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/cairo_medium"
                 android:textSize="12sp"
-                android:textColor="?attr/textSecondary" />
+                android:textColor="?attr/textSecondary"
+                android:text="@string/heatmap_today" />
 
             <com.contentfilter.app.HeatmapView
                 android:id="@+id/heatmap"
                 android:layout_width="match_parent"
-                android:layout_height="140dp" />
+                android:layout_height="170dp" />
+
+            <!-- Empty state: no recorded activity at all -->
+            <TextView
+                android:id="@+id/heatmapEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:fontFamily="@font/cairo_regular"
+                android:textSize="12sp"
+                android:textColor="?attr/textSecondary"
+                android:visibility="gone"
+                android:text="@string/heatmap_empty" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
