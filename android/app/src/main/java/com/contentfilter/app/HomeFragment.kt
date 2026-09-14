@@ -34,9 +34,9 @@ class HomeFragment : Fragment() {
         val powerLabel = view.findViewById<TextView>(R.id.powerLabel)
 
         vpnActive = active
-        // gate face breathes between flat ink tones; halo ring carries the accent
+        // gate face sits flat on ink; the layered f2 halo carries the accent
         powerHalo.setBackgroundResource(
-            if (active) R.drawable.power_bg_on else R.drawable.power_bg_off,
+            if (active) R.drawable.f2_halo_on else R.drawable.f2_halo_off,
         )
         if (animated) {
             val punchX = android.animation.ObjectAnimator.ofFloat(powerButton, "scaleX", 1f, 0.96f, 1f)
@@ -117,9 +117,16 @@ class HomeFragment : Fragment() {
         setUiState(vpnActive, animated = false)
 
         UiAnim.pressable(powerButton, view.findViewById(R.id.emailButton))
-        // hero + trust sections entrance
-        val hero = view.findViewById<LinearLayout>(R.id.heroContainer)
-        if (hero != null) UiAnim.staggeredEntrance(hero)
+        // whole-page entrance: hero leads, every section follows in one staggered rhythm
+        val sections = listOfNotNull(
+            view.findViewById<LinearLayout>(R.id.heroContainer),
+            view.findViewById<LinearLayout>(R.id.hadithCard),
+            view.findViewById<LinearLayout>(R.id.statsCard),
+            view.findViewById<LinearLayout>(R.id.stepsCard),
+            view.findViewById<LinearLayout>(R.id.trustCard),
+            view.findViewById<LinearLayout>(R.id.footerCard),
+        )
+        if (sections.isNotEmpty()) UiAnim.staggeredEntrance(*sections.toTypedArray())
 
         bindGreeting()
         bindJourneyChip()

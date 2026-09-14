@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- F2: gate button face — flat ink, deepens on press, brighter ripple, hairline parchment rim -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#40F2EFE9">
+    <item>
+        <selector>
+            <item android:state_pressed="true">
+                <shape android:shape="oval">
+                    <solid android:color="#16242F" />
+                    <stroke android:width="1dp" android:color="#4DF2EFE9" />
+                </shape>
+            </item>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="#22333F" />
+                    <stroke android:width="1dp" android:color="#2EF2EFE9" />
+                </shape>
+            </item>
+        </selector>
+    </item>
+</ripple>
