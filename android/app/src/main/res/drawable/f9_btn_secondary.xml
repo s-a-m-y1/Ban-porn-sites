@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- f9 unified button family — SECONDARY: ink-family fill (@color/ink_2),
+     16dp corners on the unified radius scale, parchment ripple at 20% alpha.
+     Mirrors the app's existing dark-fill buttons (btn_danger / btn_gate);
+     label color belongs to the layout. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33F2EFE9">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFFFF" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ink_2" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</ripple>

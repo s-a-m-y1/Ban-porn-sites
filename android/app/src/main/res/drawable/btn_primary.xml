@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Accent CTA: follows the theme (light-theme teal / dark-theme mint), 14dp
-     corners matching the chips, press feedback from the ripple itself -->
+<!-- Accent CTA: follows the theme (light-theme teal / dark-theme mint), 16dp
+     corners on the unified radius scale, press feedback from the ripple itself -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#33000000">
+    android:color="#33F2EFE9">
     <item>
         <shape android:shape="rectangle">
             <solid android:color="?attr/accentColor" />
-            <corners android:radius="14dp" />
+            <corners android:radius="16dp" />
         </shape>
     </item>
 </ripple>

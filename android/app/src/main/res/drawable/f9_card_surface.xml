@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Card: quiet surface, no border — separation comes from the surface
-     contrast alone, so every screen speaks the same visual language -->
+<!-- f9 unified card family — SURFACE: resting card on the theme surface
+     (?attr/cardBg), 24dp corners matching card_bg. No stroke: separation
+     comes from surface contrast against the page background. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="?attr/cardBg" />

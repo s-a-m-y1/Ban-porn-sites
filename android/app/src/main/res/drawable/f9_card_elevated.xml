@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- f9 unified card family — ELEVATED: raised card layer (?attr/cardBgElevated),
+     24dp corners matching the surface card. Use for dialogs, sheets and the
+     top-most floating content; keep stroke-free like f9_card_surface. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="?attr/cardBgElevated" />
+    <corners android:radius="24dp" />
+</shape>

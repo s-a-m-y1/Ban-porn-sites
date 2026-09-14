@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- f9 unified chip family — selected state: 12% teal tint (@color/green_12)
+     with a 20%-alpha teal hairline (#332F7A6B), 16dp corners — mirrors the
+     chip_green treatment so selected reads as "on" in both themes. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="@color/green_12" />
