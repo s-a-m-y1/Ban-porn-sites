@@ -52,6 +52,11 @@
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="remove">Remove</string>
+    <string name="delete">Delete</string>
+    <string name="settings_section_app">App</string>
+    <string name="settings_section_protection">Protection</string>
+    <string name="settings_section_network">Network</string>
+    <string name="stats_daily_avg">Daily average</string>
     <string name="empty_custom">No manually blocked sites yet</string>
     <string name="invalid_domain">Invalid site address</string>
     <string name="domain_added">Site added to blocklist</string>

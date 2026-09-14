@@ -13,4 +13,24 @@
     <dimen name="stat_value_size">32sp</dimen>
     <dimen name="hadith_text_size">18sp</dimen>
     <dimen name="status_subtitle_size">14sp</dimen>
+
+    <!-- F1 spacing scale: 4dp base grid. Use these instead of hardcoded dps
+         so paddings/margins stay rhythm-consistent across screens. -->
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_sm">8dp</dimen>
+    <dimen name="space_md">12dp</dimen>
+    <dimen name="space_lg">16dp</dimen>
+    <dimen name="space_xl">24dp</dimen>
+    <dimen name="space_2xl">32dp</dimen>
+    <dimen name="space_3xl">48dp</dimen>
+
+    <!-- F1 corner-radius scale: matches existing drawables (btn_primary and
+         the chip_* pills sit at 14dp; card_bg 26dp sits between xl and 2xl).
+         radius_pill is for fully-rounded chips/tags. -->
+    <dimen name="radius_sm">8dp</dimen>
+    <dimen name="radius_md">12dp</dimen>
+    <dimen name="radius_lg">16dp</dimen>
+    <dimen name="radius_xl">24dp</dimen>
+    <dimen name="radius_2xl">32dp</dimen>
+    <dimen name="radius_pill">999dp</dimen>
 </resources>

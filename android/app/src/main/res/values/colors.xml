@@ -52,7 +52,22 @@
     <color name="clay_12">#1EB4573E</color>
     <color name="brass_12">#1EB8863B</color>
 
-    <!-- hadith banner: dark enough for parchment text in BOTH themes -->
-    <color name="hadith_card_bg">#2F7A6B</color>
-    <color name="hadith_card_title">#B8DCD3C6</color>
+    <!-- deep text variants for small text on LIGHT surfaces (>= 4.5:1):
+         stone_deep 4.9:1 on heroBg / 5.1:1 on bg_light, brass_deep 4.9:1 on
+         heroBg / 5.1:1 on bg_light. Base stone/brass keep their values —
+         welcome/app-lock use them over always-dark backgrounds. -->
+    <color name="stone_deep">#6F6758</color>
+    <color name="brass_deep">#856227</color>
+    <!-- clay for small TEXT on light surfaces: base clay #B4573E sits at
+         4.4:1 on bg_light (just under the 4.5:1 small-text floor). This
+         deep step clears 5.5:1; night mode keeps the bright clay (5.7:1
+         on ink). Base clay still serves the PIN error dots and tints. -->
+    <color name="clay_text">#A0492F</color>
+
+    <!-- hadith banner: teal deepened one step so the 18sp parchment body
+         clears 5:1 in day mode and the 11sp bold eyebrow clears 4.5:1 -->
+    <color name="hadith_card_bg">#2C7264</color>
+    <!-- eyebrow: full-tone parchment (5.0:1 day bg, 6.5:1 night bg). The
+         old 72%-alpha stone_light sat at ~2.5:1 — small text needs full tone -->
+    <color name="hadith_card_title">#F4F1EA</color>
 </resources>

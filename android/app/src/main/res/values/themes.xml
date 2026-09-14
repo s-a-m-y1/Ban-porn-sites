@@ -41,7 +41,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/textPrimary</item>
         <item name="android:fontFamily">@font/cairo_extrabold</item>
-        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:letterSpacing">0</item>
     </style>
 
     <style name="SectionHeader">
@@ -54,15 +54,33 @@
         <item name="android:textColor">@color/green_light</item>
     </style>
 
+    <!-- Arabic section header: textAllCaps + letterSpacing are Latin typographic
+         idioms — caps is a no-op that breaks shaping intent and letter-spacing
+         tears Arabic joins apart. Fresh TOP-LEVEL style (not a SectionHeader
+         child) so the existing Latin style keeps its current behavior. -->
+    <style name="SectionHeaderAr">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/green_light</item>
+        <!-- Arabic needs more leading than Latin: tall ascenders/descenders -->
+        <item name="android:lineSpacingMultiplier">1.3</item>
+    </style>
+
     <style name="StatValue">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
     </style>
 
     <style name="StatLabel">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">?attr/textSecondary</item>
         <item name="android:letterSpacing">0.04</item>
+        <item name="android:lineSpacingMultiplier">1.3</item>
     </style>
 
     <!-- Components -->
@@ -98,7 +116,7 @@
     </style>
 
     <style name="NavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">#1A00BFA5</item>
+        <item name="android:color">@color/green_12</item>
     </style>
 
     <style name="Chip">
@@ -110,5 +128,6 @@
         <item name="android:paddingBottom">6dp</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 </resources>

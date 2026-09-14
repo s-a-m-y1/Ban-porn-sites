@@ -13,4 +13,23 @@
     <color name="brass">#D2AC63</color>
     <color name="clay">#D08A6E</color>
     <color name="blue_accent">#8FC4B6</color>
+
+    <!-- stone lifted for ink surfaces (footer text, input hints): same warm
+         hue, ~5.3:1 on bg_dark_surface and ~6.7:1 on bg_dark. The base value
+         still serves the always-dark welcome/app-lock screens in day mode. -->
+    <color name="stone">#B0A798</color>
+
+    <!-- deep text variants (day: small text on light/hero surfaces) collapse
+         to the night-safe accents here — the day values (#6F6758/#856227) sit
+         on heroBg=bg_dark at night and would fall to ~2.8:1. -->
+    <color name="stone_deep">#B0A798</color>
+    <color name="brass_deep">#D2AC63</color>
+    <!-- clay_text: the night clay is already 5.7:1 on ink — no deep step needed -->
+    <color name="clay_text">#D08A6E</color>
+
+    <!-- accent tints at 20% of the NIGHT accents: the 12% day tints
+         composite to near-invisible on ink cards -->
+    <color name="green_12">#338FC4B6</color>
+    <color name="clay_12">#33D08A6E</color>
+    <color name="brass_12">#33D2AC63</color>
 </resources>

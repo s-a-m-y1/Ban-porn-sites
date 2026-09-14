@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">حصن</string>
+    <string name="app_name" translatable="false">حِصن</string>
     <string name="protection_title">حالة الحماية</string>
     <string name="status_on">البوابة مغلقة</string>
     <string name="status_off">البوابة مفتوحة</string>
@@ -16,6 +16,7 @@
     <string name="settings_title">الإعدادات</string>
     <string name="language">اللغة</string>
     <string name="dark_mode">الوضع الليلي</string>
+    <string name="english">الإنجليزية</string>
     <string name="blocklist_size_fmt">%1$d دومين</string>
 
     <string name="contact_title">تواصل مع المطوّر</string>
@@ -48,6 +49,11 @@
     <string name="add">إضافة</string>
     <string name="cancel">إلغاء</string>
     <string name="remove">حذف</string>
+    <string name="delete">حذف</string>
+    <string name="settings_section_app">التطبيق</string>
+    <string name="settings_section_protection">الحماية</string>
+    <string name="settings_section_network">الشبكة</string>
+    <string name="stats_daily_avg">المتوسط اليومي</string>
     <string name="empty_custom">لا توجد مواقع محظورة يدوياً بعد</string>
     <string name="invalid_domain">عنوان الموقع غير صحيح</string>
     <string name="domain_added">تمت إضافة الموقع لقائمة الحظر</string>
@@ -62,7 +68,7 @@
     <string name="applock_title">التطبيقات المحظورة</string>
     <string name="applock_desc">اختر تطبيقات لقفلها تماماً</string>
     <string name="applock_need_permission">لقفل التطبيقات، اسمح بالوصول للاستخدام أولاً</string>
-    <string name="applock_need_overlay">علشان شاشة "اتقي الله" تظهر فوق أي تطبيق، اسمح لحصن بـ "العرض فوق التطبيقات الأخرى"</string>
+    <string name="applock_need_overlay">علشان شاشة "اتقي الله" تظهر فوق أي تطبيق، اسمح لحِصن بـ "العرض فوق التطبيقات الأخرى"</string>
     <string name="grant">سماح</string>
 
     <!-- welcome / journey -->
@@ -116,7 +122,7 @@
     <string name="attqi_allah">اتقي الله</string>
     <string name="blocked_app_message">هذا التطبيق من التطبيقات التي اخترت حجبها. خذ نفسًا، واذكر الله، وارجع.</string>
     <string name="blocked_site_message">هذا الموقع من المواقع التي اخترت حجبها. خذ نفسًا، واذكر الله، وارجع.</string>
-    <string name="blockscreen_need_overlay">علشان شاشة "اتقي الله" تظهر لما تحاول تفتح موقع محجوب، اسمح لحصن بـ "العرض فوق التطبيقات الأخرى"</string>
+    <string name="blockscreen_need_overlay">علشان شاشة "اتقي الله" تظهر لما تحاول تفتح موقع محجوب، اسمح لحِصن بـ "العرض فوق التطبيقات الأخرى"</string>
     <string name="back_home">العودة للرئيسية</string>
 
     <!-- Heatmap / persistence -->
@@ -130,7 +136,7 @@
     <string name="always_on_ask">لجعل الحماية دائمة، فعّل "Always-on VPN" لتطبيق Content Filter في الشاشة التي ستفتح.</string>
     <string name="enable">تفعيل</string>
     <string name="later">لاحقاً</string>
-    <string name="heatmap_empty">لا يوجد نشاط بعد — ستتملأ المربعات مع الحظر</string>
+    <string name="heatmap_empty">لا يوجد نشاط بعد — ستمتلئ المربعات مع الحظر</string>
     <string name="channel_desc">يبقي فلترة DNS تعمل بصمت</string>
     <string name="tab_home">الرئيسية</string>
     <string name="tab_stats">الإحصائيات</string>

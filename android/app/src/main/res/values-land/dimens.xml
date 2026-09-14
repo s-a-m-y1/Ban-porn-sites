@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape overrides for the hero/gate block only. Everything else —
+     including the F1 space_* and radius_* scales — inherits from the base
+     res/values/dimens.xml via normal resource-qualifier fallback. -->
 <resources>
     <!-- compact hero so the gate + stats fit the shorter landscape viewport
          without being clipped behind the bottom navigation -->
@@ -12,6 +15,6 @@
 
     <!-- smaller type so rows stay single-line -->
     <dimen name="stat_value_size">22sp</dimen>
-    <dimen name="hadith_text_size">14sp</dimen>
+    <dimen name="hadith_text_size">16sp</dimen>
     <dimen name="status_subtitle_size">13sp</dimen>
 </resources>
