@@ -19,7 +19,11 @@ class WelcomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-        findViewById<LinearLayout>(R.id.welcomeContainer)?.let { UiAnim.staggeredEntrance(it) }
+        // page rhythm: every element rises one beat after the last
+        findViewById<LinearLayout>(R.id.welcomeContainer)?.let { container ->
+            val children = (0 until container.childCount).map { container.getChildAt(it) }
+            UiAnim.staggeredEntrance(*children.toTypedArray())
+        }
 
         findViewById<Button>(R.id.startButton).setOnClickListener {
             val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
@@ -30,7 +34,7 @@ class WelcomeActivity : BaseActivity() {
                 .putBoolean("onboarding_done", true)
                 .apply()
             startActivity(Intent(this, MainActivity::class.java))
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            overridePendingTransition(R.anim.f7_activity_enter, R.anim.f7_activity_exit)
             finish()
         }
     }

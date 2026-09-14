@@ -2,9 +2,11 @@ package com.contentfilter.app
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import java.util.Locale
 
@@ -33,6 +35,16 @@ class MainActivity : BaseActivity() {
         val nav = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(
             R.id.bottomNav,
         )
+
+        // Belt-and-suspenders with the NavIndicator style: themes.xml now sets
+        // the pill to @color/green_12 at the source (F7 integration item). The
+        // runtime tint stays so the pill is brand-correct even if the style is
+        // bypassed; green_12 auto-resolves per mode (12% Guard Teal light /
+        // 20% #8FC4B6 night).
+        nav.itemActiveIndicatorColor = ColorStateList.valueOf(
+            ContextCompat.getColor(this, R.color.green_12),
+        )
+
         if (savedInstanceState == null) {
             switchTo(HomeFragment(), R.id.navHome)
         }

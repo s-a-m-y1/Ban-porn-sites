@@ -11,6 +11,12 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <!-- hairline separating content from the nav bar, theme-aware -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/dividerColor" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"

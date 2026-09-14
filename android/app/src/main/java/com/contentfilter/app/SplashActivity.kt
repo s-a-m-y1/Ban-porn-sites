@@ -5,13 +5,12 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import android.view.animation.DecelerateInterpolator
+import android.view.animation.PathInterpolator
 
 /**
  * Opening sequence (brand video spec):
@@ -23,8 +22,16 @@ import android.view.animation.DecelerateInterpolator
  * 3.20s  HISN companion label fades in
  * 3.60s  whole composition settles with one quiet zoom-out
  * 4.40s  continue to welcome / home
+ *
+ * Timing note: the AVD's own animators overlap (startOffsets), so its last
+ * frame lands at ~1.95s — every code beat below already runs after it, and
+ * the 4.40s exit leaves a quiet beat of stillness before continuing.
  */
 class SplashActivity : BaseActivity() {
+
+    /** Standard material easing — the same cubic the androidx interpolator
+     *  implements, via the framework class (API 21+). */
+    private val easing = PathInterpolator(0.4f, 0f, 0.2f, 1f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +59,7 @@ class SplashActivity : BaseActivity() {
             .alpha(1f)
             .setStartDelay(2100)
             .setDuration(500)
-            .setInterpolator(DecelerateInterpolator())
+            .setInterpolator(easing)
             .start()
 
         // 3) the slit (closed gate) appears last
@@ -61,7 +68,7 @@ class SplashActivity : BaseActivity() {
             .alpha(1f)
             .setStartDelay(2600)
             .setDuration(400)
-            .setInterpolator(DecelerateInterpolator())
+            .setInterpolator(easing)
             .start()
 
         // 4) wordmark rises
@@ -71,7 +78,7 @@ class SplashActivity : BaseActivity() {
             .alpha(1f).translationY(0f)
             .setStartDelay(2700)
             .setDuration(700)
-            .setInterpolator(DecelerateInterpolator())
+            .setInterpolator(easing)
             .start()
 
         // 5) HISN label
@@ -80,6 +87,7 @@ class SplashActivity : BaseActivity() {
             .alpha(1f)
             .setStartDelay(3200)
             .setDuration(600)
+            .setInterpolator(easing)
             .start()
 
         // 6) one quiet settle: the composition exhales into place
@@ -89,7 +97,7 @@ class SplashActivity : BaseActivity() {
             .scaleX(1f).scaleY(1f)
             .setStartDelay(3600)
             .setDuration(600)
-            .setInterpolator(DecelerateInterpolator())
+            .setInterpolator(easing)
             .start()
 
         // 7) continue — first launch goes to the welcome/onboarding screen
@@ -102,7 +110,7 @@ class SplashActivity : BaseActivity() {
                 WelcomeActivity::class.java
             }
             startActivity(Intent(this@SplashActivity, next))
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            overridePendingTransition(R.anim.f7_activity_enter, R.anim.f7_activity_exit)
             finish()
         }
     }
