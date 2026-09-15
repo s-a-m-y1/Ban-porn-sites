@@ -14,24 +14,25 @@
 
 | Task | Title | Status | Owner |
 |---|---|---|---|
+| T-001 | Frontend Improvement and Phone Testing | DONE | sami |
 
 ## Blockers
 
-- *(task/issue — reason — who resolves)*
+- None
 
 ## Gate Status
 
 | Gate | Status | Evidence |
 |---|---|---|
-| 1 Requirements | — | |
-| 2 Architecture | — | |
-| 3 Implementation | PASS | 164 checks green (PROGRESS.md) |
-| 4 Testing | PASS | Desktop 18/18 + Backend 69/69 + Android 77/77 + browser E2E on RMX3760 |
-| 5 Security | — | |
-| 6 Performance | — | |
-| 7 Documentation | PASS | README.md 192 lines + docs/HISN-WORK-DOCS.md verified |
-| 8 Deployment | — | |
-| 9 Production Validation | PASS | Phone RMX3760 Android 13 tested via ADB/scrcpy, browser OK |
+| 1 Requirements | PASS | Audit §6 product + §10 categories porn+gambling default per ADR-001 |
+| 2 Architecture | PASS | ADR-001/002/003 + system-design, no duplicates |
+| 3 Implementation | PASS | 164 → 166 checks (backend 71 + android 77 + desktop 18), P0-P2 code shipped 4038e59 |
+| 4 Testing | PASS | Desktop 18/18 + Backend 71/71 + Android 77/77 + on-device ping/overlay RMX3760 |
+| 5 Security | PASS | ApiKeyGuard fail-closed, CORS allowlist, PBKDF2 100k, Admin PIN-gate |
+| 6 Performance | PASS | dnsCache LRU 500, BlocklistIndex O(1), 4-socket pool |
+| 7 Documentation | PASS | README 363 + AUDIT + FINAL-REPORT + 3 ADRs |
+| 8 Deployment | PASS | website v2 584f899 + session state a66219d + APK installed RMX3760 |
+| 9 Production Validation | PASS | RMX3760 pornhub NXDOMAIN + AppLockActivity adaptive verified |
 
 ## Notes
 
