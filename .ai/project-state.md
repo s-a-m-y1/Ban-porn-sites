@@ -18,6 +18,7 @@
 | T-002 | Self-host Cairo + CSP + light/dark verification (P2-3) | DONE | agent |
 | T-003 | Prune 16 orphaned res files (PROGRESS P1) | BLOCKED | agent |
 | T-004 | Sync documentation — setup + architecture | DONE | agent |
+| T-005 | Official website + download platform | DONE | agent |
 
 ## Blockers
 
