@@ -15,9 +15,9 @@
 | Task | Title | Status | Owner |
 |---|---|---|---|
 | T-001 | Frontend Improvement and Phone Testing | DONE | sami |
-| T-002 | Self-host Cairo + CSP + light/dark verification (P2-3) | IN_PROGRESS | agent |
-| T-003 | Prune 16 orphaned res files (PROGRESS P1) | TODO | agent |
-| T-004 | Sync documentation — setup + architecture | TODO | agent |
+| T-002 | Self-host Cairo + CSP + light/dark verification (P2-3) | DONE | agent |
+| T-003 | Prune 16 orphaned res files (PROGRESS P1) | BLOCKED | agent |
+| T-004 | Sync documentation — setup + architecture | DONE | agent |
 
 ## Blockers
 
