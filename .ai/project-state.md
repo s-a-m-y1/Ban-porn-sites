@@ -2,10 +2,10 @@
 
 > Single source of truth for project position. Updated by every agent after every meaningful change (see `.skills/core/context-management.md`).
 
-- **Project**: حِصن (HISN) — Master Transformation DONE through P2
-- **Phase**: 14 (Final Audit) — Audit + P0 + P1 + P2 shipped, P3 as extension points
-- **Active Workflow**: final-testing — backend 71/71 + android 77/77 + desktop 18/18 + on-device ping/overlay verified + website smoke
-- **Updated**: 2026-09-15 — FINAL-REPORT + 3 ADRs + all P0-P2 code + device RMX3760 verified
+- **Project**: حِصن (HISN) — Autonomous Master DONE
+- **Phase**: 17 (Documentation) — All P0-P3 + website official + Vercel + QA verified
+- **Active Workflow**: DONE — 10/10 tasks DONE/BLOCKED, 6 commits pushed, RMX3760 verified, website 4 pages + 9 woff2 + CSP
+- **Updated**: 2026-09-15 — T-001..T-010 DONE/BLOCKED + ADR-004 + vercel.json + FINAL verification
 
 ## Phase Legend
 0 Init · 1 Discovery · 2 Product · 3 Architecture · 4 Design · 5 Database · 6 API · 7 Frontend · 8 Implementation · 9 Testing · 10 Review · 11 Security · 12 Performance · 13 DevOps · 14 Deployment · 15 Observability · 16 Maintenance · 17 Documentation
@@ -19,6 +19,11 @@
 | T-003 | Prune 16 orphaned res files (PROGRESS P1) | BLOCKED | agent |
 | T-004 | Sync documentation — setup + architecture | DONE | agent |
 | T-005 | Official website + download platform | DONE | agent |
+| T-006 | Architecture audit — 3D + Vercel | DONE | agent/architecture |
+| T-007 | Product UX — blocking + home + onboarding | DONE | agent/product |
+| T-008 | Frontend website — Vercel + download | DONE | agent/frontend |
+| T-009 | Backend security + privacy | DONE | agent/backend |
+| T-010 | QA validation | DONE | agent/qa |
 
 ## Blockers
 
