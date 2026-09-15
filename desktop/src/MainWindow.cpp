@@ -32,7 +32,7 @@ MainWindow::MainWindow(AdbManager *adb, ScrcpyManager *scrcpy, SettingsManager *
     : QMainWindow(parent), m_adb(adb), m_scrcpy(scrcpy), m_settings(settings),
       m_fileMgr(fileMgr), m_clipboard(clipboard) {
 
-    setWindowTitle("Android Control — USB • ADB • scrcpy");
+    setWindowTitle("حِصن — تحكم آمن • HISN — USB • ADB • scrcpy");
     setMinimumSize(860, 700);
     resize(960, 800);
 
@@ -257,11 +257,11 @@ void MainWindow::setupMenu() {
 
     auto *help = menuBar()->addMenu("Help");
     help->addAction("About", this, [this](){
-        QMessageBox::about(this, "Android Control",
-            "<b>Android Control 1.0.0</b><br>"
-            "Modern Android screen mirroring for Ubuntu.<br>"
-            "Built with Qt6, scrcpy & ADB.<br><br>"
-            "© 2026 Android Control • Hardware-accelerated • Low latency");
+        QMessageBox::about(this, "حِصن — HISN",
+            "<b>حِصن 1.0.0 — HISN</b><br>"
+            "حماية هادئة + تحكم آمن لأجهزة أندرويد.<br>"
+            "Built with Qt6, scrcpy & ADB — Night Indigo • Amber • Sage.<br><br>"
+            "© 2026 حِصن • Hardware-accelerated • Low latency");
     });
     help->addAction("Install Guide", this, &MainWindow::showAdbGuide);
 

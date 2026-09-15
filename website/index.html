@@ -435,11 +435,14 @@
 
   <section class="hero">
     <div class="hero-inner">
-      <svg class="hero-mark" viewBox="0 0 200 200" role="img" aria-label="علامة حِصن: قوس بوابة بفتحة رأسية مغلقة" style="--mark-surface:var(--indigo)">
-        <path class="mark-fill" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z"/>
-        <path class="mark-outline" pathLength="100" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190"/>
-        <rect class="mark-slit" x="96" y="60" width="8" height="130"/>
-      </svg>
+      <div style="position:relative;width:clamp(104px,16vw,150px);height:clamp(104px,16vw,150px);margin:0 auto var(--sp-7)">
+        <svg class="hero-mark" viewBox="0 0 200 200" role="img" aria-label="علامة حِصن: قوس بوابة بفتحة رأسية مغلقة" style="--mark-surface:var(--indigo)">
+          <path class="mark-fill" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z"/>
+          <path class="mark-outline" pathLength="100" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190"/>
+          <rect class="mark-slit" x="96" y="60" width="8" height="130"/>
+        </svg>
+        <canvas id="shield-canvas" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:none"></canvas>
+      </div>
       <h1 class="rise">ما لا يليق لا يصل،<br>وكل شيء آخر يبقى كما هو.</h1>
       <p class="sub rise">حِصن يفلّر الإنترنت داخل الجهاز نفسه، بلا مراقبة وبلا حساب. المواقع التي تحتاجها عائلتك تفتح كالمعتاد، وما لا يليق يُحجب قبل أن يصل إلى الشاشة.</p>
       <div class="hero-actions rise">
@@ -664,6 +667,7 @@
     selectSite(chips[next]);
   });
 </script>
+<script type="module" src="shield-3d.js"></script>
 
 </body>
 </html>
