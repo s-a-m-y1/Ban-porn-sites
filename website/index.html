@@ -6,11 +6,17 @@
 <title>حِصن — حماية تعمل في الخلفية</title>
 <meta name="description" content="حِصن يفلّر الإنترنت داخل الجهاز نفسه: المواقع التي تحتاجها عائلتك تفتح كالمعتاد، وما لا يليق يُحجب قبل أن يصل إلى الشاشة — بلا سجلات ولا مراقبة.">
 <meta name="theme-color" content="#1B1F3B">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self';">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z' fill='%237A9471'/%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190' fill='none' stroke='%23C9A15C' stroke-width='10' stroke-linecap='round'/%3E%3Crect x='96' y='60' width='8' height='130' fill='%231B1F3B'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* P2-3: self-hosted fonts — no request to fonts.googleapis.com (privacy) */
+  @font-face{font-family:'Cairo';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2') format('woff2');unicode-range:U+0600-06FF, U+0750-077F, U+08E3-08FF, U+FB50-FDFF, U+FE70-FEFC}
+  @font-face{font-family:'Cairo';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2') format('woff2');unicode-range:U+0600-06FF, U+0750-077F}
+  @font-face{font-family:'Cairo';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2') format('woff2');unicode-range:U+0600-06FF}
+  @font-face{font-family:'Cairo';font-style:normal;font-weight:800;font-display:swap;src:url('fonts/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2') format('woff2');unicode-range:U+0600-06FF}
+  @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxTKYbABA.woff2') format('woff2')}
+  @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxaKYbABA.woff2') format('woff2')}
+  @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxdKYbABA.woff2') format('woff2')}
   :root{
     --indigo:#1B1F3B;
     --indigo-2:#242952;
