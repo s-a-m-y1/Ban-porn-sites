@@ -91,6 +91,7 @@
     <string name="pin_lock_desc">Require a PIN to stop protection or change settings</string>
     <string name="uninstall_protect">Anti-uninstall protection</string>
     <string name="uninstall_protect_desc">Makes the app a device admin — much harder to remove</string>
+    <string name="admin_disable_warning">Warning: disabling admin will allow HISN to be uninstalled. Protection will be lost. Are you sure? This requires your PIN.</string>
     <string name="enter_pin_reason">Enter your PIN to continue</string>
     <string name="pin_title">PIN required</string>
     <string name="pin_hint">Enter PIN</string>
@@ -156,6 +157,15 @@
     <string name="send_feedback">Send &amp; stop</string>
     <string name="heatmap_empty">No activity yet — squares will fill as blocking happens</string>
     <string name="channel_desc">Keeps DNS filtering running silently</string>
+    <string name="vpn_revoked_title">Protection stopped</string>
+    <string name="vpn_revoked_body">VPN was revoked — tap to re-enable protection.</string>
+    <string name="tamper_title">Protection needs attention</string>
+    <string name="tamper_vpn">VPN stopped.</string>
+    <string name="tamper_overlay">Overlay permission revoked.</string>
+    <string name="tamper_usage">Usage access revoked.</string>
+    <string name="tamper_private_dns">Private DNS may bypass filtering.</string>
+    <string name="tamper_generic">Protection needs attention — open HISN.</string>
+    <string name="battery_ask">To keep protection alive in background, allow HISN to ignore battery optimization?</string>
     <string name="tab_home">Home</string>
     <string name="tab_stats">Stats</string>
     <string name="tab_features">Features</string>

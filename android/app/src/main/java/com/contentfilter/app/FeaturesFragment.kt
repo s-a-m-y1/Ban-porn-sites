@@ -48,6 +48,10 @@ class FeaturesFragment : Fragment() {
         )
     }
 
+    private var pendingCategory: Pair<String, Boolean>? = null
+    private var pendingSchedule: Boolean? = null
+    private var pendingAppLock: Boolean? = null
+
     private fun setupCategories(view: View) {
         val enabled = prefs.getStringSet("enabled_cats", null)?.takeIf { it.isNotEmpty() }
             ?: setOf(Categories.PORN, Categories.GAMBLING)
@@ -56,11 +60,17 @@ class FeaturesFragment : Fragment() {
             switch.contentDescription = label
             switch.isChecked = cat in enabled
             switch.setOnCheckedChangeListener { _, checked ->
+                // P1: category toggles require PIN if enabled
+                if (prefs.getBoolean("pin_enabled", false) && PinManager.isPinSet(requireContext())) {
+                    // revert UI, ask PIN, then re-apply
+                    switch.isChecked = !checked
+                    pendingCategory = cat to checked
+                    startActivityForResult(PinActivity.intent(requireContext(), getString(R.string.enter_pin_reason)), 9)
+                    return@setOnCheckedChangeListener
+                }
                 lifecycleScope.launch {
                     val ctx = requireContext()
                     BlocklistRepository(ctx).setCategoryEnabled(cat, checked)
-                    // refresh the in-memory index so the running filter sees
-                    // the change instantly — without a service restart
                     BlocklistIndex.load(ctx)
                     val current = prefs.getStringSet(
                         "enabled_cats", setOf(Categories.PORN, Categories.GAMBLING),
@@ -249,6 +259,12 @@ class FeaturesFragment : Fragment() {
         }
 
         scheduleSwitch.setOnCheckedChangeListener { _, checked ->
+            if (prefs.getBoolean("pin_enabled", false) && PinManager.isPinSet(requireContext())) {
+                scheduleSwitch.isChecked = !checked
+                pendingSchedule = checked
+                startActivityForResult(PinActivity.intent(requireContext(), getString(R.string.enter_pin_reason)), 10)
+                return@setOnCheckedChangeListener
+            }
             prefs.edit().putBoolean("schedule_enabled", checked).apply()
             refreshScheduleUi()
             if (checked) ScheduleManager.setAlarms(requireContext())
@@ -278,6 +294,13 @@ class FeaturesFragment : Fragment() {
         applockSwitch.isChecked = prefs.getBoolean("applock_enabled", false)
 
         applockSwitch.setOnCheckedChangeListener { _, checked ->
+            // P1: disabling app-lock requires PIN
+            if (!checked && prefs.getBoolean("pin_enabled", false) && PinManager.isPinSet(requireContext())) {
+                applockSwitch.isChecked = true
+                pendingAppLock = checked
+                startActivityForResult(PinActivity.intent(requireContext(), getString(R.string.enter_pin_reason)), 11)
+                return@setOnCheckedChangeListener
+            }
             if (checked && !hasUsageAccess()) {
                 applockSwitch.isChecked = false
                 AlertDialog.Builder(requireContext())
@@ -339,6 +362,46 @@ class FeaturesFragment : Fragment() {
         if (requestCode == 8 && resultCode == android.app.Activity.RESULT_OK) {
             pendingManualAction?.invoke()
             pendingManualAction = null
+        }
+        if (requestCode == 9 && resultCode == android.app.Activity.RESULT_OK) {
+            pendingCategory?.let { (cat, checked) ->
+                lifecycleScope.launch {
+                    val ctx = requireContext()
+                    BlocklistRepository(ctx).setCategoryEnabled(cat, checked)
+                    BlocklistIndex.load(ctx)
+                    val current = prefs.getStringSet("enabled_cats", setOf(Categories.PORN, Categories.GAMBLING))!!.toMutableSet()
+                    if (checked) current.add(cat) else current.remove(cat)
+                    prefs.edit().putStringSet("enabled_cats", current).apply()
+                    view?.findViewById<SwitchCompat>(
+                        when (cat) {
+                            Categories.PORN -> R.id.switchPorn
+                            Categories.GAMBLING -> R.id.switchGambling
+                            Categories.FAKENEWS -> R.id.switchFakenews
+                            else -> R.id.switchMalware
+                        }
+                    )?.isChecked = checked
+                }
+            }
+            pendingCategory = null
+        }
+        if (requestCode == 10 && resultCode == android.app.Activity.RESULT_OK) {
+            pendingSchedule?.let { checked ->
+                prefs.edit().putBoolean("schedule_enabled", checked).apply()
+                view?.findViewById<SwitchCompat>(R.id.scheduleSwitch)?.isChecked = checked
+                val timesRow = view?.findViewById<LinearLayout>(R.id.scheduleTimesRow)
+                timesRow?.visibility = if (checked) View.VISIBLE else View.GONE
+                if (checked) ScheduleManager.setAlarms(requireContext())
+                ScheduleManager.apply(requireContext())
+            }
+            pendingSchedule = null
+        }
+        if (requestCode == 11 && resultCode == android.app.Activity.RESULT_OK) {
+            pendingAppLock?.let { checked ->
+                prefs.edit().putBoolean("applock_enabled", checked).apply()
+                view?.findViewById<SwitchCompat>(R.id.applockSwitch)?.isChecked = checked
+                if (checked) AppLockService.start(requireContext()) else AppLockService.stop(requireContext())
+            }
+            pendingAppLock = null
         }
     }
 

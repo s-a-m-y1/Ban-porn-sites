@@ -11,4 +11,7 @@ import android.content.Intent
 class AdminReceiver : DeviceAdminReceiver() {
     override fun onEnabled(context: Context, intent: Intent) {}
     override fun onDisabled(context: Context, intent: Intent) {}
+    override fun onDisableRequested(context: Context, intent: Intent): CharSequence {
+        return context.getString(R.string.admin_disable_warning)
+    }
 }

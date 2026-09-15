@@ -169,6 +169,33 @@ class FilterVpnService : VpnService() {
         scope.cancel()
     }
 
+    override fun onRevoke() {
+        // System revoked VPN (user disconnected via Settings) — detect instantly
+        needsConsent = true
+        isRunning = false
+        // Notify to re-enable (local, no server)
+        try {
+            val nm = getSystemService(NotificationManager::class.java)
+            nm.notify(NOTIFICATION_ID + 1, buildRevokeNotification())
+        } catch (_: Exception) {}
+        super.onRevoke()
+    }
+
+    private fun buildRevokeNotification(): Notification {
+        val intent = PendingIntent.getActivity(
+            this, 1,
+            Intent(this, MainActivity::class.java),
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+        return Notification.Builder(this, CHANNEL_ID)
+            .setContentTitle(getString(R.string.vpn_revoked_title))
+            .setContentText(getString(R.string.vpn_revoked_body))
+            .setSmallIcon(R.drawable.ic_notif_transparent)
+            .setContentIntent(intent)
+            .setAutoCancel(true)
+            .build()
+    }
+
     override fun onDestroy() {
         running.set(false)
         isRunning = false

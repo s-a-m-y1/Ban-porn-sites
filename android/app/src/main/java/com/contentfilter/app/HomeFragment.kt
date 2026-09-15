@@ -167,6 +167,8 @@ class HomeFragment : Fragment() {
                 prefs.edit().putBoolean("vpn_running", true).apply()
                 setUiState(true, animated = true)
                 askOverlayPermissionIfNeeded()
+                askBatteryOptimizationIfNeeded()
+                TamperWorker.schedule(requireContext())
             }
         }
 
@@ -246,6 +248,8 @@ class HomeFragment : Fragment() {
             prefs.edit().putBoolean("vpn_running", true).apply()
             setUiState(true, animated = true)
             askOverlayPermissionIfNeeded()
+            askBatteryOptimizationIfNeeded()
+            TamperWorker.schedule(requireContext())
         }
     }
 
@@ -269,6 +273,27 @@ class HomeFragment : Fragment() {
                 )
             }
             .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun askBatteryOptimizationIfNeeded() {
+        if (prefs.getBoolean("battery_asked", false)) return
+        val pm = requireContext().getSystemService(android.os.PowerManager::class.java) ?: return
+        if (pm.isIgnoringBatteryOptimizations(requireContext().packageName)) return
+        prefs.edit().putBoolean("battery_asked", true).apply()
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setMessage(R.string.battery_ask)
+            .setPositiveButton(R.string.grant) { _, _ ->
+                try {
+                    startActivity(
+                        android.content.Intent(
+                            android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                            android.net.Uri.parse("package:${requireContext().packageName}"),
+                        ),
+                    )
+                } catch (_: Exception) {}
+            }
+            .setNegativeButton(R.string.later, null)
             .show()
     }
 

@@ -88,6 +88,7 @@
     <string name="pin_lock_desc">طلب رقم سري لإيقاف الحماية أو تغيير الإعدادات</string>
     <string name="uninstall_protect">الحماية من الحذف</string>
     <string name="uninstall_protect_desc">يجعل التطبيق مسؤول الجهاز — أصعب بكثير في الحذف</string>
+    <string name="admin_disable_warning">تحذير: إلغاء مسؤول الجهاز سيسمح بحذف حِصن وستُفقد الحماية. هل أنت متأكد؟ يتطلب الرقم السري.</string>
     <string name="enter_pin_reason">أدخل الرقم السري للمتابعة</string>
     <string name="pin_title">الرقم السري مطلوب</string>
     <string name="pin_hint">أدخل الرقم السري</string>
@@ -152,6 +153,15 @@
     <string name="send_feedback">إرسال وإيقاف</string>
     <string name="heatmap_empty">لا يوجد نشاط بعد — ستمتلئ المربعات مع الحظر</string>
     <string name="channel_desc">يبقي فلترة DNS تعمل بصمت</string>
+    <string name="vpn_revoked_title">توقفت الحماية</string>
+    <string name="vpn_revoked_body">تم إيقاف VPN — اضغط لإعادة تفعيل الحماية.</string>
+    <string name="tamper_title">الحماية تحتاج انتباه</string>
+    <string name="tamper_vpn">VPN متوقف.</string>
+    <string name="tamper_overlay">إذن العرض فوق التطبيقات أُلغي.</string>
+    <string name="tamper_usage">الوصول للاستخدام أُلغي.</string>
+    <string name="tamper_private_dns">DNS الخاص قد يتجاوز الفلترة.</string>
+    <string name="tamper_generic">الحماية تحتاج انتباه — افتح حِصن.</string>
+    <string name="battery_ask">لإبقاء الحماية تعمل في الخلفية، السماح لحِصن بتجاهل تحسين البطارية؟</string>
     <string name="tab_home">الرئيسية</string>
     <string name="tab_stats">الإحصائيات</string>
     <string name="tab_features">الحماية</string>
