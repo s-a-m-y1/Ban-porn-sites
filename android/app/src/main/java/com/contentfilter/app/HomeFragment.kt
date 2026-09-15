@@ -151,14 +151,13 @@ class HomeFragment : Fragment() {
             // a tiny pulse under the finger — the toggle should feel physical
             powerButton.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             if (vpnActive) {
+                // P1-3: stop flow → confirmation → reminder → feedback → stop (not one-tap)
                 if (prefs.getBoolean("pin_enabled", false)) {
                     startActivityForResult(
                         android.content.Intent(requireContext(), PinActivity::class.java), 3,
                     )
                 } else {
-                    FilterVpnService.stop(requireContext())
-                    prefs.edit().putBoolean("vpn_running", false).apply()
-                    setUiState(false, animated = true)
+                    showStopConfirmDialog()
                 }
                 return@setOnClickListener
             }
@@ -186,14 +185,61 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun showStopConfirmDialog() {
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.stop_confirm_title)
+            .setMessage(R.string.stop_confirm_body)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.stop_confirm_action) { _, _ -> showReminderDialog() }
+            .show()
+    }
+
+    private fun showReminderDialog() {
+        val pool = resources.getStringArray(R.array.hadiths_ar)
+        val reminder = pool[(System.currentTimeMillis().toInt() % pool.size)]
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.stop_reminder_title)
+            .setMessage(reminder)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.continue_stop) { _, _ -> showFeedbackDialog() }
+            .show()
+    }
+
+    private fun showFeedbackDialog() {
+        val view = layoutInflater.inflate(R.layout.dialog_feedback, null)
+        val stars = (1..5).map { i -> view.findViewById<View>(resources.getIdentifier("star$i", "id", requireContext().packageName)) }
+        var rating = 0
+        stars.forEachIndexed { idx, v ->
+            v?.setOnClickListener {
+                rating = idx + 1
+                stars.forEachIndexed { j, s -> s?.alpha = if (j <= idx) 1f else 0.3f }
+            }
+        }
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.feedback_title)
+            .setView(view)
+            .setNegativeButton(R.string.skip) { _, _ -> doStop() }
+            .setPositiveButton(R.string.send_feedback) { _, _ ->
+                if (rating in 1..5) {
+                    prefs.edit().putInt("last_feedback_rating", rating).apply()
+                }
+                doStop()
+            }
+            .show()
+    }
+
+    private fun doStop() {
+        FilterVpnService.stop(requireContext())
+        prefs.edit().putBoolean("vpn_running", false).apply()
+        setUiState(false, animated = true)
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 3 && resultCode == android.app.Activity.RESULT_OK) {
             if (!prefs.getBoolean("vpn_running", false)) return
-            FilterVpnService.stop(requireContext())
-            prefs.edit().putBoolean("vpn_running", false).apply()
-            setUiState(false, animated = true)
+            showStopConfirmDialog()
         }
         if (requestCode == 1 && resultCode == android.app.Activity.RESULT_OK) {
             FilterVpnService.start(requireContext())

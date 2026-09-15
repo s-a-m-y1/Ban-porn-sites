@@ -106,6 +106,8 @@
     <string name="pin_err_seq">لا يمكن أن يكون الرقم السري متسلسلاً (1234، 4321)</string>
     <string name="pin_err_common">هذا الرقم السري سهل التخمين جداً</string>
     <string name="pin_err_mismatch">الرقمان السريان غير متطابقين</string>
+    <string name="pin_err_wrong">رقم سري خطأ — حاول مرة أخرى</string>
+    <string name="pin_err_locked">محاولات كثيرة — حاول بعد %1$d ثانية</string>
     <string name="pin_change_needed">عيّن كلمة مرور التطبيق أولاً</string>
     <string name="pin_saved">تم حفظ كلمة مرور التطبيق</string>
     <string name="pin_change_desc">تغيير كلمة مرور التطبيق الحالية</string>
@@ -124,6 +126,8 @@
     <string name="blocked_site_message">هذا الموقع من المواقع التي اخترت حجبها. خذ نفسًا، واذكر الله، وارجع.</string>
     <string name="blockscreen_need_overlay">علشان شاشة "اتقي الله" تظهر لما تحاول تفتح موقع محجوب، اسمح لحِصن بـ "العرض فوق التطبيقات الأخرى"</string>
     <string name="back_home">العودة للرئيسية</string>
+    <string name="open_hisn">افتح حِصن</string>
+    <string name="challenge_prompt">تحدّي لطيف: توضّأ وصلِّ ركعتين ثم عُد — خطوة لله خير من خطوة للشيطان.</string>
 
     <!-- Heatmap / persistence -->
     <string name="heatmap_title">نشاط الحظر</string>
@@ -136,6 +140,16 @@
     <string name="always_on_ask">لجعل الحماية دائمة، فعّل "Always-on VPN" لتطبيق Content Filter في الشاشة التي ستفتح.</string>
     <string name="enable">تفعيل</string>
     <string name="later">لاحقاً</string>
+
+    <!-- P1-3 stop flow -->
+    <string name="stop_confirm_title">إيقاف الحماية؟</string>
+    <string name="stop_confirm_body">أنت محمي الآن. إيقاف الحماية سيسمح للمحتوى المؤذي. هل أنت متأكد من المتابعة؟</string>
+    <string name="stop_confirm_action">نعم، أوقف</string>
+    <string name="stop_reminder_title">تذكير لطيف</string>
+    <string name="continue_stop">متابعة الإيقاف</string>
+    <string name="feedback_title">ملاحظة سريعة (اختياري)</string>
+    <string name="skip">تخطّ</string>
+    <string name="send_feedback">إرسال وإيقاف</string>
     <string name="heatmap_empty">لا يوجد نشاط بعد — ستمتلئ المربعات مع الحظر</string>
     <string name="channel_desc">يبقي فلترة DNS تعمل بصمت</string>
     <string name="tab_home">الرئيسية</string>

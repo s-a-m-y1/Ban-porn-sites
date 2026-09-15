@@ -85,17 +85,26 @@ describe('getTypeOrmConfig', () => {
     });
   });
 
-  it('enables synchronize outside production', () => {
+  it('disables synchronize outside production as well (P0-1: never auto-sync, use migrations)', () => {
     delete process.env.DATABASE_URL;
     process.env.NODE_ENV = 'development';
 
     const resolved = (getTypeOrmConfig().useFactory as () => Record<string, unknown>)();
 
-    expect(resolved).toMatchObject({ synchronize: true, autoLoadEntities: true });
+    expect(resolved).toMatchObject({ synchronize: false, autoLoadEntities: true });
   });
 
-  it('disables synchronize in production', () => {
+  it('throws in production when DATABASE_URL is missing (P0-1 fail-fast)', () => {
     delete process.env.DATABASE_URL;
+    process.env.NODE_ENV = 'production';
+
+    expect(() => (getTypeOrmConfig().useFactory as () => Record<string, unknown>)()).toThrow(
+      'DATABASE_URL must be set',
+    );
+  });
+
+  it('disables synchronize in production with URL set', () => {
+    process.env.DATABASE_URL = 'postgresql://u:p@prod:5432/db';
     process.env.NODE_ENV = 'production';
 
     const resolved = (getTypeOrmConfig().useFactory as () => Record<string, unknown>)();

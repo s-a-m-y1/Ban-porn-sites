@@ -50,7 +50,7 @@ class FeaturesFragment : Fragment() {
 
     private fun setupCategories(view: View) {
         val enabled = prefs.getStringSet("enabled_cats", null)?.takeIf { it.isNotEmpty() }
-            ?: setOf(Categories.PORN)
+            ?: setOf(Categories.PORN, Categories.GAMBLING)
 
         fun bind(row: View, switch: SwitchCompat, cat: String, label: String) {
             switch.contentDescription = label
@@ -63,7 +63,7 @@ class FeaturesFragment : Fragment() {
                     // the change instantly — without a service restart
                     BlocklistIndex.load(ctx)
                     val current = prefs.getStringSet(
-                        "enabled_cats", setOf(Categories.PORN),
+                        "enabled_cats", setOf(Categories.PORN, Categories.GAMBLING),
                     )!!.toMutableSet()
                     if (checked) current.add(cat) else current.remove(cat)
                     prefs.edit().putStringSet("enabled_cats", current).apply()
@@ -100,6 +100,18 @@ class FeaturesFragment : Fragment() {
     }
 
     private fun showManualActions(manualCount: TextView) {
+        // P2-1: manual block/unblock requires PIN if enabled
+        if (prefs.getBoolean("pin_enabled", false) && PinManager.isPinSet(requireContext())) {
+            pendingManualAction = { showManualActionsInternal(manualCount) }
+            startActivityForResult(PinActivity.intent(requireContext(), getString(R.string.enter_pin_reason)), 8)
+            return
+        }
+        showManualActionsInternal(manualCount)
+    }
+
+    private var pendingManualAction: (() -> Unit)? = null
+
+    private fun showManualActionsInternal(manualCount: TextView) {
         val actions = arrayOf(
             getString(R.string.add_domain),
             getString(R.string.manual_review),
@@ -323,6 +335,10 @@ class FeaturesFragment : Fragment() {
             if (Settings.canDrawOverlays(requireContext())) {
                 applockSwitch.isChecked = true // triggers the enable path in the listener
             }
+        }
+        if (requestCode == 8 && resultCode == android.app.Activity.RESULT_OK) {
+            pendingManualAction?.invoke()
+            pendingManualAction = null
         }
     }
 

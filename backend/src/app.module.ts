@@ -8,6 +8,7 @@ import { getTypeOrmConfig } from './database/typeorm.config';
 import { RedisCacheModule } from './cache/redis.module';
 import { BlocklistModule } from './blocklist/blocklist.module';
 import { StatsModule } from './stats/stats.module';
+import { FeedbackModule } from './feedback/feedback.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StatsModule } from './stats/stats.module';
     RedisCacheModule,
     BlocklistModule,
     StatsModule,
+    FeedbackModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

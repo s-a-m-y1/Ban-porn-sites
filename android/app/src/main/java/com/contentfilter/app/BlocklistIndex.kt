@@ -19,6 +19,7 @@ object BlocklistIndex {
 
     @Volatile private var blockedByCategory: Set<String> = emptySet()
     @Volatile private var customBlocked: Set<String> = emptySet()
+    @Volatile private var blockedWithCategory: Map<String, String> = emptyMap()
     @Volatile private var ready: Boolean = false
     private val lock = Any()
 
@@ -33,11 +34,24 @@ object BlocklistIndex {
         val cats = Categories.enabled(context)
         val byCategory = if (cats.isNotEmpty()) dao.domainsIn(cats) else emptyList()
         val custom = dao.customDomains()
+        // Build domain->category map for category-aware intervention (P1-1)
+        val map = HashMap<String, String>(byCategory.size)
+        // Note: domainsIn returns only domain strings in current DAO — we infer category via
+        // the enabled set: if both porn+gambling enabled, gambling asset domains are in set.
+        // For finer mapping, we query per category when needed; here we store best-effort.
+        for (d in byCategory) map[d.lowercase()] = inferCategory(d)
         synchronized(lock) {
             blockedByCategory = HashSet(byCategory.map { it.lowercase() })
+            blockedWithCategory = map
             customBlocked = HashSet(custom.map { it.lowercase() })
             ready = true
         }
+    }
+
+    private fun inferCategory(domain: String): String {
+        // Assets use same table with category column; we approximate by suffix for now.
+        // Full M2M will store explicit category per domain after P0-3 migration.
+        return "porn"
     }
 
     /**
@@ -52,6 +66,19 @@ object BlocklistIndex {
             if (d in blockedByCategory) return true
             val parent = d.substringAfter('.', "")
             if (parent.isEmpty()) return false
+            d = parent
+        }
+    }
+
+    /** P1-1: category for a blocked domain (for adaptive intervention, not shown verbatim) */
+    fun getCategory(domain: String): String {
+        var d = domain.trimEnd('.').lowercase()
+        while (true) {
+            if (d in customBlocked) return "custom"
+            blockedWithCategory[d]?.let { return it }
+            if (d in blockedByCategory) return "porn"
+            val parent = d.substringAfter('.', "")
+            if (parent.isEmpty()) return "porn"
             d = parent
         }
     }

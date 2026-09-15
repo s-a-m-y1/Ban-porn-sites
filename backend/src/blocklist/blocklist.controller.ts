@@ -14,8 +14,9 @@ export class BlocklistController {
   @Get()
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(3600_000)
-  getBlocklist(): Promise<string[]> {
-    return this.blocklistService.getAllActiveDomains();
+  getBlocklist(@Query('categories') categories?: string): Promise<string[]> {
+    const cats = categories?.split(',').map((s) => s.trim()).filter(Boolean);
+    return this.blocklistService.getAllActiveDomains(cats);
   }
 
   @Get('version')
@@ -26,7 +27,11 @@ export class BlocklistController {
   }
 
   @Get('diff')
-  getDiff(@Query('since') since: string): Promise<string[]> {
-    return this.blocklistService.getDomainsAddedSince(since ?? '0.0.0');
+  getDiff(
+    @Query('since') since: string,
+    @Query('categories') categories?: string,
+  ): Promise<string[]> {
+    const cats = categories?.split(',').map((s) => s.trim()).filter(Boolean);
+    return this.blocklistService.getDomainsAddedSince(since ?? '0.0.0', cats);
   }
 }

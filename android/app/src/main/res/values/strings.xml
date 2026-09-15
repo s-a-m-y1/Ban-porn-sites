@@ -109,6 +109,8 @@
     <string name="pin_err_seq">PIN cannot be a sequence (1234, 4321)</string>
     <string name="pin_err_common">This PIN is too easy to guess</string>
     <string name="pin_err_mismatch">PINs do not match</string>
+    <string name="pin_err_wrong">Wrong PIN — try again</string>
+    <string name="pin_err_locked">Too many attempts — try again in %1$d seconds</string>
     <string name="pin_change_needed">Set your app password first</string>
     <string name="pin_saved">App password saved</string>
     <string name="pin_change_desc">Change the current app password</string>
@@ -128,6 +130,8 @@
     <string name="blocked_site_message">This site is on your blocked list. Take a breath, remember Allah, and step away.</string>
     <string name="blockscreen_need_overlay">So the "اتقي الله" screen appears when a blocked site is opened, allow Hisn to "Display over other apps"</string>
     <string name="back_home">Back to home</string>
+    <string name="open_hisn">Open HISN</string>
+    <string name="challenge_prompt">Challenge: make wudu, pray two rak\'ahs, then return.</string>
 
     <!-- Heatmap / persistence -->
     <string name="heatmap_title">Blocking activity</string>
@@ -140,6 +144,16 @@
     <string name="always_on_ask">To make protection permanent, enable "Always-on VPN" for Content Filter in the screen that opens.</string>
     <string name="enable">Enable</string>
     <string name="later">Later</string>
+
+    <!-- P1-3 stop flow -->
+    <string name="stop_confirm_title">Stop protection?</string>
+    <string name="stop_confirm_body">You are protected now. Stopping will allow harmful content. Are you sure you want to continue?</string>
+    <string name="stop_confirm_action">Yes, stop</string>
+    <string name="stop_reminder_title">A gentle reminder</string>
+    <string name="continue_stop">Continue to stop</string>
+    <string name="feedback_title">Quick feedback (optional)</string>
+    <string name="skip">Skip</string>
+    <string name="send_feedback">Send &amp; stop</string>
     <string name="heatmap_empty">No activity yet — squares will fill as blocking happens</string>
     <string name="channel_desc">Keeps DNS filtering running silently</string>
     <string name="tab_home">Home</string>

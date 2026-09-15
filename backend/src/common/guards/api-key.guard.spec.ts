@@ -55,13 +55,19 @@ describe('ApiKeyGuard', () => {
     ).toThrow(UnauthorizedException);
   });
 
-  it('currently ALLOWS the request when API_KEY is unset and no header is sent (known production bug — see handoff)', () => {
-    // KNOWN PRODUCTION BUG (documented, not fixed — specs may not touch production code):
-    // `request.headers['x-api-key'] === process.env.API_KEY` evaluates to
-    // `undefined === undefined` -> true, so an unconfigured server authorizes
-    // requests that carry no API key at all.
+  it('FAILS CLOSED when API_KEY is unset — missing server config must not authorize (P0-1 fix)', () => {
     delete process.env.API_KEY;
-    expect(guard.canActivate(makeContext({}))).toBe(true);
+    expect(() => guard.canActivate(makeContext({}))).toThrow(UnauthorizedException);
+    expect(() => guard.canActivate(makeContext({}))).toThrow(
+      'Server misconfigured',
+    );
+  });
+
+  it('FAILS CLOSED when API_KEY is the insecure placeholder', () => {
+    process.env.API_KEY = 'change-me-in-production';
+    expect(() => guard.canActivate(makeContext({ 'x-api-key': 'change-me-in-production' }))).toThrow(
+      'Server misconfigured',
+    );
   });
 
   it('rejects a non-string header value (array) even when it contains the key', () => {

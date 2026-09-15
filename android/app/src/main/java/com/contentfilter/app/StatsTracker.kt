@@ -19,8 +19,17 @@ object Categories {
     fun enabled(context: Context): List<String> {
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val saved = prefs.getStringSet("enabled_cats", null)
-        // missing OR empty set -> sensible default (porn always guards)
-        val effective = if (saved.isNullOrEmpty()) setOf(PORN) else saved
+        // P1: default is porn+gambling per §10 (both blocked when protection is on)
+        // Migration: old installs with only Porn now also enable Gambling
+        val effective = when {
+            saved.isNullOrEmpty() -> setOf(PORN, GAMBLING)
+            saved.size == 1 && saved.contains(PORN) -> {
+                val upgraded = setOf(PORN, GAMBLING)
+                prefs.edit().putStringSet("enabled_cats", upgraded).apply()
+                upgraded
+            }
+            else -> saved
+        }
         return ALL.filter { it in effective }
     }
 }

@@ -37,14 +37,14 @@ describe('BlocklistController', () => {
       blocklistService.getDomainsAddedSince.mockResolvedValue(['new.com']);
 
       await expect(controller.getDiff('2.0.0')).resolves.toEqual(['new.com']);
-      expect(blocklistService.getDomainsAddedSince).toHaveBeenCalledWith('2.0.0');
+      expect(blocklistService.getDomainsAddedSince).toHaveBeenCalledWith('2.0.0', undefined);
     });
 
     it("getDiff defaults since to '0.0.0' when not provided", async () => {
       blocklistService.getDomainsAddedSince.mockResolvedValue([]);
 
       await expect(controller.getDiff(undefined as never)).resolves.toEqual([]);
-      expect(blocklistService.getDomainsAddedSince).toHaveBeenCalledWith('0.0.0');
+      expect(blocklistService.getDomainsAddedSince).toHaveBeenCalledWith('0.0.0', undefined);
     });
   });
 

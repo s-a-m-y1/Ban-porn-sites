@@ -168,13 +168,20 @@ class SettingsFragment : Fragment() {
                 }
                 startActivityForResult(intent, 2)
             } else {
-                val dpm = requireContext().getSystemService(
-                    android.app.admin.DevicePolicyManager::class.java,
-                )
-                dpm.removeActiveAdmin(
-                    android.content.ComponentName(requireContext(), AdminReceiver::class.java),
-                )
-                prefs.edit().putBoolean("admin_enabled", false).apply()
+                // P0-5: disabling uninstall protection requires PIN (was bypass)
+                if (PinManager.isPinSet(requireContext())) {
+                    startActivityForResult(
+                        PinActivity.intent(requireContext(), getString(R.string.enter_pin_reason)), 7,
+                    )
+                } else {
+                    val dpm = requireContext().getSystemService(
+                        android.app.admin.DevicePolicyManager::class.java,
+                    )
+                    dpm.removeActiveAdmin(
+                        android.content.ComponentName(requireContext(), AdminReceiver::class.java),
+                    )
+                    prefs.edit().putBoolean("admin_enabled", false).apply()
+                }
             }
         }
 
@@ -219,6 +226,20 @@ class SettingsFragment : Fragment() {
             6 -> {
                 if (resultCode == android.app.Activity.RESULT_OK) {
                     startActivityForResult(SetPinActivity.intent(requireContext(), true), 4)
+                }
+            }
+            // P0-5: PIN verified before disabling uninstall protection
+            7 -> {
+                if (resultCode == android.app.Activity.RESULT_OK) {
+                    val dpm = requireContext().getSystemService(
+                        android.app.admin.DevicePolicyManager::class.java,
+                    )
+                    dpm.removeActiveAdmin(
+                        android.content.ComponentName(requireContext(), AdminReceiver::class.java),
+                    )
+                    prefs.edit().putBoolean("admin_enabled", false).apply()
+                } else {
+                    view?.findViewById<SwitchCompat>(R.id.adminSwitch)?.isChecked = true
                 }
             }
         }

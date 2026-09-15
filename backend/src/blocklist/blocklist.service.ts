@@ -1,10 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Domain } from './entities/domain.entity';
 import { BlocklistVersion } from './entities/blocklist-version.entity';
+
+// P0-3: V1 active categories — shipped locally, backend filters per category.
+// extensible for future violence/social/custom
+export const ACTIVE_CATEGORIES = ['adult-content', 'porn', 'gambling'] as const;
+export type BlockCategory = (typeof ACTIVE_CATEGORIES)[number];
 
 @Injectable()
 export class BlocklistService {
@@ -16,9 +21,12 @@ export class BlocklistService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async getAllActiveDomains(): Promise<string[]> {
+  async getAllActiveDomains(categories?: string[]): Promise<string[]> {
+    const cats = normalizeCategories(categories);
+    const where: Record<string, unknown> = { active: true };
+    if (cats) (where as Record<string, unknown>)['category'] = In(cats);
     const domains = await this.domainRepo.find({
-      where: { active: true },
+      where: where as never,
       select: { domain: true },
     });
     return domains.map((d) => d.domain);
@@ -32,20 +40,22 @@ export class BlocklistService {
     return latest[0]?.version ?? '0.0.0';
   }
 
-  async getDomainsAddedSince(version: string): Promise<string[]> {
+  async getDomainsAddedSince(version: string, categories?: string[]): Promise<string[]> {
     const since = await this.versionRepo.find({
       where: { version },
       order: { updatedAt: 'DESC' },
       take: 1,
     });
     if (since.length === 0) {
-      return this.getAllActiveDomains();
+      return this.getAllActiveDomains(categories);
     }
-    const domains = await this.domainRepo
+    const qb = this.domainRepo
       .createQueryBuilder('d')
       .where('d.addedAt > :since', { since: since[0].updatedAt })
-      .andWhere('d.active = :active', { active: true })
-      .getMany();
+      .andWhere('d.active = :active', { active: true });
+    const cats = normalizeCategories(categories);
+    if (cats) qb.andWhere('d.category IN (:...cats)', { cats });
+    const domains = await qb.getMany();
     return domains.map((d) => d.domain);
   }
 
@@ -90,4 +100,11 @@ export class BlocklistService {
     await this.cacheManager.del('blocklist');
     await this.cacheManager.del('blocklist/version');
   }
+}
+
+function normalizeCategories(cats?: string[]): string[] | undefined {
+  if (!cats || cats.length === 0) return undefined;
+  const allowed = new Set(ACTIVE_CATEGORIES as readonly string[]);
+  const filtered = cats.map((c) => c.trim().toLowerCase()).filter((c) => allowed.has(c));
+  return filtered.length > 0 ? filtered : undefined;
 }

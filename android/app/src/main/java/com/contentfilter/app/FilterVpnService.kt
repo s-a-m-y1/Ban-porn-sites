@@ -237,8 +237,11 @@ class FilterVpnService : VpnService() {
                         blockedCount++
                         if (blockedCount % 10 == 0) updateNotification()
                         scope.launch { StatsTracker.recordBlocked(this@FilterVpnService, domain) }
-                        showBlockToast()
-                        maybeShowBlockScreen(domain)
+                        // P1-1: category-aware + adaptive — pass category + attemptCount to overlay
+                        val category = BlocklistIndex.getCategory(domain)
+                        val attempt = BlockAttemptTracker.incrementAndGet(this@FilterVpnService, category)
+                        showBlockToast(category, attempt)
+                        maybeShowBlockScreen(domain, category, attempt)
                         val response = dnsParser.buildNxDomainResponse(packet)
                         synchronized(output) { output.write(response) }
                     } else {
@@ -314,8 +317,14 @@ class FilterVpnService : VpnService() {
         }
     }
 
-    /** Occasionally evict expired entries so the map never grows unbounded. */
+    /** Occasionally evict expired entries so the map never grows unbounded. P2-5: LRU cap 500. */
     private fun sweepCache(now: Long) {
+        // Also cap immediately if over 500
+        if (dnsCache.size > 500) {
+            val sorted = dnsCache.entries.sortedBy { it.value.second }
+            val toRemove = dnsCache.size - 400
+            for (i in 0 until toRemove) dnsCache.remove(sorted[i].key)
+        }
         if (now - cacheSweptAt < 60_000L) return
         cacheSweptAt = now
         dnsCache.entries.removeIf { it.value.second < now }
@@ -324,19 +333,15 @@ class FilterVpnService : VpnService() {
     /**
      * A calm, rotating reminder whenever a blocked site is intercepted.
      * Throttled to one Toast per 10 seconds so ad-heavy pages don't spam.
+     * P1-1: now category-aware and adaptive via ChallengeRepository.
      */
-    private fun showBlockToast() {
+    private fun showBlockToast(category: String = "porn", attempt: Int = 1) {
         val now = SystemClock.elapsedRealtime()
         if (now - lastToastAt < 10_000L) return
         lastToastAt = now
 
-        val isAr = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-            .getString("lang", "ar") == "ar"
-        val pool = resources.getStringArray(
-            if (isAr) R.array.block_messages_ar else R.array.block_messages_en,
-        )
-        val message = pool[toastIndex % pool.size]
-        toastIndex++
+        val intervention = ChallengeRepository.select(this, category, attempt)
+        val message = intervention.message
 
         android.os.Handler(mainLooper).post {
             android.widget.Toast.makeText(
@@ -350,8 +355,9 @@ class FilterVpnService : VpnService() {
      * Requires the "display over other apps" grant (the Android 14+ exemption
      * that lets a service launch an activity); otherwise falls back to the
      * reminder Toast only. Throttled to one screen per minute.
+     * P1-1: carries category + attempt for adaptive content.
      */
-    private fun maybeShowBlockScreen(domain: String) {
+    private fun maybeShowBlockScreen(domain: String, category: String = "porn", attempt: Int = 1) {
         val now = SystemClock.elapsedRealtime()
         if (now - lastBlockScreenAt < 60_000L) return
         if (!android.provider.Settings.canDrawOverlays(this)) return
@@ -360,6 +366,8 @@ class FilterVpnService : VpnService() {
             val intent = Intent(this, AppLockActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 putExtra("blocked_site", domain)
+                putExtra("blocked_category", category)
+                putExtra("blocked_attempt", attempt)
             }
             try {
                 startActivity(intent)

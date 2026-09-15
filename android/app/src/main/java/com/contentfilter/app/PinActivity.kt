@@ -142,10 +142,21 @@ class PinActivity : BaseActivity() {
     private fun verify() {
         val entered = input.text.toString()
         if (entered.length < MIN_PIN_LENGTH) return
+        // P0-5: persistent lockout (survives rotation/recreate)
+        if (PinManager.isLockedOut(this)) {
+            val ms = PinManager.remainingLockoutMs(this)
+            val secs = (ms / 1000).coerceAtLeast(1)
+            findViewById<TextView>(R.id.pinError)?.let { it.text = getString(R.string.pin_err_locked, secs) }
+            errorRow.visibility = View.VISIBLE
+            dots.forEach { it.setBackgroundResource(R.drawable.f6_pin_dot_error) }
+            shakeDots()
+            return
+        }
         val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val ok = PinManager.isPinSet(this) && PinManager.verify(this, entered)
         if (ok) {
             prefs.edit().putBoolean("pin_verified", true).apply()
+            PinManager.clearFailedAttempts(this)
             // teal flash, then hand the result back
             dots.forEach { it.setBackgroundResource(R.drawable.f6_pin_dot_success) }
             haptic()
@@ -156,22 +167,31 @@ class PinActivity : BaseActivity() {
             }
         } else {
             attempts++
+            PinManager.recordFailedAttempt(this)
             // clear first so the watcher's re-render doesn't overwrite the
             // clay state — the row then shakes in error color (UI-only
             // reorder; attempts / kick-home logic unchanged)
             input.setText("")
+            if (PinManager.isLockedOut(this)) {
+                val ms = PinManager.remainingLockoutMs(this)
+                val secs = (ms / 1000).coerceAtLeast(1)
+                findViewById<TextView>(R.id.pinError)?.let { it.text = getString(R.string.pin_err_locked, secs) }
+            } else {
+                findViewById<TextView>(R.id.pinError)?.let { it.text = getString(R.string.pin_err_wrong) }
+            }
             errorRow.visibility = View.VISIBLE
             dots.forEach { it.setBackgroundResource(R.drawable.f6_pin_dot_error) }
             shakeDots()
             haptic()
-            if (attempts >= 5) {
-                // too many wrong attempts: kick to home
-                val home = Intent(Intent.ACTION_MAIN).apply {
-                    addCategory(Intent.CATEGORY_HOME)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            if (attempts >= 5 || PinManager.isLockedOut(this)) {
+                // too many wrong attempts: kick to home (but respect lockout timer)
+                if (attempts >= 5) {
+                    val home = Intent(Intent.ACTION_MAIN).apply {
+                        addCategory(Intent.CATEGORY_HOME)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(home)
                 }
-                startActivity(home)
-                finish()
             }
         }
     }

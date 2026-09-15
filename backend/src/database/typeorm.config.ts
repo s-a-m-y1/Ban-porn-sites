@@ -15,11 +15,22 @@ export function parseDatabaseUrl(url: string) {
 export function getTypeOrmConfig(): TypeOrmModuleAsyncOptions {
   return {
     useFactory: () => {
-      const url = process.env.DATABASE_URL ?? 'postgresql://blocklist:blocklist@localhost:5432/blocklist_db';
+      const url = process.env.DATABASE_URL;
+      if (!url) {
+        if (process.env.NODE_ENV === 'production') {
+          throw new Error('DATABASE_URL must be set in production');
+        }
+        // Dev/test fallback with warning — never in production (P0-1)
+        console.warn('[typeorm] DATABASE_URL not set — using local dev fallback');
+      }
+      const effectiveUrl =
+        url ?? 'postgresql://blocklist:blocklist@localhost:5432/blocklist_db';
       return {
-        ...parseDatabaseUrl(url),
+        ...parseDatabaseUrl(effectiveUrl),
         autoLoadEntities: true,
-        synchronize: process.env.NODE_ENV !== 'production',
+        // P0-1: Never auto-synchronize — use migrations. Was `!== 'production'` which is unsafe.
+        synchronize: false,
+        migrationsRun: false,
       };
     },
   };
