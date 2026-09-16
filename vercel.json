@@ -1,5 +1,7 @@
 {
+  "buildCommand": "cd website-v2 && npm install && npm run build",
   "outputDirectory": "website-v2/dist",
+  "installCommand": "echo skip",
   "cleanUrls": true,
   "headers": [
     {
