@@ -123,5 +123,8 @@
             android:name=".SetPinActivity"
             android:exported="false"
             android:excludeFromRecents="true" />
+
+        <activity android:name=".LoginActivity" android:exported="false" />
+        <activity android:name=".SignupActivity" android:exported="false" />
     </application>
 </manifest>

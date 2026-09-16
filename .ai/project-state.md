@@ -24,6 +24,14 @@
 | T-008 | Frontend website — Vercel + download | DONE | agent/frontend |
 | T-009 | Backend security + privacy | DONE | agent/backend |
 | T-010 | QA validation | DONE | agent/qa |
+| T-014 | Auth system — signup/login | DONE | agent/backend |
+| T-015 | Coins/Points system | DONE | agent/backend |
+| T-016 | Advanced progress system | DONE | agent/product |
+| T-017 | Support HISN section | DONE | agent/frontend |
+| T-014 | Auth system — signup/login | IN_PROGRESS | agent/backend |
+| T-015 | Coins/Points system | TODO | agent/backend |
+| T-016 | Advanced progress system | TODO | agent/product |
+| T-017 | Support HISN section | TODO | agent/frontend |
 
 ## Blockers
 

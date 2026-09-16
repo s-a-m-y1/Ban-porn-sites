@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ادعم حِصن" android:textSize="22sp" android:textStyle="bold" android:textColor="?attr/textPrimary"/>
+    <TextView android:id="@+id/supportMessage" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textSize="15sp"/>
+    <TextView android:id="@+id/supportEmail" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="14sp" android:textColor="?attr/textSecondary" android:layout_marginTop="12dp"/>
+    <LinearLayout android:id="@+id/paymentsContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="16dp"/>
+    <Button android:id="@+id/btnSupport" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="24dp" android:background="@drawable/f9_btn_primary"/>
+</LinearLayout>
+</ScrollView>

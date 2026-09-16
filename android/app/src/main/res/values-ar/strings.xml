@@ -153,6 +153,12 @@
     <string name="send_feedback">إرسال وإيقاف</string>
     <string name="heatmap_empty">لا يوجد نشاط بعد — ستمتلئ المربعات مع الحظر</string>
     <string name="channel_desc">يبقي فلترة DNS تعمل بصمت</string>
+    <string name="auth_err_name">الاسم 2-50 حرف</string>
+    <string name="auth_err_email">بريد غير صحيح</string>
+    <string name="auth_err_phone">الهاتف 7-15 رقم</string>
+    <string name="auth_err_password">كلمة المرور 8+ أحرف</string>
+    <string name="auth_err_confirm">كلمتا المرور غير متطابقتين</string>
+    <string name="auth_err_generic">حدث خطأ — حاول مرة أخرى</string>
     <string name="vpn_revoked_title">توقفت الحماية</string>
     <string name="vpn_revoked_body">تم إيقاف VPN — اضغط لإعادة تفعيل الحماية.</string>
     <string name="tamper_title">الحماية تحتاج انتباه</string>

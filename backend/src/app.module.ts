@@ -9,6 +9,9 @@ import { RedisCacheModule } from './cache/redis.module';
 import { BlocklistModule } from './blocklist/blocklist.module';
 import { StatsModule } from './stats/stats.module';
 import { FeedbackModule } from './feedback/feedback.module';
+import { AuthModule } from './auth/auth.module';
+import { CoinsModule } from './coins/coins.module';
+import { ProgressModule } from './progress/progress.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { FeedbackModule } from './feedback/feedback.module';
     BlocklistModule,
     StatsModule,
     FeedbackModule,
+    AuthModule,
+    CoinsModule,
+    ProgressModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

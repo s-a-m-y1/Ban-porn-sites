@@ -28,9 +28,10 @@ export function getTypeOrmConfig(): TypeOrmModuleAsyncOptions {
       return {
         ...parseDatabaseUrl(effectiveUrl),
         autoLoadEntities: true,
-        // P0-1: Never auto-synchronize — use migrations. Was `!== 'production'` which is unsafe.
+        // P0-1: Never auto-synchronize — use migrations.
         synchronize: false,
-        migrationsRun: false,
+        migrations: [__dirname + '/migrations/*{.ts,.js}'],
+        migrationsRun: true,
       };
     },
   };

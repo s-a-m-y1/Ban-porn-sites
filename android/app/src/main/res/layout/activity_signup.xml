@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp" android:gravity="center_horizontal">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="إنشاء حساب — حِصن" android:textSize="22sp" android:textStyle="bold" android:textColor="?attr/textPrimary" android:layout_marginTop="24dp"/>
+    <EditText android:id="@+id/inputName" android:layout_width="match_parent" android:layout_height="56dp" android:hint="الاسم" android:layout_marginTop="24dp" android:background="@drawable/f9_card_surface" android:padding="12dp"/>
+    <EditText android:id="@+id/inputEmail" android:layout_width="match_parent" android:layout_height="56dp" android:hint="البريد الإلكتروني" android:inputType="textEmailAddress" android:layout_marginTop="12dp" android:background="@drawable/f9_card_surface" android:padding="12dp"/>
+    <EditText android:id="@+id/inputPhone" android:layout_width="match_parent" android:layout_height="56dp" android:hint="رقم الهاتف" android:inputType="phone" android:layout_marginTop="12dp" android:background="@drawable/f9_card_surface" android:padding="12dp"/>
+    <EditText android:id="@+id/inputPassword" android:layout_width="match_parent" android:layout_height="56dp" android:hint="كلمة المرور (8+)" android:inputType="textPassword" android:layout_marginTop="12dp" android:background="@drawable/f9_card_surface" android:padding="12dp"/>
+    <EditText android:id="@+id/inputConfirm" android:layout_width="match_parent" android:layout_height="56dp" android:hint="تأكيد كلمة المرور" android:inputType="textPassword" android:layout_marginTop="12dp" android:background="@drawable/f9_card_surface" android:padding="12dp"/>
+    <TextView android:id="@+id/errorText" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/clay_12" android:textSize="13sp" android:layout_marginTop="8dp"/>
+    <ProgressBar android:id="@+id/progress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone" android:layout_marginTop="12dp"/>
+    <Button android:id="@+id/btnSignup" android:layout_width="match_parent" android:layout_height="56dp" android:text="إنشاء حساب" android:textAllCaps="false" android:background="@drawable/f9_btn_primary" android:layout_marginTop="16dp"/>
+    <TextView android:id="@+id/linkLogin" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="لديك حساب؟ دخول" android:textColor="?attr/textSecondary" android:layout_marginTop="16dp"/>
+</LinearLayout>
+</ScrollView>

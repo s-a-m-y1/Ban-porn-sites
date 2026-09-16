@@ -157,6 +157,12 @@
     <string name="send_feedback">Send &amp; stop</string>
     <string name="heatmap_empty">No activity yet — squares will fill as blocking happens</string>
     <string name="channel_desc">Keeps DNS filtering running silently</string>
+    <string name="auth_err_name">Name must be 2-50 characters</string>
+    <string name="auth_err_email">Enter a valid email</string>
+    <string name="auth_err_phone">Phone must be 7-15 digits</string>
+    <string name="auth_err_password">Password must be 8+ characters</string>
+    <string name="auth_err_confirm">Passwords do not match</string>
+    <string name="auth_err_generic">Something went wrong — try again</string>
     <string name="vpn_revoked_title">Protection stopped</string>
     <string name="vpn_revoked_body">VPN was revoked — tap to re-enable protection.</string>
     <string name="tamper_title">Protection needs attention</string>
