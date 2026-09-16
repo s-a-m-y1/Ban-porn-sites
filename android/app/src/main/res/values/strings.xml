@@ -175,5 +175,6 @@
     <string name="tab_home">Home</string>
     <string name="tab_stats">Stats</string>
     <string name="tab_features">Features</string>
+    <string name="tab_support">Support</string>
     <string name="tab_settings">Settings</string>
 </resources>

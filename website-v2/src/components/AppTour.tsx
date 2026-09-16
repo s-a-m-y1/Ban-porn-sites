@@ -29,7 +29,7 @@ const screens = [
   },
   { key: "stats", tab: "الإحصائيات", title: "الإحصائيات", blurb: "أرقامك تبقى عندك: اليوم، الأسبوع، وخريطة النشاط." },
   { key: "protect", tab: "الحماية", title: "ميزات الحماية", blurb: "فئات بيدك: إباحي، قمار، وقائمة مواقع يدوية." },
-  { key: "support", tab: "ادعم حصن", title: "ادعم حصن", blurb: "مشروع وقفي — بدعمك يستمر ويتطوّر." },
+  { key: "support", tab: "الدعم", title: "ادعم حصن", blurb: "مشروع وقفي — بدعمك يستمر ويتطوّر." },
   { key: "settings", tab: "الإعدادات", title: "الإعدادات", blurb: "تحكم كامل: اللغة، الوضع الليلي، PIN، والدمج مع النظام." },
 ];
 
@@ -251,15 +251,15 @@ export function AppTour() {
                 </div>
               </div>
             </div>
-            <div className="mt-2 flex items-center justify-around rounded-2xl bg-ink px-2 pb-2 pt-1">
+            <div className="mt-2 flex items-center gap-0 rounded-2xl bg-[#16242F] px-1 pb-2 pt-1">
               {screens.map((s, k) => (
                 <button
                   key={s.key}
                   onClick={() => go(k)}
                   aria-label={s.tab}
-                  className={`flex flex-col items-center gap-1 rounded-xl px-3 py-1.5 text-[9px] transition-colors ${k === i ? "text-[#F4F1EA]" : "text-white/40"}`}
+                  className={`flex min-w-0 flex-1 select-none flex-col items-center gap-1 rounded-xl px-1 py-1.5 text-[8px] transition-colors ${k === i ? "text-[#F4F1EA]" : "text-white/40"}`}
                 >
-                  <span className={`grid h-7 w-12 place-items-center rounded-full ${k === i ? "gradient-emerald" : ""}`}>
+                  <span className={`grid h-6 w-10 place-items-center rounded-full ${k === i ? "gradient-emerald" : ""}`}>
                     {k === 0 && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M12 3 3 10v11h6v-7h6v7h6V10z"/></svg>}
                     {k === 1 && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M4 20V10h4v10H4zm6 0V4h4v16h-4zm6 0v-7h4v7h-4z"/></svg>}
                     {k === 2 && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5z"/></svg>}
@@ -279,7 +279,7 @@ export function AppTour() {
             <button
               key={s.key}
               onClick={() => go(k)}
-              className={`surface-card relative overflow-hidden px-5 py-4 text-right transition-all ${k === i ? "border-primary shadow-lift -translate-y-1" : "hover:-translate-y-0.5"}`}
+              className={`surface-card relative select-none overflow-hidden px-5 py-4 text-right transition-all ${k === i ? "border-primary shadow-lift -translate-y-1" : "hover:-translate-y-0.5"}`}
             >
               <p className={`text-sm font-bold ${k === i ? "text-primary" : "text-ink"}`}>{s.tab} — {s.title}</p>
               <p className="mt-1 text-[13px] text-[#6E7A72]">{s.blurb}</p>

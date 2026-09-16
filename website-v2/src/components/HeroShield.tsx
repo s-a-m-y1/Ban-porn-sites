@@ -17,7 +17,7 @@ export function HeroShield() {
   };
   return (
     <div ref={wrap} onMouseMove={onMove} onMouseLeave={reset} className="relative">
-      <svg viewBox="0 0 420 420" role="img" aria-label="درع حصن المتوهج فوق أوراق دافئة بأشكال زمردية" className="w-full h-auto">
+      <svg viewBox="0 0 420 420" shapeRendering="geometricPrecision" role="img" aria-label="درع حصن المتوهج فوق أوراق دافئة بأشكال زمردية" className="w-full h-auto">
         <defs>
           <linearGradient id="shieldFill" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="oklch(0.52 0.07 162)" />
