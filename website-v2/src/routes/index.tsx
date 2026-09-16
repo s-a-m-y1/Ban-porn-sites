@@ -160,7 +160,7 @@ export default function Index() {
         </section>
       </main>
 
-      <footer className="border-t border-border/60 py-8 text-center">
+      <footer className="pb-safe border-t border-border/60 pt-8 text-center">
         <p className="text-sm text-muted-foreground">حصن — ما لا يليق لا يصل.</p>
       </footer>
     </>

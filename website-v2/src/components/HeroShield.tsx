@@ -35,10 +35,16 @@ export function HeroShield() {
           <circle cx="95" cy="330" r="30" fill="oklch(0.93 0.025 85)" opacity="0.6" />
         </g>
         <circle cx="210" cy="185" r="150" fill="url(#glow)" className="glow-pulse" />
-        <g className="shield-float hero-parallax" style={{ transform: "translate(calc(var(--mx,0)*1px), calc(var(--my,0)*1px))" }}>
-          <path transform="translate(120 80) scale(0.9)" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z" fill="url(#shieldFill)" stroke="oklch(0.83 0.09 90)" strokeWidth="8" strokeLinejoin="round" />
-          <rect x="118" y="140" width="8" height="128" rx="4" fill="oklch(0.26 0.025 220)" />
-          <path transform="translate(120 80) scale(0.9)" d="M40 190 V95 C40 45 65 15 100 15" fill="none" stroke="oklch(0.985 0.01 95)" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+        <g className="shield-float hero-parallax" transform="translate(110,115)" style={{ transform: "translate(calc(110px + var(--mx,0)*1px), calc(115px + var(--my,0)*1px))" }}>
+          <path
+            d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z M96 60 H104 V190 H96 Z"
+            fillRule="evenodd"
+            fill="url(#shieldFill)"
+            stroke="oklch(0.83 0.09 90)"
+            strokeWidth="6"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          />
         </g>
       </svg>
     </div>
@@ -48,9 +54,8 @@ export function HeroShield() {
 export function LogoMark({ size = 36 }: { size?: number }) {
   return (
     <span className="gradient-emerald inline-flex items-center justify-center rounded-xl transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105" style={{ width: size, height: size }}>
-      <svg viewBox="0 0 200 200" width={size * 0.66} height={size * 0.66} aria-hidden="true">
-        <path d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z" fill="oklch(0.985 0.01 95)" />
-        <rect x="96" y="55" width="8" height="130" fill="oklch(0.47 0.075 160)" />
+      <svg viewBox="0 0 200 200" width={size * 0.66} height={size * 0.66} aria-hidden="true" shapeRendering="geometricPrecision">
+        <path d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z M96 60 H104 V190 H96 Z" fillRule="evenodd" fill="oklch(0.985 0.01 95)" />
       </svg>
     </span>
   );

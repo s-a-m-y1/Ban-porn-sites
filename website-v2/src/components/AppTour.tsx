@@ -43,7 +43,7 @@ function Toggle({ on }: { on: boolean }) {
 
 function Row({ children, i }: { children: React.ReactNode; i: number }) {
   return (
-    <div className="tour-rise mx-3 mb-2 flex items-center justify-between rounded-2xl border border-[#E2E2D8] bg-white px-3 py-2.5" style={{ animationDelay: `${i * 70}ms` }}>
+    <div className="tour-rise mx-3 mb-2 flex items-center justify-between rounded-2xl border border-[#E2E2D8] bg-white px-3 py-2.5 text-[#22333B]" style={{ animationDelay: `${i * 70}ms` }}>
       {children}
     </div>
   );
@@ -60,7 +60,7 @@ function HomeScreen() {
         <span className="rounded-full border border-[#E2E2D8] bg-[#EAF3EE] px-3 py-1 text-[10px] text-[#2E6B52]">مجاناً</span>
       </div>
       <div className="tour-rise mt-4 flex flex-col items-center" style={{ animationDelay: "90ms" }}>
-        <p className="flex items-center gap-1.5 text-[12px] font-medium">
+        <p className="flex items-center gap-1.5 text-[12px] font-medium text-[#22333B]">
           <span className="h-1.5 w-1.5 rounded-full bg-primary" />
           البوابة مغلقة
         </p>
@@ -74,7 +74,7 @@ function HomeScreen() {
       </div>
       <div className="tour-rise mx-3 mt-4 rounded-2xl bg-[#EDE4D2] p-3" style={{ animationDelay: "180ms" }}>
         <p className="text-[10px] font-bold text-[#22333B]">خُطوة إلى النور</p>
-        <p className="mt-1 text-[11px] leading-5">«التقوى هاهنا» — وأشار إلى صدره ثلاث مرات</p>
+        <p className="mt-1 text-[11px] leading-5 text-[#182634]">«التقوى هاهنا» — وأشار إلى صدره ثلاث مرات</p>
       </div>
       <div className="tour-rise mx-3 mt-3 grid grid-cols-2 gap-2" style={{ animationDelay: "260ms" }}>
         <div className="rounded-2xl border border-[#E2E2D8] bg-white p-2.5 text-center">
@@ -252,13 +252,13 @@ export function AppTour() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center border-t border-[#E2E2D8] bg-white px-1 py-1.5">
+              <div className="flex w-full items-center justify-around border-t border-[#E2E2D8] bg-white px-1 py-1.5">
               {screens.map((s, k) => (
                 <button
                   key={s.key}
                   onClick={() => go(k)}
                   aria-label={s.tab}
-                  className={`flex min-w-0 flex-1 select-none flex-col items-center gap-0.5 rounded-xl px-1 py-1 text-[8px] transition-colors ${k === i ? "text-[#2E6B52]" : "text-[#6E7A72]"}`}
+                  className={`flex min-w-0 flex-1 select-none flex-col items-center gap-0.5 rounded-xl px-1 py-1 text-[8px] transition-colors ${k === i ? "text-[#1E5631]" : "text-[#6B7280]"}`}
                 >
                   <span className={`grid h-6 w-11 place-items-center rounded-full ${k === i ? "bg-[#EAF3EE]" : ""}`}>
                     {k === 0 && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M12 3 3 10v11h6v-7h6v7h6V10z"/></svg>}

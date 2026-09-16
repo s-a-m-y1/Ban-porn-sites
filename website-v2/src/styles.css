@@ -256,3 +256,7 @@ html {
 
 .dark .blob-b { background: radial-gradient(circle at 60% 40%, oklch(0.64 0.09 160), transparent 65%); }
 .dark .surface-card { background-color: var(--card); }
+
+.pb-safe {
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+}
