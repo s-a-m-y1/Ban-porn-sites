@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "website",
   "cleanUrls": true,
   "headers": [
     {
@@ -11,8 +12,8 @@
     }
   ],
   "rewrites": [
-    { "source": "/download", "destination": "/website/download.html" },
-    { "source": "/install", "destination": "/website/install.html" },
-    { "source": "/privacy", "destination": "/website/privacy.html" }
+    { "source": "/download", "destination": "/download.html" },
+    { "source": "/install", "destination": "/install.html" },
+    { "source": "/privacy", "destination": "/privacy.html" }
   ]
 }
