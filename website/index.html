@@ -447,9 +447,11 @@
     <nav style="position:absolute;top:0;inset-inline:0;display:flex;justify-content:space-between;align-items:center;padding:16px 24px;z-index:2;font-family:'IBM Plex Sans',sans-serif;font-size:13px">
       <div style="display:flex;gap:12px;align-items:center">
         <a href="#" style="color:rgba(247,241,230,.85);text-decoration:none;border:1px solid rgba(247,241,230,.2);padding:6px 12px;border-radius:999px">AR / EN</a>
+        <button id="themeToggle" style="background:rgba(247,241,230,.15);border:1px solid rgba(247,241,230,.2);color:var(--sand);padding:6px 12px;border-radius:999px;cursor:pointer">☀️/🌙</button>
       </div>
       <div style="display:flex;gap:12px;align-items:center">
-        <a href="#" onclick="alert('تسجيل الدخول — قريباً');return false" style="color:rgba(247,241,230,.85);text-decoration:none">تسجيل الدخول</a>
+        <span id="authState" style="color:rgba(247,241,230,.85);font-size:12px"></span>
+        <a href="#" id="loginLink" onclick="location.href='../android/app/src/main/java/com/contentfilter/app/LoginActivity.kt';return false" style="color:rgba(247,241,230,.85);text-decoration:none">تسجيل الدخول</a>
         <a href="download.html" style="background:var(--amber);color:var(--indigo);padding:8px 18px;border-radius:4px;font-weight:700;text-decoration:none">إنشاء حساب</a>
       </div>
     </nav>
@@ -816,6 +818,33 @@
   });
 </script>
 <script type="module" src="shield-3d.js"></script>
+<script>
+// P2-3 light/dark + T-020 auth/coins/progress (minimal, backend source of truth)
+(function(){
+  const btn=document.getElementById('themeToggle');
+  const saved=localStorage.getItem('hisn_theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  btn&&btn.addEventListener('click',()=>{
+    const cur=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme', cur);
+    localStorage.setItem('hisn_theme', cur);
+  });
+  // auth state (optional, core protection works without account per #19)
+  const el=document.getElementById('authState');
+  if(el){
+    fetch('/api/auth/me', {headers:{'Authorization':'Bearer '+(localStorage.getItem('hisn_token')||'')}})
+      .then(r=>r.ok?r.json():null).then(u=>{
+        if(u&&u.email) el.textContent='مرحباً '+u.name+' • نقاط —';
+        else el.textContent='';
+      }).catch(()=>{});
+    // coins/progress placeholder (backend source of truth, not fake)
+    fetch('/api/coins/balance', {headers:{'Authorization':'Bearer '+(localStorage.getItem('hisn_token')||'')}})
+      .then(r=>r.ok?r.json():null).then(c=>{
+        if(c&&typeof c.balance==='number' && el.textContent) el.textContent+=' '+c.balance;
+      }).catch(()=>{});
+  }
+})();
+</script>
 
 </body>
 </html>
