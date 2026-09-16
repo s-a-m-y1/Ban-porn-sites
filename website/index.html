@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>حِصن — حماية تعمل في الخلفية</title>
 <meta name="description" content="حِصن يفلّر الإنترنت داخل الجهاز نفسه: المواقع التي تحتاجها عائلتك تفتح كالمعتاد، وما لا يليق يُحجب قبل أن يصل إلى الشاشة — بلا سجلات ولا مراقبة.">
-<meta name="theme-color" content="#1B1F3B">
+<meta name="theme-color" content="#16242F">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self';">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z' fill='%237A9471'/%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190' fill='none' stroke='%23C9A15C' stroke-width='10' stroke-linecap='round'/%3E%3Crect x='96' y='60' width='8' height='130' fill='%231B1F3B'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z' fill='%232F7A6B'/%3E%3Cpath d='M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190' fill='none' stroke='%23CDA55C' stroke-width='10' stroke-linecap='round'/%3E%3Crect x='96' y='60' width='8' height='130' fill='%2316242F'/%3E%3C/svg%3E">
 <style>
   /* P2-3: self-hosted fonts — no request to fonts.googleapis.com (privacy) */
   @font-face{font-family:'Cairo';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS4J0.woff2') format('woff2');unicode-range:U+0600-06FF, U+0750-077F, U+08E3-08FF, U+FB50-FDFF, U+FE70-FEFC}
@@ -18,13 +18,15 @@
   @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxaKYbABA.woff2') format('woff2')}
   @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxdKYbABA.woff2') format('woff2')}
   :root{
-    --indigo:#1B1F3B;
-    --indigo-2:#242952;
-    --amber:#C9A15C;
-    --sage:#7A9471;
-    --sage-ink:#5D7857;
-    --sand:#F7F1E6;
-    --char:#2B2A28;
+    /* P1: app palette (android colors.xml) — ink/teal/brass, not indigo */
+    --indigo:#16242F;
+    --indigo-2:#22344A;
+    --amber:#CDA55C;
+    --sage:#2F7A6B;
+    --sage-ink:#2F7A6B;
+    --sand:#F7F5EF;
+    --char:#182634;
+    --ink:#16242F; --ink-2:#26374A; --teal:#2F7A6B; --teal-night:#8FC4B6; --brass:#B8863B; --brass-light:#CDA55C; --clay:#B4573E; --parchment:#F4F1EA;
     /* spacing scale — 4px base, used for every gap/padding rhythm below */
     --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px;
     --sp-6:32px; --sp-7:48px; --sp-8:64px; --sp-9:88px; --sp-10:120px;
@@ -76,7 +78,7 @@
   .mark .mark-slit{fill:var(--mark-surface,var(--indigo))}
 
   .hero{
-    background:radial-gradient(120% 120% at 50% 0%, #242952 0%, var(--indigo) 55%, #0F1A2B 100%);
+    background:radial-gradient(120% 120% at 50% 0%, #22344A 0%, var(--indigo) 55%, #0E1B26 100%);
     min-height:100vh;
     min-height:100svh;
     display:grid;
@@ -88,7 +90,7 @@
   .hero::before{
     content:"";position:absolute;inset:auto 0 0 0;height:28%;background:
       linear-gradient(to top, rgba(0,0,0,.35), transparent),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 120'%3E%3Cpath d='M0 100 L120 40 L200 80 L320 20 L400 60 L480 30 L560 90 L640 50 L720 80 L800 100 Z' fill='%230F1A2B' opacity='.9'/%3E%3C/svg%3E") bottom/cover no-repeat;
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 120'%3E%3Cpath d='M0 100 L120 40 L200 80 L320 20 L400 60 L480 30 L560 90 L640 50 L720 80 L800 100 Z' fill='%230E1B26' opacity='.9'/%3E%3C/svg%3E") bottom/cover no-repeat;
     pointer-events:none;opacity:.7;
   }
   .hero::after{
@@ -190,6 +192,15 @@
     .hero-mark .mark-fill,.hero-mark .mark-slit{opacity:1}
     .hero-mark .mark-outline{stroke-dashoffset:0}
   }
+  /* P3: scroll reveal — every section reveals with purpose */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal[data-delay="1"]{transition-delay:.12s}
+  .reveal[data-delay="2"]{transition-delay:.24s}
+  .reveal[data-delay="3"]{transition-delay:.36s}
+  /* light theme (app bg_light) — intentional, not invert */
+  [data-theme="light"] body{background:var(--sand)}
+  [data-theme="light"] .hero{background:radial-gradient(120% 120% at 50% 0%, #22344A 0%, var(--ink) 55%, #0E1B26 100%)}
   /* returning visitor this session: jump straight to the end state.
      Scoped to the intro elements only, so interactive transitions
      (demo views, chips, links) keep working for returning visitors. */
@@ -432,6 +443,10 @@
   }
 
   @media (max-width:860px){
+    .hero-inner{grid-template-columns:1fr !important;text-align:center !important}
+    .hero-inner h1,.hero-inner .sub{text-align:center !important;margin-inline:auto !important}
+    .hero-actions{justify-content:center !important}
+    #heroPhoneWrap{margin:0 auto}
     .stage{flex-direction:column;align-items:center;gap:var(--sp-6)}
     .chips-side{align-items:center;text-align:center;padding-top:0}
     .chips{align-items:stretch}
@@ -458,47 +473,50 @@
       </div>
       <div style="display:flex;gap:12px;align-items:center">
         <span id="authState" style="color:rgba(247,241,230,.85);font-size:12px"></span>
-        <a href="#" id="loginLink" onclick="location.href='../android/app/src/main/java/com/contentfilter/app/LoginActivity.kt';return false" style="color:rgba(247,241,230,.85);text-decoration:none">تسجيل الدخول</a>
-        <a href="download.html" style="background:var(--amber);color:var(--indigo);padding:8px 18px;border-radius:4px;font-weight:700;text-decoration:none">إنشاء حساب</a>
+        <a href="download.html" style="color:rgba(247,241,230,.85);text-decoration:none">تسجيل الدخول</a>
+        <a href="download.html" style="background:var(--amber);color:var(--ink);padding:8px 18px;border-radius:4px;font-weight:700;text-decoration:none">إنشاء حساب</a>
       </div>
     </nav>
-    <div class="hero-inner">
-      <div style="position:relative;width:clamp(160px,22vw,220px);height:clamp(160px,22vw,220px);margin:0 auto var(--sp-7)">
-        <svg class="hero-mark" viewBox="0 0 200 200" role="img" aria-label="علامة حِصن: قوس بوابة بفتحة رأسية مغلقة" style="--mark-surface:var(--indigo)">
-          <path class="mark-fill" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z"/>
-          <path class="mark-outline" pathLength="100" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190"/>
-          <rect class="mark-slit" x="96" y="60" width="8" height="130"/>
-        </svg>
-        <canvas id="shield-canvas" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:none"></canvas>
-        <!-- floating UI indicators from reference hero RIGHT -->
-        <div style="position:absolute;top:8%;inset-inline-end:-18%;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(247,241,230,.15);border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--sand);min-width:140px">
-          <span style="width:28px;height:28px;background:rgba(122,148,113,.25);border-radius:6px;display:grid;place-items:center">🛡️</span>
-          <span>حماية من المشتتات</span>
+    <div class="hero-inner" style="display:grid;grid-template-columns:1fr auto;gap:var(--sp-8);align-items:center;max-width:1020px;text-align:start">
+      <div>
+        <h1 class="rise" style="text-align:start">حافظ على تركيزك<br><span style="color:var(--teal-night)">وقل وداعاً للمشتتات</span></h1>
+        <p class="sub rise" style="text-align:start;margin-inline:0">HISN حجب هادئ للمواقع المزعجة داخل جهازك — بلا مراقبة، بلا حساب. البوابة مغلقة، وأنت تتقدم.</p>
+        <div class="hero-actions rise" style="justify-content:flex-start;text-align:start">
+          <a class="cta" href="download.html">ابدأ الآن — حمّل حِصن</a>
+          <a class="hero-alt" href="#demo">
+            كيف يعمل؟
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6.5 8 11.5 13 6.5"/></svg>
+          </a>
         </div>
-        <div style="position:absolute;bottom:18%;inset-inline-end:-12%;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(247,241,230,.15);border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--sand);min-width:120px">
-          <span style="width:28px;height:28px;background:rgba(201,161,92,.2);border-radius:6px;display:grid;place-items:center">📊</span>
-          <span>تطور مستمر</span>
-        </div>
-        <div style="position:absolute;top:22%;inset-inline-start:-14%;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid rgba(247,241,230,.15);border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--sand);min-width:110px">
-          <span style="width:28px;height:28px;background:rgba(122,148,113,.25);border-radius:6px;display:grid;place-items:center">🧠</span>
-          <span>تركيز أكبر</span>
+        <div class="rise" style="display:flex;gap:24px;margin-top:28px;font-family:'IBM Plex Sans';font-size:12px;color:rgba(247,241,230,.68)">
+          <span><strong style="color:var(--sand);font-size:18px">76,771</strong><br>دومين محجوب</span>
+          <span><strong style="color:var(--sand);font-size:18px">100%</strong><br>على الجهاز</span>
+          <span><strong style="color:var(--sand);font-size:18px">0</strong><br>بيانات تُرسل</span>
         </div>
       </div>
-      <h1 class="rise">حافظ على تركيزك<br><span style="color:var(--sage)">وقل وداعاً للمشتتات</span></h1>
-      <p class="sub rise">HISN هو تطبيق ذكي يساعدك على حجب المواقع والتطبيقات المزعجة، ويمنحك بيئة رقمية آمنة تساعدك على تحقيق أهدافك.</p>
-      <div class="hero-actions rise">
-        <a class="cta" href="download.html">ابدأ الآن — حمّل حِصن</a>
-        <a class="hero-alt" href="#demo">
-          كيف يعمل؟
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6.5 8 11.5 13 6.5"/></svg>
-        </a>
+      <div id="heroPhoneWrap" style="position:relative;width:min(300px,38vw)">
+        <!-- REAL app screenshot (home gate closed, dark) — not a mockup -->
+        <img id="heroPhone" src="screens/home_gate_closed.webp" alt="تطبيق حِصن الحقيقي: البوابة مغلقة، بطاقة حديث، إحصائيات" width="480" height="1067"
+             style="display:block;width:100%;height:auto;border-radius:28px;border:6px solid #0E1B26;box-shadow:0 32px 80px -24px rgba(0,0,0,.6);will-change:transform">
+        <div style="position:absolute;top:12%;inset-inline-end:-24%;background:rgba(34,52,74,.85);backdrop-filter:blur(8px);border:1px solid rgba(143,196,182,.3);border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--parchment)">
+          <span style="width:8px;height:8px;background:var(--teal-night);border-radius:50%"></span> محمي الآن
+        </div>
+        <div style="position:absolute;bottom:22%;inset-inline-start:-26%;background:rgba(34,52,74,.85);backdrop-filter:blur(8px);border:1px solid rgba(205,165,92,.3);border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--parchment)">
+          ⭐ اليوم ٢ من رحلتك
+        </div>
+        <canvas id="shield-canvas" aria-hidden="true" style="position:absolute;inset:-40%;width:180%;height:180%;display:none;pointer-events:none"></canvas>
       </div>
-      <span class="cta-note rise">مجانًا لأجهزة أندرويد — ستنتقل إلى GitHub لتحميل ملف التطبيق وتثبيته يدويًا.</span>
     </div>
   </section>
 
-  <section class="what-is" style="background:#fff;text-align:center;border-bottom:1px solid rgba(43,42,40,.08)">
+  <section class="what-is" style="background:var(--sand);text-align:center;border-bottom:1px solid rgba(43,42,40,.08)">
     <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;text-align:start">
+      <div style="position:relative;display:flex;justify-content:center;align-items:center">
+        <!-- REAL screenshots scroller (app showcase) -->
+        <img src="screens/home_light.webp" alt="الرئيسية — البوابة مغلقة" loading="lazy" style="display:block;width:min(300px,80vw);height:auto;border-radius:24px;border:6px solid #0E1B26;box-shadow:0 24px 60px -20px rgba(0,0,0,.5)">
+        <img src="screens/stats_light.webp" alt="الإحصائيات" loading="lazy" style="position:absolute;width:min(220px,55vw);top:-8%;inset-inline-end:-6%;border-radius:18px;border:4px solid #0E1B26;box-shadow:0 16px 40px -16px rgba(0,0,0,.5);transform:rotate(2deg)">
+        <img src="screens/features_categories.webp" alt="فئات الحماية" loading="lazy" style="position:absolute;width:min(220px,55vw);bottom:-6%;inset-inline-start:-4%;border-radius:18px;border:4px solid #0E1B26;box-shadow:0 16px 40px -16px rgba(0,0,0,.5);transform:rotate(-2deg)">
+      </div>
       <div>
         <h2 style="color:var(--char);font-size:clamp(28px,4vw,38px)">ما هو حِصن؟</h2>
         <p class="lead" style="color:rgba(43,42,40,.72);margin-top:12px">تطبيق حِصن يحمي هاتفك من المحتوى المؤذي — فلترة DNS داخل الجهاز، بلا خادم خارجي، بلا تتبع. ترى الحماية تعمل أمامك: حالة البوابة، الإحصائيات، والتقدم.</p>
@@ -507,21 +525,7 @@
           <li>✓ <strong>الإحصائيات</strong> — 76771 دومين محجوب، 84 محاولة اليوم</li>
           <li>✓ <strong>التقدم</strong> — نقاط + مستوى + streak</li>
         </ul>
-        <a href="#demo" class="hero-alt" style="display:inline-flex;margin-top:20px;color:var(--indigo)">جرّب الحماية →</a>
-      </div>
-      <div style="position:relative;display:flex;justify-content:center;align-items:center;min-height:520px">
-        <div style="width:280px;height:560px;background:var(--indigo);border-radius:36px;padding:10px;box-shadow:0 24px 60px -20px rgba(27,31,59,.5);position:relative;transform:rotate(-1.5deg)">
-          <div style="background:var(--sand);border-radius:28px;height:100%;overflow:hidden;display:flex;flex-direction:column">
-            <div style="height:28px;background:var(--indigo);display:flex;align-items:center;justify-content:center;color:var(--sand);font-size:10px;font-family:'IBM Plex Sans'">حِصن — البوابة مغلقة • 84 محجوب</div>
-            <div style="flex:1;padding:16px;display:flex;flex-direction:column;gap:12px">
-              <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:12px"><div style="font-weight:700;font-size:13px">البوابة مغلقة 🛡️</div><div style="font-size:11px;color:rgba(0,0,0,.6)">حِصن يحرس جهازك</div></div>
-              <div style="background:var(--indigo);color:var(--sand);border-radius:12px;padding:12px;text-align:center"><div style="font-size:12px">نقاطك</div><div style="font-size:22px;font-weight:800;color:var(--amber)">1,240</div><div style="font-size:11px;opacity:.7">المستوى 13 • 40% للتقدم</div></div>
-              <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:12px"><div style="font-size:12px;font-weight:700">محاولة محجوبة</div><div style="font-size:11px;color:rgba(0,0,0,.6)">pornhub.com — اتقي الله</div></div>
-            </div>
-          </div>
-        </div>
-        <div style="position:absolute;top:20%;inset-inline-end:0;background:#fff;border:1px solid rgba(43,42,40,.12);border-radius:12px;padding:12px 16px;box-shadow:0 8px 24px -8px rgba(0,0,0,.15);font-size:12px;transform:rotate(1deg)"><strong>🛡️ محمي</strong><br><span style="color:rgba(0,0,0,.6)">84 محاولة اليوم</span></div>
-        <div style="position:absolute;bottom:20%;inset-inline-start:0;background:#fff;border:1px solid rgba(43,42,40,.12);border-radius:12px;padding:12px 16px;box-shadow:0 8px 24px -8px rgba(0,0,0,.15);font-size:12px;transform:rotate(-1deg)"><strong>⭐ المستوى 13</strong><br><span style="color:rgba(0,0,0,.6)">1,240 نقطة</span></div>
+        <a href="#demo" class="hero-alt" style="display:inline-flex;margin-top:20px;color:var(--teal)">جرّب الحماية →</a>
       </div>
     </div>
   </section>
@@ -567,13 +571,9 @@
                 </div>
               </div>
               <div class="view view-block" id="viewBlock" aria-hidden="true">
-                <svg class="mark" viewBox="0 0 200 200" aria-hidden="true" style="--mark-surface:var(--indigo)">
-                  <path class="mark-fill" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z"/>
-                  <path class="mark-outline" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190"/>
-                  <rect class="mark-slit" x="96" y="60" width="8" height="130"/>
-                </svg>
-                <p class="block-msg">هذا الموقع غير متاح على هذا الجهاز.</p>
-                <p class="block-soft">أغلق الصفحة وواصل يومك كما كان.</p>
+                <!-- REAL block screen from the actual app -->
+                <img src="screens/block_overlay.webp" alt="شاشة حجب حِصن الحقيقية: اتقي الله" loading="lazy"
+                     style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top">
               </div>
             </div>
           </div>
@@ -634,7 +634,7 @@
       <h2 style="color:var(--char)">حين يُحجب موقع — لا يظهر شيء.</h2>
       <p class="lead" style="color:rgba(43,42,40,.72);max-width:40rem;margin:12px auto 0">المحتوى المحجوب لا يومض أمامك. تظهر شاشة حِصن كاملة: “اتقي الله” — تذكير هادئ، ثم عودة آمنة للمتصفح دون إعادة فتح الرابط.</p>
       <div style="display:flex;justify-content:center;gap:16px;margin-top:32px;flex-wrap:wrap">
-        <div style="width:280px;background:var(--indigo);color:var(--sand);border-radius:20px;padding:24px;text-align:center"><div style="font-size:36px">🛡️</div><p style="font-weight:700;margin-top:8px">اتقي الله</p><p style="font-size:13px;color:rgba(247,241,230,.7);margin-top:8px">تذكير + آية/حديث موثق</p><button style="margin-top:16px;background:var(--amber);color:var(--indigo);border:none;padding:10px 20px;border-radius:4px;font-weight:700">العودة للمتصفح</button> <button style="margin-top:8px;background:transparent;color:var(--sand);border:1px solid rgba(247,241,230,.3);padding:10px 20px;border-radius:4px">افتح حِصن</button></div>
+        <img src="screens/block_overlay.webp" alt="شاشة حجب حِصن الحقيقية: اتقي الله" loading="lazy" style="width:min(300px,80vw);height:auto;border-radius:24px;border:6px solid #0E1B26;box-shadow:0 24px 60px -20px rgba(0,0,0,.6)">
       </div>
       <p style="font-size:13px;color:rgba(43,42,40,.6);margin-top:16px">Back لا يعيد فتح الرابط المحجوب — تاريخ التصفح آمن.</p>
     </div>
@@ -652,7 +652,7 @@
     </div>
   </section>
 
-  <section class="features" style="background:radial-gradient(100% 100% at 50% 0%, #1B1F3B 0%, #0F1A2B 100%);color:var(--sand);text-align:center;position:relative;overflow:hidden">
+  <section class="features" style="background:radial-gradient(100% 100% at 50% 0%, #16242F 0%, #0E1B26 100%);color:var(--sand);text-align:center;position:relative;overflow:hidden">
     <div class="wrap">
       <h2 style="color:var(--sand)">قدرات حِصن الحقيقية.</h2>
       <p class="lead" style="color:rgba(247,241,230,.7);max-width:40rem;margin:12px auto 0">ليست وعوداً — ميزات تعمل الآن، مختبرة على RMX3760.</p>
@@ -825,6 +825,39 @@
   });
 </script>
 <script type="module" src="shield-3d.js"></script>
+<script>
+// P3: scroll reveal via IntersectionObserver (Safari-safe), reduced-motion → instant
+(function(){
+  // auto-tag: every section h2/lead/cards get .reveal
+  document.querySelectorAll('section .wrap > *, section > .wrap').forEach(function(el,i){
+    if(el.tagName==='H2'||el.classList.contains('lead')||el.tagName==='UL'||el.tagName==='DIV') el.classList.add('reveal');
+  });
+  var els=document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(e){e.classList.add('in')});return;
+  }
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)} });
+  },{threshold:.18});
+  els.forEach(function(e){io.observe(e)});
+})();
+// P1: hero phone — mouse tilt (desktop only), calm ±6°
+(function(){
+  var ph=document.getElementById('heroPhone'); if(!ph) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(window.innerWidth<768) return;
+  var wrap=document.getElementById('heroPhoneWrap');
+  wrap.addEventListener('mousemove',function(e){
+    var r=wrap.getBoundingClientRect();
+    var x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    ph.style.transform='perspective(900px) rotateY('+(x*8)+'deg) rotateX('+(-y*6)+'deg) translateZ(0)';
+  });
+  wrap.addEventListener('mouseleave',function(){ph.style.transform='perspective(900px) rotateY(-2deg) rotateX(0)'});
+  ph.style.transform='perspective(900px) rotateY(-2deg)';
+})();
+</script>
 <script>
 // P2-3 light/dark + T-020 auth/coins/progress (minimal, backend source of truth)
 (function(){

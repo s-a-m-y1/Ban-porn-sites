@@ -32,8 +32,8 @@
     camera.position.set(0,0,6);
 
     // lights — calm, not neon
-    scene.add(new THREE.AmbientLight(0xF7F1E6, 0.9));
-    const dir = new THREE.DirectionalLight(0xC9A15C, 0.6); dir.position.set(2,3,4); scene.add(dir);
+    scene.add(new THREE.AmbientLight(0xF7F5EF, 0.9));
+    const dir = new THREE.DirectionalLight(0xCDA55C, 0.6); dir.position.set(2,3,4); scene.add(dir);
 
     // shield geometry — fortress arch (low poly <2K verts)
     const shape = new THREE.Shape();
@@ -43,26 +43,26 @@
     shape.lineTo(0.8,-1.2); shape.lineTo(-0.8,-1.2);
     const geo = new THREE.ExtrudeGeometry(shape,{depth:0.18, bevelEnabled:true, bevelThickness:0.02, bevelSize:0.02, bevelSegments:2});
     geo.center();
-    const mat = new THREE.MeshStandardMaterial({color:0x7A9471, roughness:0.7, metalness:0.05});
+    const mat = new THREE.MeshStandardMaterial({color:0x2F7A6B, roughness:0.7, metalness:0.05});
     const shield = new THREE.Mesh(geo, mat);
     scene.add(shield);
     // protective sphere — glowing, per reference hero RIGHT
     const sphereGeo = new THREE.SphereGeometry(1.15, 32, 32);
-    const sphereMat = new THREE.MeshStandardMaterial({color:0x7A9471, transparent:true, opacity:0.08, roughness:0.3, metalness:0.1, emissive:0x1B1F3B, emissiveIntensity:0.15});
+    const sphereMat = new THREE.MeshStandardMaterial({color:0x2F7A6B, transparent:true, opacity:0.08, roughness:0.3, metalness:0.1, emissive:0x16242F, emissiveIntensity:0.15});
     const sphere = new THREE.Mesh(sphereGeo, sphereMat);
     sphere.scale.set(1,1.15,1);
     scene.add(sphere);
-    const sphereWire = new THREE.LineSegments(new THREE.WireframeGeometry(sphereGeo), new THREE.LineBasicMaterial({color:0xC9A15C, transparent:true, opacity:0.12}));
+    const sphereWire = new THREE.LineSegments(new THREE.WireframeGeometry(sphereGeo), new THREE.LineBasicMaterial({color:0xCDA55C, transparent:true, opacity:0.12}));
     sphereWire.scale.copy(sphere.scale);
     scene.add(sphereWire);
     // fortress walls — two side bastions (calm, not gaming)
     const wallGeo = new THREE.BoxGeometry(0.18,0.9,0.12);
-    const wallMat = new THREE.MeshStandardMaterial({color:0x242952, roughness:0.9});
+    const wallMat = new THREE.MeshStandardMaterial({color:0x22344A, roughness:0.9});
     const leftWall = new THREE.Mesh(wallGeo, wallMat); leftWall.position.set(-0.92,-0.15, -0.05); scene.add(leftWall);
     const rightWall = new THREE.Mesh(wallGeo, wallMat); rightWall.position.set(0.92,-0.15, -0.05); scene.add(rightWall);
     // ground — subtle
     const groundGeo = new THREE.PlaneGeometry(6,2);
-    const groundMat = new THREE.MeshStandardMaterial({color:0x1B1F3B, roughness:1});
+    const groundMat = new THREE.MeshStandardMaterial({color:0x16242F, roughness:1});
     const ground = new THREE.Mesh(groundGeo, groundMat); ground.rotation.x = -Math.PI/2; ground.position.y = -1.3; scene.add(ground);
     // particles — glowing dust (low count on mobile)
     const isMobile = window.innerWidth < 720;
@@ -71,13 +71,13 @@
     const pPos = new Float32Array(pCount*3);
     for(let i=0;i<pCount;i++){ pPos[i*3]= (Math.random()-0.5)*3; pPos[i*3+1]= (Math.random()-0.5)*2; pPos[i*3+2]= (Math.random()-0.5)*1; }
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
-    const pMat = new THREE.PointsMaterial({color:0xC9A15C, size:0.015, transparent:true, opacity:0.6, depthWrite:false});
+    const pMat = new THREE.PointsMaterial({color:0xCDA55C, size:0.015, transparent:true, opacity:0.6, depthWrite:false});
     const particles = new THREE.Points(pGeo, pMat); scene.add(particles);
-    scene.fog = new THREE.Fog(0x1B1F3B, 4, 8);
+    scene.fog = new THREE.Fog(0x16242F, 4, 8);
 
     // slit
     const slitGeo = new THREE.BoxGeometry(0.07,1.0,0.2);
-    const slitMat = new THREE.MeshStandardMaterial({color:0x1B1F3B});
+    const slitMat = new THREE.MeshStandardMaterial({color:0x16242F});
     const slit = new THREE.Mesh(slitGeo, slitMat);
     slit.position.z = 0.12;
     shield.add(slit);
@@ -85,7 +85,7 @@
     // outline — LineLoop
     const points = shape.getPoints(20).map(p=> new THREE.Vector3(p.x,p.y,0.09));
     const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-    const lineMat = new THREE.LineBasicMaterial({color:0xC9A15C});
+    const lineMat = new THREE.LineBasicMaterial({color:0xCDA55C});
     const outline = new THREE.LineLoop(lineGeo, lineMat);
     shield.add(outline);
 
