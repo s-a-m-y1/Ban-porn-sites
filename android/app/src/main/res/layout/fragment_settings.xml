@@ -251,6 +251,28 @@
                     android:thumb="@drawable/f4_switch_thumb"
                     android:track="@drawable/f4_switch_track" />
             </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="?attr/dividerColor" android:layout_marginStart="74dp" />
+
+            <LinearLayout android:id="@+id/rowLogout" style="@style/SettingsRow">
+                <FrameLayout style="@style/IconCircle"
+                    android:background="@drawable/icon_circle_red">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_lang" android:importantForAccessibility="no" />
+                </FrameLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="تسجيل خروج"
+                        style="@style/SettingsLabel" />
+                    <TextView android:id="@+id/logoutEmail" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text=""
+                        style="@style/SettingsSublabel" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

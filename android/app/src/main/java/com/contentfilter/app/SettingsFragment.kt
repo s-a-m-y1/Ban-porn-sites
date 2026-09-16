@@ -33,6 +33,28 @@ class SettingsFragment : Fragment() {
         setupTheme(view)
         setupSecurity(view)
 
+        // logout row: show email if logged in, else hide
+        val logoutRow = view.findViewById<View>(R.id.rowLogout)
+        val logoutEmail = view.findViewById<TextView>(R.id.logoutEmail)
+        val authUser = AuthRepository.user(requireContext())
+        if (authUser != null) {
+            logoutEmail.text = authUser.email
+            logoutRow.visibility = View.VISIBLE
+            logoutRow.setOnClickListener {
+                AuthRepository.logout(requireContext())
+                startActivity(Intent(requireContext(), LoginActivity::class.java).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK })
+                requireActivity().finish()
+            }
+            UiAnim.pressable(logoutRow)
+        } else {
+            logoutEmail.text = "غير مسجل — اختياري"
+            logoutRow.visibility = View.VISIBLE
+            logoutRow.setOnClickListener {
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
+            }
+            UiAnim.pressable(logoutRow)
+        }
+
         // change-PIN row: only visible when a PIN exists
         val changePinRow = view.findViewById<View>(R.id.rowChangePin)
         changePinRow.visibility =

@@ -62,6 +62,7 @@ class MainActivity : BaseActivity() {
         return when (itemId) {
             R.id.navStats -> StatsFragment()
             R.id.navFeatures -> FeaturesFragment()
+            R.id.navSupport -> SupportFragment()
             R.id.navSettings -> SettingsFragment()
             else -> HomeFragment()
         }
