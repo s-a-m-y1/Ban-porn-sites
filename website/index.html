@@ -105,9 +105,16 @@
   .hero-mark .mark-fill{opacity:0;animation:appear .9s ease 1.95s forwards}
   .hero-mark .mark-slit{opacity:0;animation:appear .5s ease 2.85s forwards}
   .hero h1{
-    font-size:clamp(33px,5.6vw,58px);
-    font-weight:800;line-height:1.38;
+    font-size:clamp(28px,4.8vw,48px);
+    font-weight:800;line-height:1.35;
     color:var(--sand);
+    overflow-wrap:break-word;word-break:break-word;
+    padding-inline:8px;
+  }
+  @media (max-width:480px){
+    .hero h1{font-size:clamp(26px,7vw,36px)}
+    /* floating cards off-screen on mobile 320px — hide on small screens */
+    .hero-mark + canvas + div, .hero-mark + canvas + div + div, .hero-mark + canvas + div + div + div{display:none}
   }
   .hero .sub{
     margin:var(--sp-5) auto 0;
@@ -477,8 +484,8 @@
           <span>تركيز أكبر</span>
         </div>
       </div>
-      <h1 class="rise">ما لا يليق لا يصل،<br>وكل شيء آخر يبقى كما هو.</h1>
-      <p class="sub rise">حِصن يفلّر الإنترنت داخل الجهاز نفسه، بلا مراقبة وبلا حساب. المواقع التي تحتاجها عائلتك تفتح كالمعتاد، وما لا يليق يُحجب قبل أن يصل إلى الشاشة.</p>
+      <h1 class="rise">حافظ على تركيزك<br><span style="color:var(--sage)">وقل وداعاً للمشتتات</span></h1>
+      <p class="sub rise">HISN هو تطبيق ذكي يساعدك على حجب المواقع والتطبيقات المزعجة، ويمنحك بيئة رقمية آمنة تساعدك على تحقيق أهدافك.</p>
       <div class="hero-actions rise">
         <a class="cta" href="download.html">ابدأ الآن — حمّل حِصن</a>
         <a class="hero-alt" href="#demo">
@@ -717,7 +724,7 @@
       <p class="lead" style="color:rgba(43,42,40,.72);max-width:40rem;margin:12px auto 0">اختر منصتك — كل رابط حقيقي، بلا وهم.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:32px;text-align:start">
         <div style="border:1px solid rgba(43,42,40,.12);border-radius:12px;padding:24px;background:#fff">
-          <strong style="display:block;font-size:18px">📱 Android — حِصن</strong><p style="font-size:13px;color:rgba(43,42,40,.6);margin-top:4px">v1.0 (1) • 9.2 MB • Android 7.0+ • SHA256 79eda4…</p>
+          <strong style="display:block;font-size:18px">📱 Android — حِصن</strong><p style="font-size:13px;color:rgba(43,42,40,.6);margin-top:4px;direction:ltr;text-align:right;word-break:break-all;white-space:normal">v1.0 (1) • 9.2 MB • Android 7.0+ • SHA256 79eda473dba0…</p>
           <a href="downloads/hisn-v1.0.apk" download style="display:block;text-align:center;background:var(--amber);color:var(--indigo);font-weight:700;padding:14px;border-radius:4px;margin-top:16px;text-decoration:none">حمّل APK</a>
           <p style="font-size:11px;color:rgba(43,42,40,.5);margin-top:8px">تثبيت مباشر — <a href="install.html">دليل التثبيت</a></p>
         </div>
