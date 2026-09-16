@@ -1,363 +1,161 @@
-# حِصن (HISN) — حماية تعمل في الخلفية
-
-> فلترة إنترنت على مستوى الجهاز نفسه عبر VPN محلي + تطبيق أندرويد محمي بـ PIN + لوحة تحكم ديسكتوب (Qt6/C++20) للتحكم بأي هاتف أندرويد عبر USB. بلا سجلات، بلا مراقبة.
-
-**English one-liner:** On-device DNS filtering for families — clean sites open normally, explicit content is blocked before it reaches the screen. Includes Android app (Kotlin), NestJS backend, landing website, and a Qt6 desktop controller (ADB/scrcpy) for any phone (minSdk 24).
+# HISN — Website Visual Audit + Landing Page Plan
+> **Status: PLANNING — DO NOT IMPLEMENT YET.** Awaiting human review of this plan.
+> Captured: 2026-09-16 on realme RMX3760 (Android 13) via `adb screencap` — REAL app, no mockups.
 
 ---
 
-## Quick Start (أسرع طريق للتشغيل)
+## 1. Current website audit
+`website/index.html` (860 lines, single-file, vanilla JS):
+- **Good:** self-host Cairo/IBM Plex (9 woff2), CSP, RTL, skip-link, `prefers-reduced-motion`, real download (`downloads/hisn-v1.0.apk` 9.2MB + sha256), 10 sections, 3D `shield-3d.js` (fortress walls/sphere/particles, lazy `three@0.160`, DPR≤1.5).
+- **Problems found:**
+  1. **Fake product visuals** — hero phone (WHAT IS section) is hand-built divs mimicking HISN, NOT the real app (violates "no invented interfaces").
+  2. Demo phone shows fake wiki/bank content — not HISN's actual block screen.
+  3. No light-mode design (dark indigo hero + white sections mix, no coherent dual system).
+  4. Story order diverges from app reality (problem before product explanation).
+  5. Floating hero cards clip at 320px (just fixed via `@media 480 hide`).
+  6. No AR/EN switch (link only), auth links dead (`location.href` to .kt file — bug).
+  7. No coins/progress/screenshots anywhere — despite systems existing in app.
 
-### 0) المتطلبات
-```bash
-# Ubuntu 24.04 — كل الأدوات
-sudo apt update && sudo apt install -y cmake qt6-base-dev libspdlog-dev libfmt-dev \
-  libgtest-dev pkg-config build-essential android-sdk-platform-tools scrcpy ffmpeg -y
+## 2. Problems found (summary)
+Fake UI > real UI; no screenshot use; weak light mode; dead auth links; generic SaaS mid-sections; animation only in hero (rest static); no scroll storytelling after hero.
 
-# Node 22 + Java 17 (للباك-إند والأندرويد)
-node --version  # v22.x
-java --version  # 17+
-```
-
-### 1) Android Control — الديسكتوب (Qt6/C++20)
-```bash
-git clone <this-repo> && cd App-bloking-sex
-
-# بناء محلي (بدون Docker)
-cmake -S desktop -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --parallel $(nproc)
-LD_LIBRARY_PATH=/home/sami/.local/lib:$LD_LIBRARY_PATH ./build/android-control
-# أو عبر Docker (يبني ويشغل مباشرة):
-docker build -t android-control .
-xhost +local:docker && docker run --rm -it --privileged -v /dev/bus/usb:/dev/bus/usb \
-  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix android-control
-# تحقق:
-adb devices -l          # يجب أن يظهر هاتفك
-./build/tests/android_control_tests  # 18/18 GoogleTest
-```
-
-### 2) الباك-إند (NestJS + Postgres + Redis)
-```bash
-cd backend
-cp .env.example .env   # عدّل DATABASE_URL و API_KEY و REDIS_*
-npm ci
-npm run build
-npm test               # 69/69 jest (8 suites)
-npm run start:dev      # http://localhost:3000
-# مزامنة القائمة الخارجية يدوياً:
-npm run sync:external
-```
-
-### 3) تطبيق أندرويد (HISN — حِصن)
-```bash
-cd android
-./gradlew assembleDebug
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-adb shell am start -n com.contentfilter.app/.SplashActivity
-# اختبارات:
-./gradlew testDebugUnitTest   # 77/77 JUnit
-./gradlew connectedAndroidTest # يحتاج جهاز موصول
-```
-
-### 4) الموقع (Landing Page — ملف واحد)
-```bash
-cd website
-python3 -m http.server 8000
-# افتح http://localhost:8000 — تحقق: RTL، Cairo font، SVG inline، demo تفاعلي
-curl -s http://localhost:8000 | grep -q "حِصن" && echo "website OK"
-```
-
-> **تفعيل USB Debugging على الهاتف:** الإعدادات → حول الهاتف → اضغط 7 مرات على "رقم الإصدار" → الإعدادات → خيارات المطور → فعّل **تصحيح USB** → وصّل USB → اضغط **سماح** على الهاتف.
-
----
-
-## What It Does — ماذا يفعل البرنامج (5 مكونات)
-
-1.  **فلترة DNS محليّة عبر VPN وهمي** — `FilterVpnService.kt` ينشئ `VpnService` بلا خادم خارجي؛ كل استعلام DNS يُفحص ضد قاعدة `BlocklistDatabase` (Room) قبل السماح. شاشة الحجب تعرض **"اتقي الله"** فوق التطبيق المحجوب عبر `SYSTEM_ALERT_WINDOW`.
-2.  **قاعدة حجب قابلة للمزامنة** — الباك-إند (NestJS + TypeORM + Postgres) يجلب يومياً قائمة StevenBlack `porn-only/hosts` عبر cron (`BLOCKLIST_CRON=0 0 * * *`) ويكشفها عبر `GET /blocklist`؛ تطبيق الأندرويد يسحبها دورياً عبر `SyncWorker` (WorkManager كل `SYNC_INTERVAL_HOURS`).
-3.  **حماية بـ PIN + قفل تطبيقات** — `PinActivity.kt` / `PinManager.kt` / `AppLockService.kt` (Accessibility)؛ إصلاح الكيبورد: حقل شفاف `match_parent×56dp` + `SOFT_INPUT_STATE_ALWAYS_VISIBLE` + إعادة محاولة عند `onWindowFocusChanged` (انظر `docs/HISN-WORK-DOCS.md`).
-4.  **تحكم ديسكتوب كامل بأي هاتف أندرويد** — تطبيق Qt6/C++20: `AdbManager.cpp` (listDevices, shell)، `ScrcpyManager.cpp` (mirroring هاردوير-مسرّع)، `FileTransferManager` (push/pull)، `ClipboardManager` (copy/paste + autosync)، `DeviceWidget`، إعدادات `SettingsManager` (دقة/FPS/codec/bitrate).
-5.  **موقع تعريفي من ملف واحد** — `website/index.html` (667 سطر، HTML+CSS+Vanilla JS، بدون framework): Hero بـ Night Indigo `#1B1F3B` + Amber `#C9A15C`، Demo هاتف تفاعلي، قسم ثقة، Footer. خطوط `Cairo` + `IBM Plex Sans`، `dir="rtl"`، كل الأيقونات SVG inline.
-
----
-
-## Architecture — نظرة معمارية سريعة
-
-```
-┌─────────────┐      HTTPS      ┌──────────────┐     DNS/VPN     ┌──────────┐
-│  website/   │  ─────────────► │  backend/    │  ◄────────────► │ android/ │
-│ index.html  │   (landing)     │ NestJS:3000  │  /blocklist     │ HISN App │
-└─────────────┘                 │ Postgres+    │   JSON          │ VpnService│
-                                │ Redis+       │                 │ Room DB  │
-                                │ cron sync    │                 └────┬─────┘
-                                └──────────────┘                      │ ADB/USB
-                                                                      ▼
-                                                               ┌──────────┐
-                                                               │ desktop/ │
-                                                               │ Qt6 C++20│
-                                                               │ Adb+scrcpy│
-                                                               └──────────┘
-```
-
-| Container | التقنية | المسؤولية |
+## 3. Current HISN visual identity (from `android/app/src/main/res/values/colors.xml` + screenshots)
+| Token | Value | Use |
 |---|---|---|
-| `android/` | Kotlin, Room, WorkManager, VpnService, Gradle | فلترة على الجهاز، PIN، إحصائيات، مزامنة القوائم |
-| `backend/` | NestJS 11, TypeORM, Postgres, Redis, Jest | إدارة القوائم، API بمفتاح `X-Api-Key`، كاش، throttling |
-| `desktop/` | Qt6 Widgets, C++20, CMake, spdlog, scrcpy, ADB | مرآة الشاشة، لقطة/تسجيل، نقل ملفات، حافظة، تحكم كامل |
-| `website/` | HTML+CSS+JS (ملف واحد)، Cairo | صفحة هبوط عربية RTL، Demo تفاعلي، بدون build step |
+| `ink` | `#16242F` | dark bg (NOT indigo — deeper blue-green) |
+| `ink_2` | `#26374A` | dark surface |
+| `teal` | `#2F7A6B` | primary accent (gate on, success) |
+| `teal_night` | `#8FC4B6` | dark-mode teal |
+| `brass` | `#B8863B` / `brass_light #CDA55C` | highlights, status dot |
+| `clay` | `#B4573E` | error/blocked accents |
+| `stone_light` | `#DCD3C6` / `parchment #F4F1EA` | light surfaces |
+| `bg_light` | `#F7F5EF` | light bg |
+**IMPORTANT:** Website currently uses `#1B1F3B` indigo — **WRONG vs app `#16242F` ink-teal**. Website must adopt app palette.
 
-- **التفاصيل الكاملة:** `docs/HISN-WORK-DOCS.md` (إصلاح PIN، نظام الألوان، الأقسام، التجاوب، الوصولية) + `.ai/architecture.md` + `.skills/documentation/architecture-docs.md`
-- **القرارات (ADRs):** `.ai/decisions/` + `desktop/include/*.h` (DeviceInfo, AdbManager…)
+Typography: **Cairo** (UI, 400/500/700/800) + **Amiri** (اتقي الله hero, religious) + **IBM Plex Sans** (latin/numbers). Radius: 8/12/16/24dp. Terminology: البوابة (gate), اتقي الله, خُطوة إلى النور, اليوم ٢ من رحلتك.
 
----
-
-## Development — التطوير (أوامر مجربة)
-
-### الديسكتوب (C++20)
-```bash
-cmake -S desktop -B build -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --parallel $(nproc)
-./build/tests/android_control_tests --gtest_output=xml
-# تنسيق
-clang-format -i desktop/src/*.cpp desktop/include/*.h
+## 4. Screenshot inventory (17 PNGs, real device)
 ```
-
-### الباك-إند
-```bash
-cd backend
-npm ci && npm run lint && npm test
-npm run test:e2e   # يحتاج Postgres/Redis عبر docker-compose.yml
-docker compose up -d db redis  # من جذر المشروع
+docs/hisn-screenshots/
+01-splash/splash.png                     — ink bg, gate AVD, teal line
+02-home/home.png, home_gate_closed.png   — greeting+sami, gate مغلقة, hadith card, stats 84/76771
+03-protection/features_categories.png    — حظر المواقع الإباحية/القمار toggles
+04-block-screen/block_overlay.png        — اتقي الله 52sp Amiri + brass rule + domain
+05-pin/pin_entry.png                     — dots+keypad, teal success/clay error
+06-settings/settings.png, settings_logout_row.png — grouped rows: لغة/وضع/PIN/مسؤول/تشغيل/VPN
+07-stats/stats.png, stats_light.png      — cards+bar+heatmap
+08-auth/login.png, signup.png           — Cairo labels, teal primary btn
+10-light-dark/home_dark.png, home_light.png, settings_dark.png, settings_light.png — BOTH MODES REAL
+11-states/support_tab.png                — ادعم حِصن + email + payments placeholder
 ```
+Missing (todo in capture phase 2): onboarding Welcome, schedule dialog, feedback 1-5 stars, EN locale variants.
 
-### الأندرويد
-```bash
-cd android
-./gradlew testDebugUnitTest
-./gradlew assembleDebug
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-```
+## 5. New visual direction
+**"التطبيق نفسه جاء للحياة"** — ink-teal cinematic fortress (matches app `#16242F`+`#2F7A6B`), NOT website's current indigo. Calm, spiritual, premium. Glow = teal on dark / brass on light.
 
-### الموقع
-```bash
-cd website && python3 -m http.server 8000
-# تحقق يدوي: hero animation، demo بثلاثة أزرار، trust، footer
-```
+## 6. Landing page structure
+1. HERO — real home screenshot in 3D phone + fortress backdrop
+2. WHAT IS HISN — app identity, gate concept (from `how_it_works_body` strings)
+3. THE PROBLEM — from app journey (المشكلة ليست في إرادتك)
+4. HOW HISN PROTECTS — 4-layer diagram DEVICE→HISN→DNS→ALLOW/BLOCK
+5. REAL APP EXPERIENCE — scroll through REAL screenshots (home→stats→features)
+6. BLOCK EXPERIENCE — real `block_overlay.png` + intervention stages
+7. FEATURES — real capabilities (PIN/Admin/Accessibility/schedule/applock)
+8. COINS/PROGRESS — real (backend source of truth, screenshots from app when shipped)
+9. PRIVACY — trust list (existing copy is good)
+10. DOWNLOAD — Android v1.0 9.2MB sha256 + Desktop, install.html
+11. SUPPORT — support_tab content
+12. FOOTER
 
-> كل أوامر `Quick Start` و `Development` مجربة على جهاز حقيقي (realme RMX3760 / Android 13 / SDK 35) عبر `adb devices -l` + `scrcpy 3.3.4`. فشل Gate 7 = توقف الـ pipeline.
+## 7. Hero concept
+Phone (real `home_gate_closed.png` on 3D device) enters from depth → gate closes → particles settle → mouse tilts phone (±8°) → scroll dollies camera out revealing fortress silhouette → headline `حافظ على تركيزك` rises. 2D fallback: static screenshot + SVG gate.
 
----
+## 8. 2D strategy
+SVG gate mark (existing), 4-layer diagram (shield-story, animated path draw), feature icons (trust-icon family), hadith card, floating UI chips (real terminology), section transitions (GSAP or CSS scroll-driven).
 
-## Deployment — النشر
+## 9. 3D strategy
+`three@0.160` lazy (keep current loader): device mockup (rounded box + screenshot texture via `CanvasTexture` from PNG), fortress walls + sphere (already built), particles teal (recolor from amber), fog ink. Mouse→rotation, scroll→camera Y, hover→elevation. Mobile: no particles, DPR 1.
 
-| البيئة | كيف | المتغيرات |
-|---|---|---|
-| **ديسكتوب** | `docker build -t android-control .` أو `cmake --install build` → `.deb` عبر `packaging/deb/build-deb.sh` | لا شيء |
-| **باك-إند** | `docker compose up -d` (db + redis + backend) أو `npm run start:prod` | `DATABASE_URL`, `REDIS_HOST/PORT`, `API_KEY`, `EXTERNAL_BLOCKLIST_SOURCE`, `PORT=3000` |
-| **أندرويد** | `assembleRelease` + توقيع → Play Internal → Production | `local.properties` (sdk.dir) |
-| **موقع** | أي static host (GitHub Pages): ارفع `website/index.html` فقط | لا شيء |
+## 10. Animation plan (per section)
+| Section | Appears | Trigger | Purpose | Mobile | Reduced-motion |
+|---|---|---|---|---|---|
+| Hero | phone rise+gate close | load | product = real app | same, lighter | static |
+| What is | text stagger | scroll-in | clarity | same | fade only |
+| Problem | cards stagger | scroll | empathy | 1col | fade |
+| How | path draw | scroll | education | vertical | static SVG |
+| App exp | screenshots crossfade | scroll snap | credibility | swipe | static |
+| Block | overlay slides over browser mock | scroll | the promise | same | static |
+| Features | cards + icon pop | scroll | proof | 1col | fade |
+| Coins | counter-up | scroll | reward feel | same | static number |
+| Privacy | list stagger | scroll | trust | same | fade |
+| Download | CTA glow | hover | conversion | tap | static |
+| Support | fade | scroll | community | same | fade |
 
-مصفوفة البيئات `dev → staging → prod` عبر `.env.example` (قيم فقط، لا شكل مختلف — `devops/cd.md` single-artifact).
+## 11. Real app screenshot integration
+All 17 PNGs → `website/screens/` (copied, optimized ≤150KB each). Used as: 3D phone textures (hero, app-exp), floating cards (block, coins), static lightbox. **No invented UI anywhere.**
 
----
+## 12. Color system (website = app)
+Dark: bg `#16242F`, surface `#22344A`, elevated `#26374A`, text `#F4F1EA`, teal `#8FC4B6`, brass `#CDA55C`.
+Light: bg `#F7F5EF`, surface `#FFFFFF`, text `#182634`, teal `#2F7A6B`, brass `#B8863B`, clay `#B4573E` (errors only).
 
-## Project Memory — ذاكرة المشروع (للوكلاء)
+## 13. Typography
+Cairo (ar UI), Amiri (اتقي الله only), IBM Plex Sans (latin/URLs/numbers). Scale: 48/32/24/18/16/14/12. Line-height 1.6-1.85 (matches app).
 
-- **حالة المشروع:** `.ai/project-state.md` (Phase 0–17، المهام النشطة، Gate Status)
-- **المهام:** `.ai/tasks/T-*.md` (حالياً `T-001` — تحسين الواجهة + اختبار على الهاتف)
-- **السجل:** `.ai/SESSION_LOG.md` + `PROGRESS.md` + `.ai/TASKS.md`
-- **التسليم بين الوكلاء:** `.ai/HANDOFFS/`
-- **نظام المهارات:** `.skills/` (70+ مهارة) — نقطة الدخول `AGENT.md` → `core/skill-router.md`
+## 14. Responsive strategy
+Breakpoints 480/720/1024/1440. Desktop: side-by-side hero. Tablet: stacked, 3D on. Mobile: own composition — single column, screenshots full-bleed, 3D minimal (phone only), no fortress walls.
 
----
+## 15. Mobile strategy
+Phone-first story: real screenshots vertical swipe; particles off; DPR 1; fortress → flat SVG silhouette; CTA sticky bottom on download section.
 
-## Contributing — المساهمة
+## 16. Performance strategy
+Lazy `three` (existing), screenshots `loading=lazy`, woff2 subset (existing), no GSAP if CSS scroll-driven suffices (evaluate in impl), total JS <25KB, LCP = hero screenshot <200KB.
 
-- الفروع: `feat/*`, `fix/*`, `docs/*` (انظر `devops/git.md`)
-- كل إصلاح يضيف اختبار انحدار (`testing/regression.md`)
-- قبل الـ PR: `lint + typecheck + build + كل الاختبارات` + `git diff` كامل
-- لا `secrets` في الكود، لا `--force`، لا تجاوز للـ hooks (`core/agent-rules.md`)
-- حدّث `README` و `docs/*` مع أي تغيير سلوك/عقد
+## 17. Accessibility
+Contrast AA (teal on ink = 6.9:1 ✓), keyboard chips (existing pattern), `aria-live` for demo, focus-visible, skip-link, reduced-motion full fallback (static).
 
----
+## 18. Download experience
+Prominent: WHAT (حِصن فلترة DNS), PLATFORM (Android 7+), FILE (hisn-v1.0.apk 9.2MB v1.0), SHA256 full + copy btn, install.html 6 steps, Desktop secondary (GitHub releases).
 
-## License / Contact
+## 19. Support section
+From `SupportConfig`: message, `support@hisn.app` mailto, payments placeholder (Paymob/Fawry/Vodafone Cash — disabled, "قريباً"), CTA mailto.
 
-MIT — انظر `LICENSE` (Copyright © 2026 Android Control / حِصن).
+## 20. Technical architecture
+Keep single-file + `shield-3d.js` (no React — site is static, Vercel zero-build; React adds bundle for little gain at this scope; GSAP optional via dynamic import only if CSS scroll-driven insufficient). New: `website/screens/` assets, `website/phone-3d.js` (device mock), palette swap to app colors.
 
-- **Issues / Tasks:** `.ai/bugs/` + GitHub Issues
-- **Docs:** `docs/` + `website/` + `docs/HISN-WORK-DOCS.md`
-- **Icon:** `desktop/resources/icons/android-control.svg`
+## 21. Proposed components
+`<section-hero>` (3D phone + fortress), `<app-showcase>` (screenshot scroller), `<block-demo>` (browser→overlay), `<diagram-flow>` (SVG 4-layer), `<coins-progress>` (fetch /api optional), `<download-cards>`, `<support-cards>`, `<theme-toggle>` (existing).
 
-> هذا الـ README هو المصدر الوحيد للبداية السريعة. التفاصيل تعيش في `docs/setup.md` و `docs/architecture-docs.md` و `docs/api-docs.md` — الـ README يربط فقط، لا يكرر.
+## 22. Asset requirements
+17 screenshots (have), optimize to WebP ≤150KB (keep PNG originals in docs/), fortress silhouette SVG, gate mark (have), favicon (have).
 
----
+## 23. Implementation phases (after approval)
+P1: palette swap + screenshot integration + hero phone 3D (1d)
+P2: story reorder + block demo + app showcase scroller (1d)
+P3: animations + light/dark coherence (1d)
+P4: QA responsive/a11y/perf + Vercel (0.5d)
 
-# المراجعة الشاملة — كل شيء بالتفصيل (Appendix للمراجعة)
+## 24. Agent/task assignments
+- agent/frontend: P1-P2 (components, 3D)
+- agent/design: palette/typography/dark-light audit (P1, P3)
+- agent/product: story order + copy from app strings (P2)
+- agent/qa: P4 journeys + Lighthouse
+- Tasks: will create T-026..T-029 in `.ai/tasks/` upon approval.
 
-> هذا الملحق أُضيف بطلب المراجعة — يوثق **كل ملف ومكوّن** في المشروع لمن يريد مراجعة شاملة سطر بسطر.
+## 25. Risks & technical challenges
+1. Screenshot textures on 3D phone need aspect fit (720×1600 → 9/19.5 crop).
+2. CSS scroll-driven animation Safari <15 fallback → IntersectionObserver fallback.
+3. Light mode needs full section redesign (current sections are dark-locked).
+4. Amiri webfont not self-hosted yet (app has TTF; need woff2 conversion or fallback Cairo).
 
-## 1) شجرة المشروع الكاملة
-
-```
-App-bloking-sex/
-├── android/                 # تطبيق حِصن — Kotlin + Gradle (minSdk 24)
-│   ├── app/src/main/java/com/contentfilter/app/
-│   │   ├── SplashActivity.kt, WelcomeActivity.kt, MainActivity.kt, BaseActivity.kt
-│   │   ├── HomeFragment.kt, FeaturesFragment.kt, SettingsFragment.kt, StatsFragment.kt
-│   │   ├── FilterVpnService.kt      # VpnService — فلترة DNS بلا سيرفر خارجي
-│   │   ├── DnsPacketParser.kt       #解析 DNS (يهزم public-suffix over-blocking)
-│   │   ├── BlocklistDatabase.kt / BlocklistRepository.kt / BlocklistIndex.kt
-│   │   ├── PinActivity.kt / SetPinActivity.kt / PinManager.kt / AppLockService.kt / AppLockActivity.kt
-│   │   ├── StatsTracker.kt / HeatmapView.kt / SyncWorker.kt / ApiService.kt
-│   │   ├── AdminReceiver.kt / BootReceiver.kt / ScheduleReceiver.kt
-│   │   ├── AppPrefs.kt / UiAnim.kt
-│   │   └── ... (27 ملف Kotlin إجمالي)
-│   ├── app/src/main/res/
-│   │   ├── layout/  activity_pin.xml, activity_main.xml, fragment_home.xml, fragment_stats.xml...
-│   │   ├── drawable/ btn_primary.xml, btn_danger.xml, card_bg.xml, chip_green.xml...
-│   │   ├── values/  themes, colors, dimens (+ values-ar, values-night)
-│   │   ├── anim/    fade_in.xml, slide_in.xml, pulse.xml, f7_activity_enter.xml...
-│   │   └── mipmap-*/ ic_launcher
-│   ├── app/src/main/assets/ blocklist_porn.txt, blocklist_malware.txt, blocklist_gambling.txt...
-│   └── build.gradle.kts / settings.gradle.kts / gradlew
-├── backend/                 # NestJS 11 + TypeORM + Postgres + Redis
-│   ├── src/
-│   │   ├── blocklist/  blocklist.controller.ts, blocklist.service.ts, blocklist-update.task.ts
-│   │   │              entities/domain.entity.ts, blocklist-version.entity.ts
-│   │   ├── stats/      stats.controller.ts, stats.service.ts, entities/blocked-attempt.entity.ts
-│   │   ├── common/guards/api-key.guard.ts
-│   │   ├── cache/redis.module.ts, database/typeorm.config.ts, main.ts
-│   │   └── scripts/fetch-external.ts  # جلب StevenBlack porn-only/hosts
-│   └── package.json  # scripts: build, start, lint, test (jest 29)
-├── desktop/                 # Android Control — Qt6/C++20 + CMake
-│   ├── include/ AdbManager.h, ScrcpyManager.h, SettingsManager.h, FileTransferManager.h, ClipboardManager.h, MainWindow.h, DeviceWidget.h, DeviceInfo.h
-│   ├── src/     AdbManager.cpp, ScrcpyManager.cpp, SettingsManager.cpp, MainWindow.cpp (748 سطر), DeviceWidget.cpp, ...
-│   ├── tests/   test_adb_manager.cpp, test_device_info.cpp, test_scrcpy.cpp, test_settings.cpp, test_input.cpp
-│   ├── resources/icons/android-control.svg
-│   └── CMakeLists.txt (C++20, Qt6 Widgets/Gui/Network, spdlog/fmt, FFmpeg اختياري)
-├── website/                 # Landing page — ملف واحد 667 سطر
-│   └── index.html  # HTML+CSS+JS، Cairo 400/500/700/800 + IBM Plex Sans، dir="rtl"
-├── docs/  HISN-WORK-DOCS.md, architecture/, installation/, screenshots/, testing/
-├── packaging/  deb/, appimage/, desktop-entry/com.github.androidcontrol.desktop
-├── Dockerfile / docker-compose.yml / docker-compose.android-control.yml
-├── .skills/  70+ مهارة (SDLC كامل: product → design → dev → testing → security → devops)
-├── .ai/  project-state.md, tasks/, decisions/, architecture.md, HANDOFFS/, SESSION_LOG.md
-└── README.md / LICENSE / PROGRESS.md / CONTRIBUTING.md
-```
-
-## 2) الباك-إند — API + DB بالتفصيل
-
-### الجداول (TypeORM Entities)
-| جدول | ملف | أعمدة |
-|---|---|---|
-| `domains` | `blocklist/entities/domain.entity.ts` | `id PK`, `domain UNIQUE`, `category='adult-content'`, `active BOOL`, `addedAt` (+ index `idx_domains_domain`) |
-| `blocklist_versions` | `blocklist/entities/blocklist-version.entity.ts` | `id PK`, `version STRING`, `updatedAt` |
-| `blocked_attempts` | `stats/entities/blocked-attempt.entity.ts` | `id PK`, `deviceId(64)`, `domain`, `timestamp` (+ index `idx_attempts_device`) |
-
-### Endpoints
-| Method | Path | Guard/Cache | ماذا يفعل |
-|---|---|---|---|
-| `GET` | `/blocklist` | `CacheInterceptor` TTL 1h | يرجع `string[]` كل الدومينات النشطة |
-| `GET` | `/blocklist/version` | TTL 5min | يرجع `version` الحالية |
-| `GET` | `/blocklist/diff?since=0.0.0` | — | دومينات مضافة منذ نسخة معينة |
-| `POST` | `/stats/blocked` | `Throttler 120/60s` | `{deviceId, domain}` → يسجل محاولة محجوبة |
-| `GET` | `/stats/summary/:deviceId` | `ApiKeyGuard (X-Api-Key)` | ملخص إحصائيات جهاز |
-
-- `ApiKeyGuard` — يقرأ `API_KEY` من `.env`؛ تحذير: إذا لم يُضبط يسمح بلا مفتاح (موثق في PROGRESS.md).
-- `fetch-external.ts` — يجلب `https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn-only/hosts` يومياً.
-- `.env` keys: `DATABASE_URL`, `REDIS_HOST/PORT`, `API_KEY`, `EXTERNAL_BLOCKLIST_SOURCE`, `BLOCKLIST_CRON`, `PORT`.
-
-## 3) الأندرويد — كل الملفات ووظيفتها
-
-| ملف Kotlin | الدور |
-|---|---|
-| `SplashActivity.kt` | شاشة بداية + توجيه لـ Welcome/Main |
-| `WelcomeActivity.kt` | Onboarding أول مرة |
-| `MainActivity.kt` | `BottomNavigation` → 4 تبويبات (Home/Features/Settings/Stats) |
-| `HomeFragment.kt` | Hero + Gate toggle + hadith + stats + journey |
-| `FeaturesFragment.kt` | شبكة بطاقات المميزات |
-| `SettingsFragment.kt` | مجموعات إعدادات بصفوف أيقونية |
-| `StatsFragment.kt` | كروت إحصائيات + BarChart + HeatmapView |
-| `FilterVpnService.kt` | `VpnService` + `FOREGROUND_SERVICE_SPECIAL_USE` + اعتراض DNS |
-| `DnsPacketParser.kt` | فك حزم DNS + تحقق public-suffix |
-| `BlocklistDatabase.kt` | Room DB |
-| `BlocklistRepository.kt` / `BlocklistIndex.kt` | فهرس بحث O(1) للدومينات |
-| `PinManager.kt` / `PinActivity.kt` / `SetPinActivity.kt` | منطق PIN + شاشة إدخال (إصلاح 1dp→56dp) |
-| `AppLockService.kt` / `AppLockActivity.kt` | قفل تطبيقات عبر Accessibility |
-| `SyncWorker.kt` | WorkManager → `GET /blocklist` دورياً |
-| `ApiService.kt` | Retrofit للباك-إند |
-| `StatsTracker.kt` / `HeatmapView.kt` | تسجيل وعرض المحاولات |
-| `BootReceiver.kt` / `ScheduleReceiver.kt` / `AdminReceiver.kt` | إعادة تشغيل الحماية بعد reboot |
-
-**الصلاحيات (AndroidManifest.xml):** `INTERNET`, `FOREGROUND_SERVICE*`, `POST_NOTIFICATIONS`, `RECEIVE_BOOT_COMPLETED`, `VIBRATE`, `PACKAGE_USAGE_STATS`, `QUERY_ALL_PACKAGES`, `SYSTEM_ALERT_WINDOW` (لشاشة "اتقي الله") + `BIND_VPN_SERVICE`.
-
-**Assets افتراضية:** `blocklist_porn.txt` + `gambling` + `malware` + `fakenews`.
-
-## 4) الديسكتوب — كل الكلاسات
-
-| كلاس C++ | ملف | مسؤولية |
-|---|---|---|
-| `DeviceInfo` | `include/DeviceInfo.h` | struct + enum `DeviceState {Connected, Unauthorized, Offline, NoPermissions}` |
-| `AdbManager` | `AdbManager.h/.cpp` | `listDevices(true)`, `shell`, `adbVersion()`, `isAdbInstalled()`, `restartServer()` |
-| `ScrcpyManager` | `ScrcpyManager.h/.cpp` | `start(serial)`, `stop(serial)`, `isMirroring()`, `takeScreenshot()`, `startRecording()`, `sendKeyEvent(3/4/187)`, `rotateDevice()` |
-| `SettingsManager` | `SettingsManager.h/.cpp` | 4 تبويبات: Display (maxSize/FPS/bitrate/codec/fullscreen/stayAwake), Input (mouse/keyboard/clipboard/turnOff), Connection (autoReconnect), Recording (outputDir/format/quality) |
-| `FileTransferManager` | `FileTransferManager.h/.cpp` | `pushFile(serial, local, remote)` / `pullFile(...)` عبر `adb push/pull` |
-| `ClipboardManager` | `ClipboardManager.h/.cpp` | `copyToDevice()` / `pasteFromDevice()` + `autosync` |
-| `DeviceWidget` | `DeviceWidget.h/.cpp` | كرت جهاز واحد في القائمة (serial/model/manufacturer/battery) |
-| `MainWindow` | `MainWindow.h/.cpp` 748 سطر | النافذة الرئيسية: banner, header, scroll devices, preview frame (340px), status row (● + FPS + USB), صفّي أزرار (Screenshot/Record/Rotate... + Back/Home/Recent/Push/Pull/Copy/Paste), menu, toolbar, statusBar |
-
-**بناء:** `C++20`, `Qt6 Core/Widgets/Gui/Network`, `spdlog` (fallback `fmt`), `FFmpeg` اختياري. **tests:** 5 ملفات GoogleTest (`test_adb_manager`...).
-
-**مشكلة معروفة وحلها:** `libspdlog.so.1.15` غير في `/usr/lib` على بعض الأنظمة → شغّل بـ `LD_LIBRARY_PATH=/home/sami/.local/lib:$LD_LIBRARY_PATH ./build/android-control`.
-
-## 5) الموقع — تفصيل الألوان والبنية
-
-| CSS var | قيمة | دور وحيد |
-|---|---|---|
-| `--indigo` `#1B1F3B` | خلفية Hero + شاشة الهاتف المحجوبة + Footer |
-| `--indigo-2` `#242952` | خلفية قسم الثقة فقط |
-| `--amber` `#C9A15C` | CTA وحيد (زر حمّل) + نقطة chip غير معروف |
-| `--sage` `#7A9471` | نجاح/سماح فقط (صح + تعبئة القوس) |
-| `--sage-ink` `#5D7857` | حد صغير للتباين |
-| `--sand` `#F7F1E6` | خلفية Demo + نص فوق الداكن |
-| `--char` `#2B2A28` | نص فوق الفاتح |
-
-لا أحمر إطلاقاً. الخطوط: `Cairo 400/500/700/800` (عربي) + `IBM Plex Sans 400/500/600` (لاتيني). الأقسام بالترتيب: Hero (fullscreen + رسم قوس SVG) → Demo (هاتف + 3 أزرار حجب) → Trust (Indigo2) → Footer.
-
-## 6) الاختبارات — 164 فحص آلي أخضر
-
-| Suite | الأمر | النتيجة |
-|---|---|---|
-| Desktop GoogleTest | `./build/tests/android_control_tests` | **18/18** |
-| Backend Jest | `cd backend && npm test` (8 suites: blocklist/service/controller/cron, stats, guard, config) | **69/69** |
-| Android JUnit | `cd android && ./gradlew testDebugUnitTest` (DnsParser, BlocklistIndex, PinManager) | **77/77** |
-| Website smoke | `python3 -m http.server` + `curl` RTL/SVG/404 | PASS |
-| **المجموع** | | **164/164** |
-
-+ اختبار يدوي على جهاز حقيقي: realme RMX3760 / Android 13 / SDK 35 عبر `adb devices -l` + `scrcpy 3.3.4` + browser E2E (Google/DuckDuckGo/back/forward/text/swipe).
-
-## 7) الأمان والخصوصية
-
-- لا سجلات تصفح تُرسل للخارج — الفلترة داخل `VpnService` على الجهاز.
-- لا مراقبة — الباك-إند يخزن فقط `blocked_attempts {deviceId, domain, timestamp}` بلا محتوى.
-- `allowBackup=false` + `X-Api-Key` + `Throttler` + `SYSTEM_ALERT_WINDOW` للموثوقية على Android 14+.
-- تحذير موثق: `ApiKeyGuard` بلا `API_KEY` يسمح بلا مفتاح — اضبطه في الإنتاج.
-
-## 8) سلسلة المهام المتبقية P1–P7 (PROGRESS.md)
-
-| # | مهمة | حالة |
-|---|---|---|
-| P1 | `git rm` 16 ملف res يتيم (12 drawable + 4 anim) | Pending |
-| P2 | commit `.ai/` + HANDOFFS + PROGRESS | Pending |
-| P3 | commit website v2 (667 سطر) | Pending |
-| P4 | smoke test الموقع | Pending |
-| P5 | `assembleDebug` + `adb install -r` على هاتفك | Pending ← طلبك الأخير |
-| P6 | اختبار كامل على الجهاز (tabs, gate, VPN, حجب دومين) | Pending |
-| P7 | تقرير نهائي | Pending |
-
-**مشاكل موثقة (out of scope):** 🔴 guard بلا key، 🟡 over-blocking public-suffix، 🟡 `PinManager` ترتيب أخطاء، 🟢 `10.111.0.2` هاردكود.
+## 26. Definition of Done
+- [ ] Every product visual = real screenshot (17+)
+- [ ] Palette = app colors (ink/teal/brass, both modes)
+- [ ] Hero: 3D phone w/ real home screenshot, mouse+scroll reactive, static fallback
+- [ ] 11-section story per §6, each animated w/ purpose + reduced-motion
+- [ ] Download: real APK + sha256 + install guide, obvious in <3s of landing
+- [ ] Lighthouse ≥90 perf/a11y, LCP <2.5s, mobile excellent
+- [ ] AR/EN toggle functional; auth links → real /download or app
+- [ ] Vercel prod + all journeys verified on device
 
 ---
-
-> للمراجعة: كل سطر أعلاه مقابل لملف حقيقي في الشجرة. افتح أي مسار مذكور لتتحقق مباشرة.
+**STOP — plan complete. Awaiting review before implementation.**
