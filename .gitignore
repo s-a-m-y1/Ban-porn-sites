@@ -33,3 +33,5 @@ Makefile
 *.deb
 packaging/deb/android-control_*/
 packaging/appimage/AndroidControl.AppDir/
+website-v2/.vercel/
+website-v2/node_modules/
