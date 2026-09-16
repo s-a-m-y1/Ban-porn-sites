@@ -1,5 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 
+function PhoneTilt({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const onMove = (e: React.MouseEvent) => {
+    if (window.innerWidth < 861) return;
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    ref.current!.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 5}deg)`;
+  };
+  const reset = () => { if (ref.current) ref.current.style.transform = "perspective(900px) rotateY(0) rotateX(0)"; };
+  return (
+    <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className="transition-transform duration-300 will-change-transform">
+      {children}
+    </div>
+  );
+}
+
 const TOUR_MS = 5200;
 
 const screens = [
@@ -224,6 +242,7 @@ export function AppTour() {
 
       <div className="mt-10 grid items-center gap-10 lg:grid-cols-2">
         <div className="mx-auto w-[290px] max-w-full">
+          <PhoneTilt>
           <div className="rounded-[2.6rem] bg-ink p-3 shadow-lift">
             <div className="relative h-[520px] overflow-hidden rounded-[2rem] bg-background">
               <div key={screens[i].key} className="tour-stage absolute inset-0">
@@ -252,6 +271,7 @@ export function AppTour() {
               ))}
             </div>
           </div>
+          </PhoneTilt>
         </div>
 
         <div className="grid gap-3">
