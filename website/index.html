@@ -216,149 +216,6 @@
   .lead{margin-top:var(--sp-4);font-size:17px;font-weight:500}
 
   /* ---------- DEMO — the star ---------- */
-  .demo{text-align:center}
-  .demo .lead{color:rgba(43,42,40,.72);max-width:38rem;margin-inline:auto}
-  .stage{
-    display:flex;align-items:flex-start;justify-content:center;
-    gap:var(--sp-8);
-    margin-top:var(--sp-9);
-  }
-  .phone{
-    width:min(312px,84vw);
-    aspect-ratio:9/20; /* matches REAL app screenshots 720×1600 — no crop */
-    flex:none;
-    background:var(--indigo);
-    border-radius:44px;
-    padding:12px;
-    box-shadow:var(--shadow-phone);
-  }
-  .screen{
-    background:var(--sand);
-    border-radius:33px;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-  }
-  .browser-top{
-    padding:var(--sp-3) var(--sp-3) 10px;
-    border-bottom:1px solid var(--hairline-light);
-    display:flex;align-items:center;gap:var(--sp-2);
-  }
-  .url{
-    display:flex;align-items:center;gap:6px;
-    direction:ltr;
-    font-family:'IBM Plex Sans',sans-serif;
-    font-size:12px;font-weight:500;
-    color:var(--char);
-    background:rgba(43,42,40,.07);
-    padding:7px 14px;
-    border-radius:var(--radius-pill);
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    text-align:left;
-    min-width:0;
-    flex:1;
-  }
-  .url .lock{
-    width:10px;height:10px;flex:none;
-    fill:none;stroke:var(--sage-ink);stroke-width:1.7;
-    stroke-linecap:round;stroke-linejoin:round;
-  }
-  .page{flex:1;position:relative}
-  .view{
-    position:absolute;inset:0;
-    opacity:0;visibility:hidden;
-    transform:scale(.97);
-    pointer-events:none;
-    transition:opacity .32s ease,transform .32s ease,visibility 0s linear .32s;
-  }
-  /* .is-live is the visible view; the other fades+shrinks out.
-     JS also mirrors this with aria-hidden for assistive tech. */
-  .view.is-live{
-    opacity:1;visibility:visible;
-    transform:none;
-    pointer-events:auto;
-    transition-delay:0s;
-  }
-  .view-ok{display:flex;flex-direction:column}
-  .view-block{
-    background:var(--indigo);
-    display:flex;flex-direction:column;
-    align-items:center;justify-content:center;
-    text-align:center;
-    padding:0 var(--sp-5);
-  }
-  .view-block .mark{width:46px;height:46px;margin-bottom:var(--sp-5)}
-  .block-msg{font-size:15px;font-weight:700;color:var(--sand);line-height:1.8}
-  .block-soft{font-size:12.5px;font-weight:500;color:rgba(247,241,230,.68);margin-top:6px}
-  .fake{padding:var(--sp-5) var(--sp-4) 10px;display:flex;flex-direction:column;gap:11px}
-  .fake-title{font-size:14.5px;font-weight:700;color:var(--char)}
-  .bar{height:8px;border-radius:var(--radius-s);background:rgba(43,42,40,.13)}
-  .fake-img{height:62px;border-radius:6px;background:rgba(43,42,40,.08);margin:6px 0}
-  .b46{width:46%}.b58{width:58%}.b84{width:84%}.b92{width:92%}
-  .status{
-    margin-top:auto;
-    display:flex;align-items:center;gap:9px;
-    padding:var(--sp-3) var(--sp-4);
-    border-top:1px solid rgba(43,42,40,.14);
-    font-size:12px;font-weight:600;color:var(--char);
-  }
-  .check{width:15px;height:15px;flex:none}
-  .check path{fill:none;stroke:var(--sage-ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-
-  /* chips column: the interactive "try it" list beside the phone */
-  .chips-side{
-    display:flex;flex-direction:column;
-    gap:var(--sp-4);
-    padding-top:var(--sp-8);
-    text-align:start;
-  }
-  .chips-side .try-label{
-    font-size:13px;font-weight:700;
-    color:rgba(43,42,40,.72);
-    margin-bottom:var(--sp-1);
-  }
-  .chips{
-    display:flex;flex-direction:column;
-    gap:var(--sp-3);
-  }
-  .chip{
-    display:inline-flex;align-items:center;gap:var(--sp-3);
-    font-family:'Cairo',sans-serif;
-    font-size:14px;font-weight:600;
-    color:var(--char);
-    background:#fff;
-    border:1px solid rgba(43,42,40,.22);
-    border-radius:var(--radius-m);
-    padding:13px var(--sp-4);
-    cursor:pointer;
-    text-align:start;
-    min-width:min(300px,72vw);
-    transition:border-color .18s,background .18s,transform .18s,box-shadow .18s;
-  }
-  .chip:hover{border-color:rgba(43,42,40,.55);transform:translateY(-1px)}
-  .chip:active{transform:translateY(0)}
-  .chip.on{
-    border-color:var(--char);
-    background:#fff;
-    box-shadow:inset 0 0 0 1px var(--char);
-  }
-  .url #demoUrlText{
-    min-width:0;
-    overflow:hidden;text-overflow:ellipsis;
-  }
-  .chip-url{
-    font-family:'IBM Plex Sans',sans-serif;
-    font-size:11.5px;font-weight:500;
-    color:rgba(43,42,40,.68);
-    margin-inline-start:auto;
-  }
-  .dot{width:8px;height:8px;border-radius:50%;flex:none}
-  .dot-ok{background:var(--sage)}
-  .dot-blocked{background:var(--amber)}
-
-  /* ---------- TRUST — designed grid ---------- */
-  .trust{background:var(--indigo-2)}
   .trust .wrap{display:grid;grid-template-columns:1fr;gap:var(--sp-6) var(--sp-8)}
   .trust-head{max-width:44rem}
   .trust h2{color:var(--sand)}
@@ -399,6 +256,75 @@
   .trust-list p a:hover{color:var(--sand);border-bottom-color:var(--sand)}
   .trust-cta{display:flex;justify-content:center;margin-top:var(--sp-2)}
 
+  /* ---------- JOURNEY — رحلة الحماية (scroll-driven, sticky 3D phone) ---------- */
+  .journey{position:relative;height:420vh;background:radial-gradient(130% 100% at 50% 0%, #22344A 0%, var(--ink) 60%, #0E1B26 100%);color:var(--parchment)}
+  .journey-sticky{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:var(--sp-7);padding:0 var(--sp-6);overflow:hidden}
+  .journey-head{position:absolute;top:6vh;inset-inline:0;text-align:center}
+  .journey-head h2{color:var(--parchment);font-size:clamp(22px,3vw,32px)}
+  .journey-head p{color:rgba(244,241,234,.6);font-size:14px;margin-top:4px}
+  /* 3D phone — right side (RTL: inline-start), perspective tilt */
+  .jphone-wrap{perspective:1100px;justify-self:center;width:min(300px,70vw)}
+  .jphone{
+    position:relative;width:100%;aspect-ratio:9/20;
+    transform-style:preserve-3d;will-change:transform;
+    transition:transform .5s cubic-bezier(.22,.61,.36,1);
+  }
+  .jshot{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;
+    border-radius:30px;border:6px solid #0E1B26;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(143,196,182,.12);
+    opacity:0;visibility:hidden;transform:translateY(26px) scale(.97);
+    transition:opacity .55s ease, transform .55s cubic-bezier(.22,.61,.36,1), visibility 0s linear .55s;
+  }
+  .jshot.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+  .jglow{ /* soft teal floor-glow under phone — purpose: depth */
+    position:absolute;inset-inline:10%;bottom:-5%;height:9%;border-radius:50%;
+    background:radial-gradient(50% 100% at 50% 50%, rgba(47,122,107,.35), transparent 70%);
+    filter:blur(6px);
+  }
+  /* captions — left side */
+  .jcaps{position:relative;height:70vh;display:grid;align-content:center}
+  .jcap{
+    position:absolute;inset-inline:0;top:50%;transform:translateY(-50%) translateX(var(--jcap-x,0));
+    opacity:0;visibility:hidden;
+    transition:opacity .5s ease, transform .55s cubic-bezier(.22,.61,.36,1), visibility 0s linear .5s;
+  }
+  .jcap.on{opacity:1;visibility:visible;transform:translateY(-50%);transition-delay:.08s}
+  .jcap h3{font-size:clamp(22px,2.6vw,32px);font-weight:800;color:var(--parchment);line-height:1.5}
+  .jcap p{margin-top:10px;font-size:15.5px;color:rgba(244,241,234,.75);max-width:34rem;line-height:1.9}
+  .jcap .jtag{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--teal-night);border:1px solid rgba(143,196,182,.3);border-radius:999px;padding:5px 14px;margin-bottom:12px;font-family:'IBM Plex Sans'}
+  .jstep{font-family:'IBM Plex Sans';font-size:12px;letter-spacing:.2em;color:rgba(244,241,234,.45);margin-bottom:10px}
+  /* progress rail */
+  .jrail{position:absolute;inset-inline-start:clamp(10px,3vw,36px);top:50%;transform:translateY(-50%);display:grid;gap:14px}
+  .jdot{width:10px;height:10px;border-radius:50%;background:rgba(244,241,234,.18);border:none;cursor:pointer;padding:0;transition:background .3s, transform .3s}
+  .jdot.on{background:var(--teal-night);transform:scale(1.35)}
+  .jdot:focus-visible{outline:2px solid var(--teal-night);outline-offset:3px}
+  .jnum{position:absolute;inset-inline-end:clamp(10px,3vw,36px);bottom:8vh;font-family:'IBM Plex Sans';font-size:12px;color:rgba(244,241,234,.4)}
+  .jnum b{color:var(--parchment);font-size:20px}
+  @media (max-width:860px){
+    .journey{height:380vh}
+    .journey-sticky{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:0;padding:0 var(--sp-4);padding-top:11vh}
+    .jphone-wrap{width:min(240px,62vw);grid-row:2;align-self:start;margin-top:2vh}
+    .jcaps{height:34vh;grid-row:3;align-content:start;margin-top:2vh}
+    .jcap{position:relative;top:0;transform:none}
+    .jcap.on{transform:none}
+    .jcap p{font-size:14px}
+    .jrail{inset-inline-start:auto;inset-inline:0;top:auto;bottom:3vh;grid-auto-flow:column;justify-content:center;gap:18px;transform:none}
+    .jnum{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .journey{height:auto}
+    .journey-sticky{position:static;height:auto;display:grid;grid-template-columns:1fr;padding:var(--sp-7) var(--sp-4) var(--sp-8)}
+    .jphone-wrap{display:none} /* replaced by static card list */
+    .jcaps{height:auto;display:grid;gap:var(--sp-6);margin-top:var(--sp-5)}
+    .jcap{position:relative;opacity:1;visibility:visible;transform:none;border:1px solid rgba(143,196,182,.2);border-radius:14px;padding:18px;background:rgba(34,52,74,.4)}
+    .jcap img{display:none}
+    .jrail,.jnum{display:none}
+    .jstatic{display:grid !important;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:var(--sp-5)}
+    .jstatic img{width:100%;border-radius:16px;border:4px solid #0E1B26}
+  }
+  .jstatic{display:none}
+
   /* ---------- FOOTER ---------- */
   footer{
     background:var(--indigo);
@@ -431,10 +357,7 @@
     .hero-inner h1,.hero-inner .sub{text-align:center !important;margin-inline:auto !important}
     .hero-actions{justify-content:center !important}
     #heroPhoneWrap{margin:0 auto}
-    .stage{flex-direction:column;align-items:center;gap:var(--sp-6)}
-    .chips-side{align-items:center;text-align:center;padding-top:0}
-    .chips{align-items:stretch}
-  }
+    .stage{flex-direction:column;align-items:center;gap:var(--sp-6)}  }
   @media (max-width:720px){
     section{padding:var(--sp-9) 0}
     .hero{padding:var(--sp-8) var(--sp-5)}
@@ -445,7 +368,7 @@
 </head>
 <body>
 
-<a class="skip-link" href="#demo">تخطَّ إلى تجربة الحماية</a>
+<a class="skip-link" href="#journey">تخطَّ إلى رحلة الحماية</a>
 
 <main id="top">
 
@@ -467,7 +390,7 @@
         <p class="sub rise" style="text-align:start;margin-inline:0">HISN حجب هادئ للمواقع المزعجة داخل جهازك — بلا مراقبة، بلا حساب. البوابة مغلقة، وأنت تتقدم.</p>
         <div class="hero-actions rise" style="justify-content:flex-start;text-align:start">
           <a class="cta" href="download.html">ابدأ الآن — حمّل حِصن</a>
-          <a class="hero-alt" href="#demo">
+          <a class="hero-alt" href="#journey">
             كيف يعمل؟
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6.5 8 11.5 13 6.5"/></svg>
           </a>
@@ -502,75 +425,58 @@
           <li>✓ <strong>الإحصائيات</strong> — 76771 دومين محجوب، 84 محاولة اليوم</li>
           <li>✓ <strong>التقدم</strong> — نقاط + مستوى + streak</li>
         </ul>
-        <a href="#demo" class="hero-alt" style="display:inline-flex;margin-top:20px;color:var(--teal)">جرّب الحماية →</a>
+        <a href="#journey" class="hero-alt" style="display:inline-flex;margin-top:20px;color:var(--teal)">جرّب الحماية →</a>
       </div>
     </div>
   </section>
 
-  <section class="demo on-light" id="demo">
-    <div class="wrap">
-      <h2>اضغط على أي عنوان، وشاهد بنفسك.</h2>
-      <p class="lead">جهاز فيه حِصن. موقع مرجعي، وموقع بنكي، ورابط لا يعرفه أحد — ثلاث حالات تختبرها هنا قبل أن تثبّت التطبيق.</p>
-
-      <div class="stage">
-        <div class="phone">
-          <div class="screen">
-            <div class="browser-top">
-              <span class="url" id="demoUrl">
-                <svg class="lock" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5" width="8" height="6" rx="1"/><path d="M4 5V3.8a2 2 0 0 1 4 0V5"/></svg>
-                <span id="demoUrlText">ar.wikipedia.org</span>
-              </span>
-              <span class="sr-only" id="viewAnnounce" aria-live="polite"></span>
-            </div>
-            <div class="page">
-              <div class="view view-ok is-live" id="viewOk">
-                <div class="fake">
-                  <div class="fake-title" id="okTitle">الموسوعة الحرة</div>
-                  <div class="bar b46"></div>
-                  <div class="bar b92"></div>
-                  <div class="bar b84"></div>
-                  <div class="fake-img"></div>
-                  <div class="bar b58"></div>
-                  <div class="bar b84"></div>
-                </div>
-                <div class="status">
-                  <svg class="check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5"/></svg>
-                  <span>فتح الموقع بشكل طبيعي</span>
-                </div>
-              </div>
-              <div class="view view-block" id="viewBlock" aria-hidden="true">
-                <!-- REAL block screen from the actual app — fills, correct aspect -->
-                <img src="screens/block_overlay.webp" alt="شاشة حجب حِصن الحقيقية: اتقي الله" loading="lazy"
-                     style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:0">
-              </div>
-            </div>
-          </div>
+  <section class="journey" id="journey" aria-label="رحلة الحماية — التطبيق الحقيقي مشهد بمشهد">
+    <div class="journey-sticky">
+      <div class="journey-head">
+        <h2>رحلة الحماية — التطبيق الحقيقي.</h2>
+        <p>اسحب ببطء… التطبيق نفسه يقودك عبر أربع محطات.</p>
+      </div>
+      <div class="jcaps" id="jcaps">
+        <div class="jcap" data-cap="0">
+          <span class="jtag">المحطة ١</span>
+          <h3>الحماية شغّالة بهدوء.</h3>
+          <p>هذه شاشة حِصن الحقيقية: البوابة مغلقة، حديث اليوم أمامك، وعدّاد الحماية يعمل في الخلفية — كل شيء داخل جهازك، لا شيء يخرج.</p>
         </div>
-
-        <div class="chips-side">
-          <p class="try-label" id="tryLabel">جرّب هذه العناوين:</p>
-          <div class="chips" role="group" aria-labelledby="tryLabel">
-            <button class="chip on" type="button" data-site="wiki" aria-pressed="true">
-              <span class="dot dot-ok" aria-hidden="true"></span>
-              <span>موقع مرجعي</span>
-              <span class="chip-url" dir="ltr">ar.wikipedia.org</span>
-            </button>
-            <button class="chip" type="button" data-site="bank" aria-pressed="false">
-              <span class="dot dot-ok" aria-hidden="true"></span>
-              <span>موقع بنكي</span>
-              <span class="chip-url" dir="ltr">www.nbe.com.eg</span>
-            </button>
-            <button class="chip" type="button" data-site="unknown" aria-pressed="false">
-              <span class="dot dot-blocked" aria-hidden="true"></span>
-              <span>رابط غير معروف</span>
-              <span class="chip-url" dir="ltr">unknown-link.xyz</span>
-            </button>
-          </div>
+        <div class="jcap" data-cap="1">
+          <span class="jtag">المحطة ٢</span>
+          <h3>لحظة الحجب — لا يظهر شيء.</h3>
+          <p>عند محاولة فتح موقع محجوب، لا يومض المحتوى ولو للحظة. تظهر شاشة «اتقي الله» كاملة: تذكير هادئ من مصدر موثّق، ثم عودة آمنة دون إعادة فتح الرابط.</p>
+        </div>
+        <div class="jcap" data-cap="2">
+          <span class="jtag">المحطة ٣</span>
+          <h3>تقدّمك أمامك.</h3>
+          <p>كل محاولة محجوبة تتحول إلى تقدم: إحصائيات اليوم، الأسبوع، وخريطة نشاط — بيانات تبقى على جهازك وحده.</p>
+        </div>
+        <div class="jcap" data-cap="3">
+          <span class="jtag">المحطة ٤</span>
+          <h3>تحكم كامل بيدك.</h3>
+          <p>فئات الحماية، الجدولة، قفل التطبيقات، ورقم سري يحمي الإعدادات — كل قرار بيدك، ومحمي بـ PIN.</p>
         </div>
       </div>
+      <div class="jphone-wrap" id="jphoneWrap">
+        <div class="jphone" id="jphone">
+          <img class="jshot on" src="screens/home_gate_closed.webp" alt="الرئيسية — البوابة مغلقة (شاشة حقيقية)" loading="eager">
+          <img class="jshot" src="screens/block_overlay.webp" alt="شاشة الحجب الحقيقية: اتقي الله" loading="lazy">
+          <img class="jshot" src="screens/stats_light.webp" alt="الإحصائيات الحقيقية" loading="lazy">
+          <img class="jshot" src="screens/features_categories.webp" alt="فئات الحماية الحقيقية" loading="lazy">
+          <div class="jglow" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="jrail" id="jrail" role="tablist" aria-label="محطات الرحلة"></div>
+      <div class="jnum" id="jnum"><b>١</b> / ٤</div>
+    </div>
+    <div class="jstatic">
+      <img src="screens/home_gate_closed.webp" alt="البوابة مغلقة">
+      <img src="screens/block_overlay.webp" alt="اتقي الله">
+      <img src="screens/stats_light.webp" alt="الإحصائيات">
+      <img src="screens/features_categories.webp" alt="الفئات">
     </div>
   </section>
-
   <section class="problem" style="background:var(--sand);text-align:center">
     <div class="wrap">
       <h2 style="color:var(--char)">المشكلة ليست في إرادتك وحدها.</h2>
@@ -740,56 +646,84 @@
     } catch (_e) { /* storage unavailable — intro simply replays */ }
   })();
 
-  var sites = {
-    wiki: { url: 'ar.wikipedia.org', title: 'الموسوعة الحرة', ok: true },
-    bank: { url: 'www.nbe.com.eg', title: 'خدماتك المصرفية عبر الإنترنت', ok: true },
-    unknown: { url: 'unknown-link.xyz', ok: false },
-  };
-  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
-  var group = document.querySelector('.chips');
-  var urlText = document.getElementById('demoUrlText');
-  var viewOk = document.getElementById('viewOk');
-  var viewBlock = document.getElementById('viewBlock');
-  var okTitle = document.getElementById('okTitle');
-  var announce = document.getElementById('viewAnnounce');
+  // ─── JOURNEY: رحلة الحماية — scroll-driven 4-scene story ───
+  var AR = ['١','٢','٣','٤'];
+  var jsec = document.getElementById('journey');
+  var jphone = document.getElementById('jphone');
+  var jwrap = document.getElementById('jphoneWrap');
+  var jcaps = document.querySelectorAll('.jcap');
+  var jshots = document.querySelectorAll('.jshot');
+  var jrail = document.getElementById('jrail');
+  var jnum = document.getElementById('jnum');
+  var jscene = 0, jTiltX = 0, jTiltY = 0, jScrollTilt = 0;
 
-  function selectSite(chip) {
-    var site = sites[chip.dataset.site];
-    urlText.textContent = site.url;
-    if (site.ok) okTitle.textContent = site.title;
-    // crossfade: only the live view is visible and exposed to AT
-    viewOk.classList.toggle('is-live', site.ok);
-    viewBlock.classList.toggle('is-live', !site.ok);
-    viewOk.setAttribute('aria-hidden', String(!site.ok));
-    viewBlock.setAttribute('aria-hidden', String(site.ok));
-    announce.textContent = site.ok
-      ? site.url + ' — فتح الموقع بشكل طبيعي'
-      : site.url + ' — هذا الموقع غير متاح على هذا الجهاز';
-    chips.forEach(function (c) {
-      var active = c === chip;
-      c.classList.toggle('on', active);
-      c.setAttribute('aria-pressed', String(active));
+  // build dots
+  if(jrail){
+    jcaps.forEach(function(c,i){
+      var d=document.createElement('button');
+      d.className='jdot'+(i===0?' on':''); d.type='button';
+      d.setAttribute('role','tab'); d.setAttribute('aria-label','المحطة '+AR[i]);
+      d.addEventListener('click',function(){ setScene(i,true); });
+      jrail.appendChild(d);
     });
   }
+  var jdots = jrail ? jrail.querySelectorAll('.jdot') : [];
 
-  chips.forEach(function (chip) {
-    chip.addEventListener('click', function () { selectSite(chip); });
-  });
+  function setScene(i, snap){
+    if(i===jscene && !snap) return;
+    jscene = i;
+    jshots.forEach(function(s,k){ s.classList.toggle('on', k===i); });
+    jcaps.forEach(function(c,k){ c.classList.toggle('on', k===i); });
+    jdots.forEach(function(d,k){ d.classList.toggle('on', k===i); });
+    if(jnum) jnum.innerHTML = '<b>'+AR[i]+'</b> / ٤';
+    if(jphone && !snap){ // small depth pop on change
+      jphone.style.transform = jphone.style.transform.replace(' scale(1.02)','') + ' scale(1.02)';
+      setTimeout(function(){ applyTilt(); }, 180);
+    }
+  }
 
-  // arrow-key navigation inside the chip group (radiogroup-style).
-  // RTL page: ArrowLeft moves visually forward (next chip), ArrowRight back.
-  group.addEventListener('keydown', function (e) {
-    var idx = chips.indexOf(document.activeElement);
-    if (idx === -1) return;
-    var next = null;
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') next = (idx + 1) % chips.length;
-    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') next = (idx - 1 + chips.length) % chips.length;
-    else if (e.key === 'Home') next = 0;
-    else if (e.key === 'End') next = chips.length - 1;
-    if (next === null) return;
-    e.preventDefault();
-    chips[next].focus();
-    selectSite(chips[next]);
+  function applyTilt(){
+    if(!jphone) return;
+    var ry = jTiltX*7 + jScrollTilt;
+    var rx = -jTiltY*5;
+    jphone.style.transform = 'rotateY('+ry.toFixed(2)+'deg) rotateX('+rx.toFixed(2)+'deg)';
+  }
+
+  // mouse parallax (desktop only)
+  if(jwrap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.innerWidth>=861){
+    jwrap.addEventListener('mousemove',function(e){
+      var r=jwrap.getBoundingClientRect();
+      jTiltX=(e.clientX-r.left)/r.width-.5; jTiltY=(e.clientY-r.top)/r.height-.5;
+      applyTilt();
+    });
+    jwrap.addEventListener('mouseleave',function(){ jTiltX=0;jTiltY=0;applyTilt(); });
+  }
+
+  // scroll progress → scene + gentle rotation arc
+  function jUpdate(){
+    if(!jsec) return;
+    var rect = jsec.getBoundingClientRect();
+    var total = rect.height - window.innerHeight;
+    var p = Math.min(1, Math.max(0, -rect.top / (total||1)));
+    var idx = Math.min(3, Math.floor(p * 4));
+    jScrollTilt = (p - .5) * 6; // gentle -3°..+3° arc across the journey
+    setScene(idx, false);
+    applyTilt();
+  }
+  var jRaf = false;
+  window.addEventListener('scroll', function(){
+    if(jRaf) return; jRaf = true;
+    requestAnimationFrame(function(){ jRaf=false; jUpdate(); });
+  }, {passive:true});
+  jUpdate();
+
+  // keyboard: arrows switch stations when journey in view
+  document.addEventListener('keydown', function(e){
+    if(!jsec) return;
+    var r=jsec.getBoundingClientRect();
+    if(r.top > window.innerHeight*.5 || r.bottom < window.innerHeight*.5) return;
+    if(e.key==='ArrowLeft' && jscene<3){ setScene(jscene+1,true); }
+    if(e.key==='ArrowRight' && jscene>0){ setScene(jscene-1,true); }
   });
 </script>
 <!-- shield-3d removed: hero shows ONLY the real app screenshot per user request -->
