@@ -46,6 +46,15 @@
     const mat = new THREE.MeshStandardMaterial({color:0x7A9471, roughness:0.7, metalness:0.05});
     const shield = new THREE.Mesh(geo, mat);
     scene.add(shield);
+    // protective sphere — glowing, per reference hero RIGHT
+    const sphereGeo = new THREE.SphereGeometry(1.15, 32, 32);
+    const sphereMat = new THREE.MeshStandardMaterial({color:0x7A9471, transparent:true, opacity:0.08, roughness:0.3, metalness:0.1, emissive:0x1B1F3B, emissiveIntensity:0.15});
+    const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+    sphere.scale.set(1,1.15,1);
+    scene.add(sphere);
+    const sphereWire = new THREE.LineSegments(new THREE.WireframeGeometry(sphereGeo), new THREE.LineBasicMaterial({color:0xC9A15C, transparent:true, opacity:0.12}));
+    sphereWire.scale.copy(sphere.scale);
+    scene.add(sphereWire);
     // fortress walls — two side bastions (calm, not gaming)
     const wallGeo = new THREE.BoxGeometry(0.18,0.9,0.12);
     const wallMat = new THREE.MeshStandardMaterial({color:0x242952, roughness:0.9});
@@ -86,13 +95,22 @@
     function animate(){
       raf=requestAnimationFrame(animate);
       t+=0.01;
-      if(state==='IDLE'){ shield.rotation.y = Math.sin(t*0.2)*0.15; particles.rotation.y = t*0.02; }
-      if(state==='PROTECTED'){ shield.rotation.y +=0.003; particles.material.opacity = 0.7; }
-      if(state==='THREAT'){ shield.scale.setScalar(1+Math.sin(t*3)*0.015); particles.material.opacity = 0.9; }
-      if(state==='BLOCKED'){ shield.position.x = Math.sin(t*12)*0.03; particles.material.opacity = 0.3; }
+      if(state==='IDLE'){ shield.rotation.y = Math.sin(t*0.2)*0.15; sphere.rotation.y = -t*0.05; particles.rotation.y = t*0.02; }
+      if(state==='PROTECTED'){ shield.rotation.y +=0.003; sphere.rotation.y +=0.001; particles.material.opacity = 0.7; }
+      if(state==='THREAT'){ shield.scale.setScalar(1+Math.sin(t*3)*0.015); sphere.scale.setScalar(1+Math.sin(t*3)*0.01); particles.material.opacity = 0.9; }
+      if(state==='BLOCKED'){ shield.position.x = Math.sin(t*12)*0.03; sphere.material.opacity = 0.15; particles.material.opacity = 0.3; } else sphere.material.opacity = 0.08;
       particles.rotation.y +=0.0005;
+      // mouse tilt
+      shield.rotation.x = mouseY * 0.15;
+      shield.rotation.y += mouseX * 0.01;
+      sphere.rotation.x = mouseY * 0.08;
       renderer.render(scene,camera);
     }
+    let mouseX=0, mouseY=0;
+    window.addEventListener('mousemove', e=>{
+      mouseX = (e.clientX / window.innerWidth - 0.5)*0.5;
+      mouseY = (e.clientY / window.innerHeight - 0.5)*0.5;
+    }, {passive:true});
     animate();
 
     // scroll storytelling: hero → demo → trust
