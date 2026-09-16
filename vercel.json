@@ -1,19 +1,13 @@
 {
-  "outputDirectory": "website",
+  "outputDirectory": "website-v2/dist",
   "cleanUrls": true,
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self';" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" }
       ]
     }
-  ],
-  "rewrites": [
-    { "source": "/download", "destination": "/download.html" },
-    { "source": "/install", "destination": "/install.html" },
-    { "source": "/privacy", "destination": "/privacy.html" }
   ]
 }

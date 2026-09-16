@@ -1,0 +1,35 @@
+export function HeroShield() {
+  return (
+    <svg viewBox="0 0 420 420" role="img" aria-label="درع حصن المتوهج فوق أوراق دافئة بأشكال زمردية" className="w-full h-auto">
+      <defs>
+        <linearGradient id="shieldFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="oklch(0.52 0.07 162)" />
+          <stop offset="100%" stopColor="oklch(0.38 0.08 155)" />
+        </linearGradient>
+        <radialGradient id="glow" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stopColor="oklch(0.47 0.075 160 / 0.35)" />
+          <stop offset="100%" stopColor="oklch(0.47 0.075 160 / 0)" />
+        </radialGradient>
+      </defs>
+      <path d="M60 90 C 120 20, 300 10, 380 80 C 420 160, 410 300, 340 380 C 250 430, 110 420, 50 340 C 10 260, 20 150, 60 90 Z" fill="oklch(0.94 0.02 155)" opacity="0.7" />
+      <path d="M90 70 C 180 -10, 340 40, 360 150 C 380 260, 320 360, 210 385 C 110 400, 40 330, 45 220 C 50 140, 60 100, 90 70 Z" fill="oklch(0.955 0.02 160)" />
+      <circle cx="330" cy="100" r="46" fill="oklch(0.93 0.025 85)" opacity="0.8" />
+      <circle cx="95" cy="330" r="30" fill="oklch(0.93 0.025 85)" opacity="0.6" />
+      <circle cx="210" cy="185" r="150" fill="url(#glow)" />
+      <path transform="translate(120 80) scale(0.9)" d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z" fill="url(#shieldFill)" stroke="oklch(0.83 0.09 90)" strokeWidth="8" strokeLinejoin="round" />
+      <rect x="118" y="140" width="8" height="128" rx="4" fill="oklch(0.26 0.025 220)" />
+      <path transform="translate(120 80) scale(0.9)" d="M40 190 V95 C40 45 65 15 100 15" fill="none" stroke="oklch(0.985 0.01 95)" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+    </svg>
+  );
+}
+
+export function LogoMark({ size = 36 }: { size?: number }) {
+  return (
+    <span className="gradient-emerald inline-flex items-center justify-center rounded-xl" style={{ width: size, height: size }}>
+      <svg viewBox="0 0 200 200" width={size * 0.66} height={size * 0.66} aria-hidden="true">
+        <path d="M40 190 V95 C40 45 65 15 100 15 C135 15 160 45 160 95 V190 H40 Z" fill="oklch(0.985 0.01 95)" />
+        <rect x="96" y="55" width="8" height="130" fill="oklch(0.47 0.075 160)" />
+      </svg>
+    </span>
+  );
+}

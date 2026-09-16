@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@font-face { font-family: "Tajawal"; font-style: normal; font-weight: 400; font-display: swap; src: url("./assets/fonts/tajawal-400-arabic.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: "Tajawal"; font-style: normal; font-weight: 400; font-display: swap; src: url("./assets/fonts/tajawal-400-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+FEFF, U+FFFD; }
+@font-face { font-family: "Tajawal"; font-style: normal; font-weight: 500; font-display: swap; src: url("./assets/fonts/tajawal-500-arabic.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: "Tajawal"; font-style: normal; font-weight: 500; font-display: swap; src: url("./assets/fonts/tajawal-500-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+FEFF, U+FFFD; }
+@font-face { font-family: "Tajawal"; font-style: normal; font-weight: 700; font-display: swap; src: url("./assets/fonts/tajawal-700-arabic.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: "Tajawal"; font-style: normal; font-weight: 700; font-display: swap; src: url("./assets/fonts/tajawal-700-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+FEFF, U+FFFD; }
+@font-face { font-family: "Tajawal"; font-style: normal; font-weight: 800; font-display: swap; src: url("./assets/fonts/tajawal-800-arabic.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: "Tajawal"; font-style: normal; font-weight: 800; font-display: swap; src: url("./assets/fonts/tajawal-800-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+FEFF, U+FFFD; }
+
+@theme {
+  --font-sans: "Tajawal", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: oklch(0.973 0.014 91);
+  --color-foreground: oklch(0.26 0.02 160);
+  --color-card: oklch(0.995 0.005 95);
+  --color-primary: oklch(0.47 0.075 160);
+  --color-primary-foreground: oklch(0.985 0.01 95);
+  --color-secondary: oklch(0.94 0.02 155);
+  --color-accent: oklch(0.94 0.02 155);
+  --color-muted: oklch(0.94 0.02 155);
+  --color-muted-foreground: oklch(0.52 0.02 150);
+  --color-mint: oklch(0.955 0.02 160);
+  --color-ink: oklch(0.26 0.025 220);
+  --color-sand: oklch(0.93 0.025 85);
+  --color-border: oklch(0.9 0.015 120);
+  --color-input: oklch(0.9 0.015 120);
+  --color-ring: oklch(0.47 0.075 160 / 0.35);
+  --color-destructive: oklch(0.55 0.19 27);
+
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 2rem;
+
+  --shadow-soft: 0 2px 4px oklch(0.47 0.075 160 / 0.06), 0 12px 32px -12px oklch(0.47 0.075 160 / 0.12);
+  --shadow-lift: 0 4px 8px oklch(0.47 0.075 160 / 0.10), 0 20px 44px -16px oklch(0.47 0.075 160 / 0.18);
+
+  --gradient-emerald: linear-gradient(150deg, oklch(0.52 0.07 162), oklch(0.38 0.08 155));
+  --gradient-paper: linear-gradient(180deg, oklch(0.973 0.014 91), oklch(0.955 0.02 160));
+}
+
+@utility surface-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-soft);
+}
+
+@utility gradient-emerald {
+  background-image: var(--gradient-emerald);
+}
+
+@utility gradient-paper {
+  background-image: var(--gradient-paper);
+}
+
+@utility tour-stage {
+  perspective: 1400px;
+}
+
+@utility tour-screen-in {
+  animation: tour-screen-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility tour-rise {
+  animation: tour-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility tour-ring {
+  animation: tour-ring 2.6s ease-out infinite;
+}
+
+@utility tour-bar {
+  transform-origin: bottom;
+  animation: tour-bar 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility tour-float {
+  animation: tour-float 3.2s ease-in-out infinite;
+}
+
+@keyframes tour-screen-in {
+  from { opacity: 0; transform: translate3d(60px, 0, -60px) rotateY(-12deg); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) rotateY(0deg); }
+}
+@keyframes tour-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes tour-ring {
+  0% { box-shadow: 0 0 0 0 oklch(0.47 0.075 160 / 0.35); }
+  70% { box-shadow: 0 0 0 18px oklch(0.47 0.075 160 / 0); }
+  100% { box-shadow: 0 0 0 0 oklch(0.47 0.075 160 / 0); }
+}
+@keyframes tour-bar {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes tour-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .tour-screen-in, .tour-rise, .tour-ring, .tour-bar, .tour-float {
+    animation: none !important;
+  }
+}
