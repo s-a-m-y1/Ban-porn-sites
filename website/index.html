@@ -76,13 +76,23 @@
   .mark .mark-slit{fill:var(--mark-surface,var(--indigo))}
 
   .hero{
-    background:var(--indigo);
+    background:radial-gradient(120% 120% at 50% 0%, #242952 0%, var(--indigo) 55%, #0F1A2B 100%);
     min-height:100vh;
     min-height:100svh;
     display:grid;
     place-items:center;
     text-align:center;
     padding:var(--sp-8) var(--sp-5);
+    position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:auto 0 0 0;height:28%;background:
+      linear-gradient(to top, rgba(0,0,0,.35), transparent),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 120'%3E%3Cpath d='M0 100 L120 40 L200 80 L320 20 L400 60 L480 30 L560 90 L640 50 L720 80 L800 100 Z' fill='%230F1A2B' opacity='.9'/%3E%3C/svg%3E") bottom/cover no-repeat;
+    pointer-events:none;opacity:.7;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 30%, transparent 40%, rgba(15,26,43,.5) 100%);pointer-events:none;
   }
   .hero-inner{max-width:640px}
   .hero-mark{width:clamp(104px,16vw,150px);height:auto;display:block;margin:0 auto var(--sp-7)}
@@ -434,6 +444,15 @@
 <main id="top">
 
   <section class="hero">
+    <nav style="position:absolute;top:0;inset-inline:0;display:flex;justify-content:space-between;align-items:center;padding:16px 24px;z-index:2;font-family:'IBM Plex Sans',sans-serif;font-size:13px">
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="#" style="color:rgba(247,241,230,.85);text-decoration:none;border:1px solid rgba(247,241,230,.2);padding:6px 12px;border-radius:999px">AR / EN</a>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="#" onclick="alert('تسجيل الدخول — قريباً');return false" style="color:rgba(247,241,230,.85);text-decoration:none">تسجيل الدخول</a>
+        <a href="download.html" style="background:var(--amber);color:var(--indigo);padding:8px 18px;border-radius:4px;font-weight:700;text-decoration:none">إنشاء حساب</a>
+      </div>
+    </nav>
     <div class="hero-inner">
       <div style="position:relative;width:clamp(104px,16vw,150px);height:clamp(104px,16vw,150px);margin:0 auto var(--sp-7)">
         <svg class="hero-mark" viewBox="0 0 200 200" role="img" aria-label="علامة حِصن: قوس بوابة بفتحة رأسية مغلقة" style="--mark-surface:var(--indigo)">
@@ -446,9 +465,9 @@
       <h1 class="rise">ما لا يليق لا يصل،<br>وكل شيء آخر يبقى كما هو.</h1>
       <p class="sub rise">حِصن يفلّر الإنترنت داخل الجهاز نفسه، بلا مراقبة وبلا حساب. المواقع التي تحتاجها عائلتك تفتح كالمعتاد، وما لا يليق يُحجب قبل أن يصل إلى الشاشة.</p>
       <div class="hero-actions rise">
-        <a class="cta" href="download.html">حمّل حِصن</a>
+        <a class="cta" href="download.html">ابدأ الآن — حمّل حِصن</a>
         <a class="hero-alt" href="#demo">
-          جرّب الحماية أولًا
+          كيف يعمل؟
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6.5 8 11.5 13 6.5"/></svg>
         </a>
       </div>

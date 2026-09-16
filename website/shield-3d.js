@@ -35,7 +35,7 @@
     scene.add(new THREE.AmbientLight(0xF7F1E6, 0.9));
     const dir = new THREE.DirectionalLight(0xC9A15C, 0.6); dir.position.set(2,3,4); scene.add(dir);
 
-    // shield geometry — simple extruded arch (low poly <2K verts)
+    // shield geometry — fortress arch (low poly <2K verts)
     const shape = new THREE.Shape();
     shape.moveTo(-0.8,-1.2); shape.lineTo(-0.8,-0.1);
     shape.bezierCurveTo(-0.8,-0.7, -0.4,-1.1, 0,-1.1);
@@ -46,6 +46,25 @@
     const mat = new THREE.MeshStandardMaterial({color:0x7A9471, roughness:0.7, metalness:0.05});
     const shield = new THREE.Mesh(geo, mat);
     scene.add(shield);
+    // fortress walls — two side bastions (calm, not gaming)
+    const wallGeo = new THREE.BoxGeometry(0.18,0.9,0.12);
+    const wallMat = new THREE.MeshStandardMaterial({color:0x242952, roughness:0.9});
+    const leftWall = new THREE.Mesh(wallGeo, wallMat); leftWall.position.set(-0.92,-0.15, -0.05); scene.add(leftWall);
+    const rightWall = new THREE.Mesh(wallGeo, wallMat); rightWall.position.set(0.92,-0.15, -0.05); scene.add(rightWall);
+    // ground — subtle
+    const groundGeo = new THREE.PlaneGeometry(6,2);
+    const groundMat = new THREE.MeshStandardMaterial({color:0x1B1F3B, roughness:1});
+    const ground = new THREE.Mesh(groundGeo, groundMat); ground.rotation.x = -Math.PI/2; ground.position.y = -1.3; scene.add(ground);
+    // particles — glowing dust (low count on mobile)
+    const isMobile = window.innerWidth < 720;
+    const pCount = isMobile ? 30 : 80;
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(pCount*3);
+    for(let i=0;i<pCount;i++){ pPos[i*3]= (Math.random()-0.5)*3; pPos[i*3+1]= (Math.random()-0.5)*2; pPos[i*3+2]= (Math.random()-0.5)*1; }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
+    const pMat = new THREE.PointsMaterial({color:0xC9A15C, size:0.015, transparent:true, opacity:0.6, depthWrite:false});
+    const particles = new THREE.Points(pGeo, pMat); scene.add(particles);
+    scene.fog = new THREE.Fog(0x1B1F3B, 4, 8);
 
     // slit
     const slitGeo = new THREE.BoxGeometry(0.07,1.0,0.2);
@@ -67,10 +86,11 @@
     function animate(){
       raf=requestAnimationFrame(animate);
       t+=0.01;
-      if(state==='IDLE') shield.rotation.y = Math.sin(t*0.2)*0.15;
-      if(state==='PROTECTED') shield.rotation.y +=0.003;
-      if(state==='THREAT') shield.scale.setScalar(1+Math.sin(t*3)*0.015);
-      if(state==='BLOCKED') shield.position.x = Math.sin(t*12)*0.03;
+      if(state==='IDLE'){ shield.rotation.y = Math.sin(t*0.2)*0.15; particles.rotation.y = t*0.02; }
+      if(state==='PROTECTED'){ shield.rotation.y +=0.003; particles.material.opacity = 0.7; }
+      if(state==='THREAT'){ shield.scale.setScalar(1+Math.sin(t*3)*0.015); particles.material.opacity = 0.9; }
+      if(state==='BLOCKED'){ shield.position.x = Math.sin(t*12)*0.03; particles.material.opacity = 0.3; }
+      particles.rotation.y +=0.0005;
       renderer.render(scene,camera);
     }
     animate();
