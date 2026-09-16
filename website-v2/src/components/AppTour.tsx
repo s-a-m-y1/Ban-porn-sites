@@ -244,22 +244,23 @@ export function AppTour() {
         <div className="mx-auto w-[290px] max-w-full">
           <PhoneTilt>
           <div className="rounded-[2.6rem] bg-[#16242F] p-3 shadow-lift">
-            <div className="relative h-[520px] overflow-hidden rounded-[2rem] bg-[#F7F5EF]">
-              <div key={screens[i].key} className="tour-stage absolute inset-0">
-                <div className="tour-screen-in absolute inset-0">
-                  <Active />
+            <div className="flex h-[560px] flex-col overflow-hidden rounded-[2rem] bg-[#F7F5EF]">
+              <div className="relative flex-1 overflow-hidden">
+                <div key={screens[i].key} className="tour-stage absolute inset-0">
+                  <div className="tour-screen-in absolute inset-0">
+                    <Active />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="mt-2 flex items-center gap-0 rounded-2xl bg-[#16242F] px-1 pb-2 pt-1">
+              <div className="flex items-center border-t border-[#E2E2D8] bg-white px-1 py-1.5">
               {screens.map((s, k) => (
                 <button
                   key={s.key}
                   onClick={() => go(k)}
                   aria-label={s.tab}
-                  className={`flex min-w-0 flex-1 select-none flex-col items-center gap-1 rounded-xl px-1 py-1.5 text-[8px] transition-colors ${k === i ? "text-[#F4F1EA]" : "text-white/40"}`}
+                  className={`flex min-w-0 flex-1 select-none flex-col items-center gap-0.5 rounded-xl px-1 py-1 text-[8px] transition-colors ${k === i ? "text-[#2E6B52]" : "text-[#6E7A72]"}`}
                 >
-                  <span className={`grid h-6 w-10 place-items-center rounded-full ${k === i ? "gradient-emerald" : ""}`}>
+                  <span className={`grid h-6 w-11 place-items-center rounded-full ${k === i ? "bg-[#EAF3EE]" : ""}`}>
                     {k === 0 && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M12 3 3 10v11h6v-7h6v7h6V10z"/></svg>}
                     {k === 1 && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M4 20V10h4v10H4zm6 0V4h4v16h-4zm6 0v-7h4v7h-4z"/></svg>}
                     {k === 2 && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5z"/></svg>}
@@ -269,6 +270,7 @@ export function AppTour() {
                   {s.tab}
                 </button>
               ))}
+              </div>
             </div>
           </div>
           </PhoneTilt>
