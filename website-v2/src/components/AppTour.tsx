@@ -35,7 +35,7 @@ const screens = [
 
 function Toggle({ on }: { on: boolean }) {
   return (
-    <span className={`inline-flex h-5 w-9 items-center rounded-full px-0.5 ${on ? "bg-primary" : "bg-sand"}`}>
+    <span className={`inline-flex h-5 w-9 items-center rounded-full px-0.5 ${on ? "bg-primary" : "bg-[#EDE4D2]"}`}>
       <span className={`h-4 w-4 rounded-full bg-white shadow transition-transform ${on ? "-translate-x-0" : "-translate-x-4"}`} />
     </span>
   );
@@ -43,7 +43,7 @@ function Toggle({ on }: { on: boolean }) {
 
 function Row({ children, i }: { children: React.ReactNode; i: number }) {
   return (
-    <div className="tour-rise mx-3 mb-2 flex items-center justify-between rounded-2xl border border-border bg-white px-3 py-2.5" style={{ animationDelay: `${i * 70}ms` }}>
+    <div className="tour-rise mx-3 mb-2 flex items-center justify-between rounded-2xl border border-[#E2E2D8] bg-white px-3 py-2.5" style={{ animationDelay: `${i * 70}ms` }}>
       {children}
     </div>
   );
@@ -54,10 +54,10 @@ function HomeScreen() {
     <div>
       <div className="tour-rise flex items-center justify-between px-4 pt-4" style={{ animationDelay: "0ms" }}>
         <div>
-          <p className="text-[13px] text-muted-foreground">أسعد الله يومك</p>
-          <p className="text-[11px] text-muted-foreground">اليوم ٢ من رحلتك</p>
+          <p className="text-[13px] text-[#6E7A72]">أسعد الله يومك</p>
+          <p className="text-[11px] text-[#6E7A72]">اليوم ٢ من رحلتك</p>
         </div>
-        <span className="rounded-full border border-border bg-mint px-3 py-1 text-[10px] text-primary">مجاناً</span>
+        <span className="rounded-full border border-[#E2E2D8] bg-[#EAF3EE] px-3 py-1 text-[10px] text-[#2E6B52]">مجاناً</span>
       </div>
       <div className="tour-rise mt-4 flex flex-col items-center" style={{ animationDelay: "90ms" }}>
         <p className="flex items-center gap-1.5 text-[12px] font-medium">
@@ -70,20 +70,20 @@ function HomeScreen() {
             <rect x="96" y="55" width="8" height="130" fill="oklch(0.985 0.01 95)" />
           </svg>
         </div>
-        <p className="mt-2 text-[10px] text-muted-foreground">اضغط لفتح البوابة — يتطلب PIN</p>
+        <p className="mt-2 text-[10px] text-[#6E7A72]">اضغط لفتح البوابة — يتطلب PIN</p>
       </div>
-      <div className="tour-rise mx-3 mt-4 rounded-2xl bg-sand p-3" style={{ animationDelay: "180ms" }}>
-        <p className="text-[10px] font-bold text-ink">خُطوة إلى النور</p>
+      <div className="tour-rise mx-3 mt-4 rounded-2xl bg-[#EDE4D2] p-3" style={{ animationDelay: "180ms" }}>
+        <p className="text-[10px] font-bold text-[#22333B]">خُطوة إلى النور</p>
         <p className="mt-1 text-[11px] leading-5">«التقوى هاهنا» — وأشار إلى صدره ثلاث مرات</p>
       </div>
       <div className="tour-rise mx-3 mt-3 grid grid-cols-2 gap-2" style={{ animationDelay: "260ms" }}>
-        <div className="rounded-2xl border border-border bg-white p-2.5 text-center">
-          <p className="text-[15px] font-extrabold text-ink">٨٤</p>
-          <p className="text-[9px] text-muted-foreground">محاولة محجوبة</p>
+        <div className="rounded-2xl border border-[#E2E2D8] bg-white p-2.5 text-center">
+          <p className="text-[15px] font-extrabold text-[#22333B]">٨٤</p>
+          <p className="text-[9px] text-[#6E7A72]">محاولة محجوبة</p>
         </div>
-        <div className="rounded-2xl border border-border bg-white p-2.5 text-center">
-          <p className="text-[15px] font-extrabold text-ink">٧٦٧٧١</p>
-          <p className="text-[9px] text-muted-foreground">دومين في القائمة</p>
+        <div className="rounded-2xl border border-[#E2E2D8] bg-white p-2.5 text-center">
+          <p className="text-[15px] font-extrabold text-[#22333B]">٧٦٧٧١</p>
+          <p className="text-[9px] text-[#6E7A72]">دومين في القائمة</p>
         </div>
       </div>
     </div>
@@ -97,33 +97,33 @@ function StatsScreen() {
   ];
   return (
     <div className="px-3 pt-4">
-      <p className="tour-rise text-[13px] font-extrabold text-ink" style={{ animationDelay: "0ms" }}>الإحصائيات</p>
+      <p className="tour-rise text-[13px] font-extrabold text-[#22333B]" style={{ animationDelay: "0ms" }}>الإحصائيات</p>
       <div className="mt-3 grid grid-cols-2 gap-2">
-        <div className="tour-rise rounded-2xl border border-border bg-white p-3" style={{ animationDelay: "70ms" }}>
-          <p className="text-[10px] text-muted-foreground">محاولات محجوبة — اليوم</p>
-          <p className="text-[20px] font-extrabold text-destructive">٨٤</p>
+        <div className="tour-rise rounded-2xl border border-[#E2E2D8] bg-white p-3" style={{ animationDelay: "70ms" }}>
+          <p className="text-[10px] text-[#6E7A72]">محاولات محجوبة — اليوم</p>
+          <p className="text-[20px] font-extrabold text-[#C0392B]">٨٤</p>
         </div>
-        <div className="tour-rise rounded-2xl border border-border bg-white p-3" style={{ animationDelay: "140ms" }}>
-          <p className="text-[10px] text-muted-foreground">المتوسط اليومي</p>
-          <p className="text-[20px] font-extrabold text-ink">١٢</p>
+        <div className="tour-rise rounded-2xl border border-[#E2E2D8] bg-white p-3" style={{ animationDelay: "140ms" }}>
+          <p className="text-[10px] text-[#6E7A72]">المتوسط اليومي</p>
+          <p className="text-[20px] font-extrabold text-[#22333B]">١٢</p>
         </div>
       </div>
-      <div className="tour-rise mt-3 rounded-2xl border border-border bg-white p-3" style={{ animationDelay: "210ms" }}>
-        <p className="text-[10px] font-bold text-ink">هذا الأسبوع</p>
+      <div className="tour-rise mt-3 rounded-2xl border border-[#E2E2D8] bg-white p-3" style={{ animationDelay: "210ms" }}>
+        <p className="text-[10px] font-bold text-[#22333B]">هذا الأسبوع</p>
         <div className="mt-2 flex h-16 items-end justify-between gap-1.5">
           {week.map((b, i) => (
             <div key={i} className="flex flex-1 flex-col items-center gap-1">
               <div className="tour-bar w-full rounded-t-md gradient-emerald" style={{ height: `${b.v}%`, animationDelay: `${260 + i * 60}ms` }} />
-              <span className="text-[8px] text-muted-foreground">{b.d}</span>
+              <span className="text-[8px] text-[#6E7A72]">{b.d}</span>
             </div>
           ))}
         </div>
       </div>
-      <div className="tour-rise mt-3 rounded-2xl border border-border bg-white p-3" style={{ animationDelay: "480ms" }}>
-        <p className="text-[10px] font-bold text-ink">الأكثر حظراً</p>
+      <div className="tour-rise mt-3 rounded-2xl border border-[#E2E2D8] bg-white p-3" style={{ animationDelay: "480ms" }}>
+        <p className="text-[10px] font-bold text-[#22333B]">الأكثر حظراً</p>
         {[["pornhub.com", "٤١"], ["xvideos.com", "١٨"], ["888.com", "٩"]].map(([s, n], i) => (
           <div key={s} className="mt-1.5 flex justify-between text-[10px]">
-            <span className="text-muted-foreground" dir="ltr">{s}</span>
+            <span className="text-[#6E7A72]" dir="ltr">{s}</span>
             <span className="font-bold">{n}</span>
           </div>
         ))}
@@ -135,7 +135,7 @@ function StatsScreen() {
 function ProtectScreen() {
   return (
     <div className="pt-4">
-      <p className="tour-rise mx-4 text-[13px] font-extrabold text-ink" style={{ animationDelay: "0ms" }}>ميزات الحماية</p>
+      <p className="tour-rise mx-4 text-[13px] font-extrabold text-[#22333B]" style={{ animationDelay: "0ms" }}>ميزات الحماية</p>
       <div className="mt-3">
         <Row i={1}><span className="text-[11px]">حظر المواقع الإباحية</span><Toggle on /></Row>
         <Row i={2}><span className="text-[11px]">حظر مواقع القمار</span><Toggle on /></Row>
@@ -143,11 +143,11 @@ function ProtectScreen() {
         <Row i={4}><span className="text-[11px]">حظر مواقع الفيروسات</span><Toggle on={false} /></Row>
         <Row i={5}>
           <span className="text-[11px]">مواقع محظورة يدوياً</span>
-          <span className="rounded-full bg-mint px-2 py-0.5 text-[10px] text-primary">+٤</span>
+          <span className="rounded-full bg-[#EAF3EE] px-2 py-0.5 text-[10px] text-[#2E6B52]">+٤</span>
         </Row>
         <Row i={6}>
           <span className="text-[11px]">التطبيقات المحظورة</span>
-          <span className="rounded-full bg-sand px-2 py-0.5 text-[10px]">X (٢)</span>
+          <span className="rounded-full bg-[#EDE4D2] px-2 py-0.5 text-[10px]">X (٢)</span>
         </Row>
       </div>
     </div>
@@ -162,15 +162,15 @@ function SupportScreen() {
           <path d="M12 21s-7.5-4.9-9.8-9.2C.6 8.9 2.3 5 6 5c2.2 0 3.6 1.2 6 3.6C14.4 6.2 15.8 5 18 5c3.7 0 5.4 3.9 3.8 6.8C19.5 16.1 12 21 12 21z" />
         </svg>
       </div>
-      <p className="tour-rise mt-4 text-[13px] font-extrabold text-ink" style={{ animationDelay: "80ms" }}>ادعم حصن</p>
-      <p className="tour-rise mt-2 text-[11px] leading-5 text-muted-foreground" style={{ animationDelay: "150ms" }}>
+      <p className="tour-rise mt-4 text-[13px] font-extrabold text-[#22333B]" style={{ animationDelay: "80ms" }}>ادعم حصن</p>
+      <p className="tour-rise mt-2 text-[11px] leading-5 text-[#6E7A72]" style={{ animationDelay: "150ms" }}>
         حصن مشروع وقفي لحماية الأسرة.<br />دعمك يساعدنا على الاستمرار والتطوير.
       </p>
-      <p className="tour-rise mt-3 text-[10px] text-muted-foreground" dir="ltr" style={{ animationDelay: "220ms" }}>sam858y@gmail.com</p>
-      <p className="tour-rise mt-3 rounded-full bg-sand px-3 py-1 text-[9px] text-muted-foreground" style={{ animationDelay: "290ms" }}>
+      <p className="tour-rise mt-3 text-[10px] text-[#6E7A72]" dir="ltr" style={{ animationDelay: "220ms" }}>sam858y@gmail.com</p>
+      <p className="tour-rise mt-3 rounded-full bg-[#EDE4D2] px-3 py-1 text-[9px] text-[#6E7A72]" style={{ animationDelay: "290ms" }}>
         Paymob • Fawry • فودافون كاش — قريباً
       </p>
-      <button className="tour-rise mt-4 rounded-full gradient-emerald px-5 py-2 text-[11px] font-bold text-primary-foreground shadow-lift" style={{ animationDelay: "360ms" }}>
+      <button className="tour-rise mt-4 rounded-full gradient-emerald px-5 py-2 text-[11px] font-bold text-[#F4F1EA] shadow-lift" style={{ animationDelay: "360ms" }}>
         تواصل عبر البريد
       </button>
     </div>
@@ -180,16 +180,16 @@ function SupportScreen() {
 function SettingsScreen() {
   return (
     <div className="pt-4">
-      <p className="tour-rise mx-4 text-[13px] font-extrabold text-ink" style={{ animationDelay: "0ms" }}>الإعدادات</p>
+      <p className="tour-rise mx-4 text-[13px] font-extrabold text-[#22333B]" style={{ animationDelay: "0ms" }}>الإعدادات</p>
       <div className="mt-3">
-        <Row i={1}><span className="text-[11px]">اللغة</span><span className="text-[10px] text-muted-foreground">العربية</span></Row>
+        <Row i={1}><span className="text-[11px]">اللغة</span><span className="text-[10px] text-[#6E7A72]">العربية</span></Row>
         <Row i={2}><span className="text-[11px]">الوضع الليلي</span><Toggle on={false} /></Row>
         <Row i={3}><span className="text-[11px]">حماية برقم سري</span><Toggle on /></Row>
         <Row i={4}><span className="text-[11px]">مسؤول الجهاز (ضد الحذف)</span><Toggle on /></Row>
         <Row i={5}><span className="text-[11px]">التشغيل مع الجهاز</span><Toggle on /></Row>
         <Row i={6}><span className="text-[11px]">VPN الدائم</span><Toggle on={false} /></Row>
       </div>
-      <p className="mt-3 text-center text-[9px] text-muted-foreground">حصن ١.٠ — كل البيانات على جهازك</p>
+      <p className="mt-3 text-center text-[9px] text-[#6E7A72]">حصن ١.٠ — كل البيانات على جهازك</p>
     </div>
   );
 }
@@ -238,13 +238,13 @@ export function AppTour() {
   return (
     <section id="tour" className="mx-auto max-w-6xl px-4 py-16">
       <h2 className="text-center text-3xl font-extrabold text-ink">جولة داخل التطبيق</h2>
-      <p className="mx-auto mt-3 max-w-xl text-center text-muted-foreground">خمس شاشات حقيقية من حصن — كما هي على جهازك، تماماً.</p>
+      <p className="mx-auto mt-3 max-w-xl text-center text-[#6E7A72]">خمس شاشات حقيقية من حصن — كما هي على جهازك، تماماً.</p>
 
       <div className="mt-10 grid items-center gap-10 lg:grid-cols-2">
         <div className="mx-auto w-[290px] max-w-full">
           <PhoneTilt>
-          <div className="rounded-[2.6rem] bg-ink p-3 shadow-lift">
-            <div className="relative h-[520px] overflow-hidden rounded-[2rem] bg-background">
+          <div className="rounded-[2.6rem] bg-[#16242F] p-3 shadow-lift">
+            <div className="relative h-[520px] overflow-hidden rounded-[2rem] bg-[#F7F5EF]">
               <div key={screens[i].key} className="tour-stage absolute inset-0">
                 <div className="tour-screen-in absolute inset-0">
                   <Active />
@@ -257,7 +257,7 @@ export function AppTour() {
                   key={s.key}
                   onClick={() => go(k)}
                   aria-label={s.tab}
-                  className={`flex flex-col items-center gap-1 rounded-xl px-3 py-1.5 text-[9px] transition-colors ${k === i ? "text-primary-foreground" : "text-white/40"}`}
+                  className={`flex flex-col items-center gap-1 rounded-xl px-3 py-1.5 text-[9px] transition-colors ${k === i ? "text-[#F4F1EA]" : "text-white/40"}`}
                 >
                   <span className={`grid h-7 w-12 place-items-center rounded-full ${k === i ? "gradient-emerald" : ""}`}>
                     {k === 0 && <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M12 3 3 10v11h6v-7h6v7h6V10z"/></svg>}
@@ -282,7 +282,7 @@ export function AppTour() {
               className={`surface-card relative overflow-hidden px-5 py-4 text-right transition-all ${k === i ? "border-primary shadow-lift -translate-y-1" : "hover:-translate-y-0.5"}`}
             >
               <p className={`text-sm font-bold ${k === i ? "text-primary" : "text-ink"}`}>{s.tab} — {s.title}</p>
-              <p className="mt-1 text-[13px] text-muted-foreground">{s.blurb}</p>
+              <p className="mt-1 text-[13px] text-[#6E7A72]">{s.blurb}</p>
               {k === i && playing && (
                 <span className="absolute inset-x-0 bottom-0 h-1 bg-mint">
                   <span className="block h-full gradient-emerald" style={{ width: `${progress}%` }} />

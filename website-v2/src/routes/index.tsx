@@ -94,7 +94,7 @@ export default function Index() {
               </div>
             </div>
           </div>
-          <div className="rounded-[2rem] bg-sand/40 shadow-soft md:order-last">
+          <div className="surface-card rounded-[2rem] p-2 md:order-last">
             <HeroShield />
           </div>
         </section>
